@@ -5,7 +5,7 @@
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <!-- Test names use underscores for readability. -->
-    <NoWarn>$(NoWarn);CA1707;CA1861;CA2007</NoWarn>
+    <NoWarn>$(NoWarn);CA1001;CA1707;CA1861;CA2007</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +19,7 @@
     <ProjectReference Include="..\..\src\UniversalNotifier.NET\UniversalNotifier.NET.csproj" />
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.Testing\UniversalNotifier.NET.Testing.csproj" />
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.Email.Mailgun\UniversalNotifier.NET.Email.Mailgun.csproj" />
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET.Email.Smtp\UniversalNotifier.NET.Email.Smtp.csproj" />
   </ItemGroup>
 
   <ItemGroup>
