@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>UniversalNotifier.NET.Receipts.AspNetCore</Title>
+    <Description>ASP.NET Core endpoint for UniversalNotifier.NET delivery receipts: one MapDeliveryReceipts call hosts a verified provider webhook and hands each delivery event to your handlers.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UniversalNotifier.NET.Receipts\UniversalNotifier.NET.Receipts.csproj" />
+  </ItemGroup>
+
+</Project>

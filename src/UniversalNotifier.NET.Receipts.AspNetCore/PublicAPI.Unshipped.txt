@@ -1,0 +1,5 @@
+#nullable enable
+Microsoft.AspNetCore.Builder.DeliveryReceiptEndpoints
+static Microsoft.AspNetCore.Builder.DeliveryReceiptEndpoints.MapDeliveryReceipts(this Microsoft.AspNetCore.Routing.IEndpointRouteBuilder! endpoints, string! pattern, UniversalNotifier.NET.Receipts.IDeliveryWebhook! webhook) -> Microsoft.AspNetCore.Builder.IEndpointConventionBuilder!
+UniversalNotifier.NET.Receipts.IDeliveryReceiptHandler
+UniversalNotifier.NET.Receipts.IDeliveryReceiptHandler.HandleAsync(UniversalNotifier.NET.Receipts.DeliveryEvent! deliveryEvent, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.ValueTask
