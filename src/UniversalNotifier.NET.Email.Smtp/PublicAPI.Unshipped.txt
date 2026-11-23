@@ -1,0 +1,30 @@
+#nullable enable
+const UniversalNotifier.NET.Email.Smtp.SmtpNotifier.Name = "smtp" -> string!
+Microsoft.Extensions.DependencyInjection.SmtpBuilderExtensions
+override UniversalNotifier.NET.Email.Smtp.SmtpOptions.ToString() -> string!
+static Microsoft.Extensions.DependencyInjection.SmtpBuilderExtensions.AddSmtp(this UniversalNotifier.NET.INotifierBuilder! builder, System.Action<UniversalNotifier.NET.Email.Smtp.SmtpOptions!>? configure = null, string? name = null) -> UniversalNotifier.NET.INotifierBuilder!
+UniversalNotifier.NET.Email.Smtp.SmtpNotifier
+UniversalNotifier.NET.Email.Smtp.SmtpNotifier.SmtpNotifier(UniversalNotifier.NET.Email.Smtp.SmtpOptions! options, UniversalNotifier.NET.NotifierContext! context) -> void
+UniversalNotifier.NET.Email.Smtp.SmtpOptions
+UniversalNotifier.NET.Email.Smtp.SmtpOptions.AllowInsecureAuthentication.get -> bool
+UniversalNotifier.NET.Email.Smtp.SmtpOptions.AllowInsecureAuthentication.set -> void
+UniversalNotifier.NET.Email.Smtp.SmtpOptions.From.get -> UniversalNotifier.NET.EmailAddress
+UniversalNotifier.NET.Email.Smtp.SmtpOptions.From.set -> void
+UniversalNotifier.NET.Email.Smtp.SmtpOptions.Host.get -> string!
+UniversalNotifier.NET.Email.Smtp.SmtpOptions.Host.set -> void
+UniversalNotifier.NET.Email.Smtp.SmtpOptions.Password.get -> string?
+UniversalNotifier.NET.Email.Smtp.SmtpOptions.Password.set -> void
+UniversalNotifier.NET.Email.Smtp.SmtpOptions.Port.get -> int
+UniversalNotifier.NET.Email.Smtp.SmtpOptions.Port.set -> void
+UniversalNotifier.NET.Email.Smtp.SmtpOptions.Security.get -> UniversalNotifier.NET.Email.Smtp.SmtpSecurity
+UniversalNotifier.NET.Email.Smtp.SmtpOptions.Security.set -> void
+UniversalNotifier.NET.Email.Smtp.SmtpOptions.SmtpOptions() -> void
+UniversalNotifier.NET.Email.Smtp.SmtpOptions.Timeout.get -> System.TimeSpan
+UniversalNotifier.NET.Email.Smtp.SmtpOptions.Timeout.set -> void
+UniversalNotifier.NET.Email.Smtp.SmtpOptions.UserName.get -> string?
+UniversalNotifier.NET.Email.Smtp.SmtpOptions.UserName.set -> void
+UniversalNotifier.NET.Email.Smtp.SmtpSecurity
+UniversalNotifier.NET.Email.Smtp.SmtpSecurity.None = 3 -> UniversalNotifier.NET.Email.Smtp.SmtpSecurity
+UniversalNotifier.NET.Email.Smtp.SmtpSecurity.SslOnConnect = 1 -> UniversalNotifier.NET.Email.Smtp.SmtpSecurity
+UniversalNotifier.NET.Email.Smtp.SmtpSecurity.StartTls = 0 -> UniversalNotifier.NET.Email.Smtp.SmtpSecurity
+UniversalNotifier.NET.Email.Smtp.SmtpSecurity.StartTlsWhenAvailable = 2 -> UniversalNotifier.NET.Email.Smtp.SmtpSecurity

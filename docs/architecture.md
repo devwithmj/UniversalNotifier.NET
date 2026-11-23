@@ -23,6 +23,8 @@ INotificationChannel handlers          IEmailNotifier  ISmsNotifier  IPushNotifi
 
 ## Decisions and trade-offs
 
+Each major decision has a record with context, alternatives and trade-offs in [`docs/decisions`](decisions/). The summary:
+
 **Failures are results, not exceptions.** A notification system is called from request paths and workers where a rejected phone number must not become a 500. `NotifierBase` converts everything a provider can throw into a classified `NotifierResponse`. Only programmer errors (`null`) and cancellation throw. *Trade-off:* callers must check `Success`; the result type makes that obvious and the classification tells them what to do next.
 
 **Template method for providers.** `NotifierBase.SendAsync` is sealed and owns validation, logging, exception mapping, cancellation and retries. Providers cannot forget them or implement them differently. *Trade-off:* providers are a base class, not just an interface; the interface is still the public contract.

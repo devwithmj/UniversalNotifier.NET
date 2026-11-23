@@ -65,10 +65,10 @@ public sealed class NotifierResponse
         new(DeliveryStatus.Failed, null, httpStatusCode, [error], [], retryAfter);
 
     /// <summary>Creates a failed response with several errors.</summary>
-    public static NotifierResponse Failed(IReadOnlyList<NotifierError> errors, int? httpStatusCode = null, TimeSpan? retryAfter = null)
+    public static NotifierResponse Failed(IReadOnlyList<NotifierError> errors)
     {
         ArgumentNullException.ThrowIfNull(errors);
-        return new(DeliveryStatus.Failed, null, httpStatusCode, errors, [], retryAfter);
+        return new(DeliveryStatus.Failed, null, null, errors, [], null);
     }
 
     /// <summary>Creates a response from per-recipient outcomes, deriving the overall status.</summary>

@@ -1,0 +1,522 @@
+#nullable enable
+abstract UniversalNotifier.NET.NotifierBase<TMessage>.SendCoreAsync(TMessage! message, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<UniversalNotifier.NET.NotifierResponse!>!
+abstract UniversalNotifier.NET.NotifierMessage.<Clone>$() -> UniversalNotifier.NET.NotifierMessage!
+abstract UniversalNotifier.NET.NotifierMessage.Validate() -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.NotifierError>!
+Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions
+override sealed UniversalNotifier.NET.EmailMessage.Equals(UniversalNotifier.NET.NotifierMessage? other) -> bool
+override sealed UniversalNotifier.NET.Notification.ToString() -> string!
+override sealed UniversalNotifier.NET.NotifierMessage.ToString() -> string!
+override sealed UniversalNotifier.NET.PushMessage.Equals(UniversalNotifier.NET.NotifierMessage? other) -> bool
+override sealed UniversalNotifier.NET.Recipient.ToString() -> string!
+override sealed UniversalNotifier.NET.SmsMessage.Equals(UniversalNotifier.NET.NotifierMessage? other) -> bool
+override sealed UniversalNotifier.NET.TelegramMessage.Equals(UniversalNotifier.NET.NotifierMessage? other) -> bool
+override sealed UniversalNotifier.NET.WebPushMessage.Equals(UniversalNotifier.NET.NotifierMessage? other) -> bool
+override UniversalNotifier.NET.ChannelContent.Equals(object? obj) -> bool
+override UniversalNotifier.NET.ChannelContent.GetHashCode() -> int
+override UniversalNotifier.NET.ChannelContent.ToString() -> string!
+override UniversalNotifier.NET.ChannelRequest.Equals(object? obj) -> bool
+override UniversalNotifier.NET.ChannelRequest.GetHashCode() -> int
+override UniversalNotifier.NET.ChannelRequest.ToString() -> string!
+override UniversalNotifier.NET.ChannelResult.GetHashCode() -> int
+override UniversalNotifier.NET.EmailAddress.GetHashCode() -> int
+override UniversalNotifier.NET.EmailAddress.ToString() -> string!
+override UniversalNotifier.NET.EmailAttachment.Equals(object? obj) -> bool
+override UniversalNotifier.NET.EmailAttachment.GetHashCode() -> int
+override UniversalNotifier.NET.EmailAttachment.ToString() -> string!
+override UniversalNotifier.NET.EmailMessage.<Clone>$() -> UniversalNotifier.NET.EmailMessage!
+override UniversalNotifier.NET.EmailMessage.Equals(object? obj) -> bool
+override UniversalNotifier.NET.EmailMessage.GetHashCode() -> int
+override UniversalNotifier.NET.EmailMessage.Validate() -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.NotifierError>!
+override UniversalNotifier.NET.Notification.Equals(object? obj) -> bool
+override UniversalNotifier.NET.Notification.GetHashCode() -> int
+override UniversalNotifier.NET.NotificationChannel.Equals(object? obj) -> bool
+override UniversalNotifier.NET.NotificationChannel.GetHashCode() -> int
+override UniversalNotifier.NET.NotificationChannel.ToString() -> string!
+override UniversalNotifier.NET.NotificationDelivery.Equals(object? obj) -> bool
+override UniversalNotifier.NET.NotificationDelivery.GetHashCode() -> int
+override UniversalNotifier.NET.NotificationDelivery.ToString() -> string!
+override UniversalNotifier.NET.NotifierError.GetHashCode() -> int
+override UniversalNotifier.NET.NotifierError.ToString() -> string!
+override UniversalNotifier.NET.NotifierMessage.Equals(object? obj) -> bool
+override UniversalNotifier.NET.NotifierMessage.GetHashCode() -> int
+override UniversalNotifier.NET.PhoneNumber.GetHashCode() -> int
+override UniversalNotifier.NET.PhoneNumber.ToString() -> string!
+override UniversalNotifier.NET.PushMessage.<Clone>$() -> UniversalNotifier.NET.PushMessage!
+override UniversalNotifier.NET.PushMessage.Equals(object? obj) -> bool
+override UniversalNotifier.NET.PushMessage.GetHashCode() -> int
+override UniversalNotifier.NET.PushMessage.Validate() -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.NotifierError>!
+override UniversalNotifier.NET.Recipient.Equals(object? obj) -> bool
+override UniversalNotifier.NET.Recipient.GetHashCode() -> int
+override UniversalNotifier.NET.RecipientResult.GetHashCode() -> int
+override UniversalNotifier.NET.SmsMessage.<Clone>$() -> UniversalNotifier.NET.SmsMessage!
+override UniversalNotifier.NET.SmsMessage.Equals(object? obj) -> bool
+override UniversalNotifier.NET.SmsMessage.GetHashCode() -> int
+override UniversalNotifier.NET.SmsMessage.Validate() -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.NotifierError>!
+override UniversalNotifier.NET.TelegramMessage.<Clone>$() -> UniversalNotifier.NET.TelegramMessage!
+override UniversalNotifier.NET.TelegramMessage.Equals(object? obj) -> bool
+override UniversalNotifier.NET.TelegramMessage.GetHashCode() -> int
+override UniversalNotifier.NET.TelegramMessage.Validate() -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.NotifierError>!
+override UniversalNotifier.NET.TemplateRegistration.Equals(object? obj) -> bool
+override UniversalNotifier.NET.TemplateRegistration.GetHashCode() -> int
+override UniversalNotifier.NET.TemplateRegistration.ToString() -> string!
+override UniversalNotifier.NET.WebPushMessage.<Clone>$() -> UniversalNotifier.NET.WebPushMessage!
+override UniversalNotifier.NET.WebPushMessage.Equals(object? obj) -> bool
+override UniversalNotifier.NET.WebPushMessage.GetHashCode() -> int
+override UniversalNotifier.NET.WebPushMessage.Validate() -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.NotifierError>!
+override UniversalNotifier.NET.WebPushSubscription.Equals(object? obj) -> bool
+override UniversalNotifier.NET.WebPushSubscription.GetHashCode() -> int
+override UniversalNotifier.NET.WebPushSubscription.ToString() -> string!
+static Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions.AddUniversalNotifier(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<UniversalNotifier.NET.INotifierBuilder!>? configure = null) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static UniversalNotifier.NET.ChannelContent.operator !=(UniversalNotifier.NET.ChannelContent? left, UniversalNotifier.NET.ChannelContent? right) -> bool
+static UniversalNotifier.NET.ChannelContent.operator ==(UniversalNotifier.NET.ChannelContent? left, UniversalNotifier.NET.ChannelContent? right) -> bool
+static UniversalNotifier.NET.ChannelRequest.operator !=(UniversalNotifier.NET.ChannelRequest? left, UniversalNotifier.NET.ChannelRequest? right) -> bool
+static UniversalNotifier.NET.ChannelRequest.operator ==(UniversalNotifier.NET.ChannelRequest? left, UniversalNotifier.NET.ChannelRequest? right) -> bool
+static UniversalNotifier.NET.ChannelResult.operator !=(UniversalNotifier.NET.ChannelResult left, UniversalNotifier.NET.ChannelResult right) -> bool
+static UniversalNotifier.NET.ChannelResult.operator ==(UniversalNotifier.NET.ChannelResult left, UniversalNotifier.NET.ChannelResult right) -> bool
+static UniversalNotifier.NET.EmailAddress.implicit operator UniversalNotifier.NET.EmailAddress(string! address) -> UniversalNotifier.NET.EmailAddress
+static UniversalNotifier.NET.EmailAddress.operator !=(UniversalNotifier.NET.EmailAddress left, UniversalNotifier.NET.EmailAddress right) -> bool
+static UniversalNotifier.NET.EmailAddress.operator ==(UniversalNotifier.NET.EmailAddress left, UniversalNotifier.NET.EmailAddress right) -> bool
+static UniversalNotifier.NET.EmailAttachment.operator !=(UniversalNotifier.NET.EmailAttachment? left, UniversalNotifier.NET.EmailAttachment? right) -> bool
+static UniversalNotifier.NET.EmailAttachment.operator ==(UniversalNotifier.NET.EmailAttachment? left, UniversalNotifier.NET.EmailAttachment? right) -> bool
+static UniversalNotifier.NET.EmailMessage.Create(UniversalNotifier.NET.EmailAddress to, string! subject, string? textBody = null, string? htmlBody = null) -> UniversalNotifier.NET.EmailMessage!
+static UniversalNotifier.NET.EmailMessage.operator !=(UniversalNotifier.NET.EmailMessage? left, UniversalNotifier.NET.EmailMessage? right) -> bool
+static UniversalNotifier.NET.EmailMessage.operator ==(UniversalNotifier.NET.EmailMessage? left, UniversalNotifier.NET.EmailMessage? right) -> bool
+static UniversalNotifier.NET.Notification.operator !=(UniversalNotifier.NET.Notification? left, UniversalNotifier.NET.Notification? right) -> bool
+static UniversalNotifier.NET.Notification.operator ==(UniversalNotifier.NET.Notification? left, UniversalNotifier.NET.Notification? right) -> bool
+static UniversalNotifier.NET.Notification.To(string! emailOrPhone) -> UniversalNotifier.NET.Notification!
+static UniversalNotifier.NET.Notification.To(UniversalNotifier.NET.Recipient! recipient) -> UniversalNotifier.NET.Notification!
+static UniversalNotifier.NET.NotificationChannel.Email.get -> UniversalNotifier.NET.NotificationChannel
+static UniversalNotifier.NET.NotificationChannel.operator !=(UniversalNotifier.NET.NotificationChannel left, UniversalNotifier.NET.NotificationChannel right) -> bool
+static UniversalNotifier.NET.NotificationChannel.operator ==(UniversalNotifier.NET.NotificationChannel left, UniversalNotifier.NET.NotificationChannel right) -> bool
+static UniversalNotifier.NET.NotificationChannel.Push.get -> UniversalNotifier.NET.NotificationChannel
+static UniversalNotifier.NET.NotificationChannel.Sms.get -> UniversalNotifier.NET.NotificationChannel
+static UniversalNotifier.NET.NotificationChannel.Telegram.get -> UniversalNotifier.NET.NotificationChannel
+static UniversalNotifier.NET.NotificationChannel.WebPush.get -> UniversalNotifier.NET.NotificationChannel
+static UniversalNotifier.NET.NotificationDelivery.operator !=(UniversalNotifier.NET.NotificationDelivery? left, UniversalNotifier.NET.NotificationDelivery? right) -> bool
+static UniversalNotifier.NET.NotificationDelivery.operator ==(UniversalNotifier.NET.NotificationDelivery? left, UniversalNotifier.NET.NotificationDelivery? right) -> bool
+static UniversalNotifier.NET.NotificationJson.Deserialize(string! json) -> UniversalNotifier.NET.Notification!
+static UniversalNotifier.NET.NotificationJson.Serialize(UniversalNotifier.NET.Notification! notification) -> string!
+static UniversalNotifier.NET.NotifierBuilderExtensions.AddChannel<THandler>(this UniversalNotifier.NET.INotifierBuilder! builder) -> UniversalNotifier.NET.INotifierBuilder!
+static UniversalNotifier.NET.NotifierBuilderExtensions.AddNotifier<TChannel>(this UniversalNotifier.NET.INotifierBuilder! builder, string! providerName, string? name, System.Func<System.IServiceProvider!, string!, TChannel!>! factory) -> UniversalNotifier.NET.INotifierBuilder!
+static UniversalNotifier.NET.NotifierBuilderExtensions.AddTemplate(this UniversalNotifier.NET.INotifierBuilder! builder, string! name, UniversalNotifier.NET.NotificationChannel channel, UniversalNotifier.NET.ChannelContent! content) -> UniversalNotifier.NET.INotifierBuilder!
+static UniversalNotifier.NET.NotifierBuilderExtensions.AddTemplatesFromDirectory(this UniversalNotifier.NET.INotifierBuilder! builder, string! path) -> UniversalNotifier.NET.INotifierBuilder!
+static UniversalNotifier.NET.NotifierBuilderExtensions.AddTemplateStore<TStore>(this UniversalNotifier.NET.INotifierBuilder! builder) -> UniversalNotifier.NET.INotifierBuilder!
+static UniversalNotifier.NET.NotifierBuilderExtensions.Build(this UniversalNotifier.NET.INotifierBuilder! builder) -> UniversalNotifier.NET.Notifier!
+static UniversalNotifier.NET.NotifierBuilderExtensions.ConfigureTemplates(this UniversalNotifier.NET.INotifierBuilder! builder, System.Action<UniversalNotifier.NET.TemplateOptions!>! configure) -> UniversalNotifier.NET.INotifierBuilder!
+static UniversalNotifier.NET.NotifierBuilderExtensions.UseLoggerFactory(this UniversalNotifier.NET.INotifierBuilder! builder, Microsoft.Extensions.Logging.ILoggerFactory! loggerFactory) -> UniversalNotifier.NET.INotifierBuilder!
+static UniversalNotifier.NET.NotifierBuilderExtensions.UseTemplateRenderer<TRenderer>(this UniversalNotifier.NET.INotifierBuilder! builder) -> UniversalNotifier.NET.INotifierBuilder!
+static UniversalNotifier.NET.NotifierBuilderExtensions.WithRetries(this UniversalNotifier.NET.INotifierBuilder! builder, int maxAttempts = 3, System.TimeSpan? baseDelay = null, System.TimeSpan? maxDelay = null, bool retryUnknownFailures = false) -> UniversalNotifier.NET.INotifierBuilder!
+static UniversalNotifier.NET.NotifierError.operator !=(UniversalNotifier.NET.NotifierError left, UniversalNotifier.NET.NotifierError right) -> bool
+static UniversalNotifier.NET.NotifierError.operator ==(UniversalNotifier.NET.NotifierError left, UniversalNotifier.NET.NotifierError right) -> bool
+static UniversalNotifier.NET.NotifierMessage.operator !=(UniversalNotifier.NET.NotifierMessage? left, UniversalNotifier.NET.NotifierMessage? right) -> bool
+static UniversalNotifier.NET.NotifierMessage.operator ==(UniversalNotifier.NET.NotifierMessage? left, UniversalNotifier.NET.NotifierMessage? right) -> bool
+static UniversalNotifier.NET.NotifierResponse.Accepted(string? providerMessageId = null, int? httpStatusCode = null, System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.RecipientResult>? recipients = null) -> UniversalNotifier.NET.NotifierResponse!
+static UniversalNotifier.NET.NotifierResponse.Failed(System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.NotifierError>! errors) -> UniversalNotifier.NET.NotifierResponse!
+static UniversalNotifier.NET.NotifierResponse.Failed(UniversalNotifier.NET.NotifierError error, int? httpStatusCode = null, System.TimeSpan? retryAfter = null) -> UniversalNotifier.NET.NotifierResponse!
+static UniversalNotifier.NET.NotifierResponse.FromRecipients(System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.RecipientResult>! recipients, string? providerMessageId = null, int? httpStatusCode = null, System.TimeSpan? retryAfter = null) -> UniversalNotifier.NET.NotifierResponse!
+static UniversalNotifier.NET.PhoneNumber.implicit operator UniversalNotifier.NET.PhoneNumber(string! value) -> UniversalNotifier.NET.PhoneNumber
+static UniversalNotifier.NET.PhoneNumber.operator !=(UniversalNotifier.NET.PhoneNumber left, UniversalNotifier.NET.PhoneNumber right) -> bool
+static UniversalNotifier.NET.PhoneNumber.operator ==(UniversalNotifier.NET.PhoneNumber left, UniversalNotifier.NET.PhoneNumber right) -> bool
+static UniversalNotifier.NET.PushMessage.Create(string! token, string! title, string! body) -> UniversalNotifier.NET.PushMessage!
+static UniversalNotifier.NET.PushMessage.operator !=(UniversalNotifier.NET.PushMessage? left, UniversalNotifier.NET.PushMessage? right) -> bool
+static UniversalNotifier.NET.PushMessage.operator ==(UniversalNotifier.NET.PushMessage? left, UniversalNotifier.NET.PushMessage? right) -> bool
+static UniversalNotifier.NET.Recipient.implicit operator UniversalNotifier.NET.Recipient!(string! value) -> UniversalNotifier.NET.Recipient!
+static UniversalNotifier.NET.Recipient.operator !=(UniversalNotifier.NET.Recipient? left, UniversalNotifier.NET.Recipient? right) -> bool
+static UniversalNotifier.NET.Recipient.operator ==(UniversalNotifier.NET.Recipient? left, UniversalNotifier.NET.Recipient? right) -> bool
+static UniversalNotifier.NET.Recipient.Parse(string! value) -> UniversalNotifier.NET.Recipient!
+static UniversalNotifier.NET.RecipientResult.operator !=(UniversalNotifier.NET.RecipientResult left, UniversalNotifier.NET.RecipientResult right) -> bool
+static UniversalNotifier.NET.RecipientResult.operator ==(UniversalNotifier.NET.RecipientResult left, UniversalNotifier.NET.RecipientResult right) -> bool
+static UniversalNotifier.NET.SmsMessage.Create(UniversalNotifier.NET.PhoneNumber to, string! body) -> UniversalNotifier.NET.SmsMessage!
+static UniversalNotifier.NET.SmsMessage.operator !=(UniversalNotifier.NET.SmsMessage? left, UniversalNotifier.NET.SmsMessage? right) -> bool
+static UniversalNotifier.NET.SmsMessage.operator ==(UniversalNotifier.NET.SmsMessage? left, UniversalNotifier.NET.SmsMessage? right) -> bool
+static UniversalNotifier.NET.TelegramMessage.Create(string! chatId, string! text) -> UniversalNotifier.NET.TelegramMessage!
+static UniversalNotifier.NET.TelegramMessage.operator !=(UniversalNotifier.NET.TelegramMessage? left, UniversalNotifier.NET.TelegramMessage? right) -> bool
+static UniversalNotifier.NET.TelegramMessage.operator ==(UniversalNotifier.NET.TelegramMessage? left, UniversalNotifier.NET.TelegramMessage? right) -> bool
+static UniversalNotifier.NET.TemplateData.Empty.get -> UniversalNotifier.NET.TemplateData!
+static UniversalNotifier.NET.TemplateData.From(object? data) -> UniversalNotifier.NET.TemplateData!
+static UniversalNotifier.NET.TemplateRegistration.operator !=(UniversalNotifier.NET.TemplateRegistration? left, UniversalNotifier.NET.TemplateRegistration? right) -> bool
+static UniversalNotifier.NET.TemplateRegistration.operator ==(UniversalNotifier.NET.TemplateRegistration? left, UniversalNotifier.NET.TemplateRegistration? right) -> bool
+static UniversalNotifier.NET.WebPushMessage.operator !=(UniversalNotifier.NET.WebPushMessage? left, UniversalNotifier.NET.WebPushMessage? right) -> bool
+static UniversalNotifier.NET.WebPushMessage.operator ==(UniversalNotifier.NET.WebPushMessage? left, UniversalNotifier.NET.WebPushMessage? right) -> bool
+static UniversalNotifier.NET.WebPushSubscription.operator !=(UniversalNotifier.NET.WebPushSubscription? left, UniversalNotifier.NET.WebPushSubscription? right) -> bool
+static UniversalNotifier.NET.WebPushSubscription.operator ==(UniversalNotifier.NET.WebPushSubscription? left, UniversalNotifier.NET.WebPushSubscription? right) -> bool
+UniversalNotifier.NET.ChannelContent
+UniversalNotifier.NET.ChannelContent.<Clone>$() -> UniversalNotifier.NET.ChannelContent!
+UniversalNotifier.NET.ChannelContent.ChannelContent() -> void
+UniversalNotifier.NET.ChannelContent.Data.get -> System.Collections.Generic.IReadOnlyDictionary<string!, string!>?
+UniversalNotifier.NET.ChannelContent.Data.init -> void
+UniversalNotifier.NET.ChannelContent.Equals(UniversalNotifier.NET.ChannelContent? other) -> bool
+UniversalNotifier.NET.ChannelContent.Html.get -> string?
+UniversalNotifier.NET.ChannelContent.Html.init -> void
+UniversalNotifier.NET.ChannelContent.Subject.get -> string?
+UniversalNotifier.NET.ChannelContent.Subject.init -> void
+UniversalNotifier.NET.ChannelContent.Text.get -> string?
+UniversalNotifier.NET.ChannelContent.Text.init -> void
+UniversalNotifier.NET.ChannelContent.Title.get -> string?
+UniversalNotifier.NET.ChannelContent.Title.init -> void
+UniversalNotifier.NET.ChannelRequest
+UniversalNotifier.NET.ChannelRequest.<Clone>$() -> UniversalNotifier.NET.ChannelRequest!
+UniversalNotifier.NET.ChannelRequest.Channel.get -> UniversalNotifier.NET.NotificationChannel
+UniversalNotifier.NET.ChannelRequest.Channel.init -> void
+UniversalNotifier.NET.ChannelRequest.ChannelRequest(UniversalNotifier.NET.NotificationChannel Channel, UniversalNotifier.NET.ChannelContent? Content = null, string? Provider = null) -> void
+UniversalNotifier.NET.ChannelRequest.Content.get -> UniversalNotifier.NET.ChannelContent?
+UniversalNotifier.NET.ChannelRequest.Content.init -> void
+UniversalNotifier.NET.ChannelRequest.Deconstruct(out UniversalNotifier.NET.NotificationChannel Channel, out UniversalNotifier.NET.ChannelContent? Content, out string? Provider) -> void
+UniversalNotifier.NET.ChannelRequest.Equals(UniversalNotifier.NET.ChannelRequest? other) -> bool
+UniversalNotifier.NET.ChannelRequest.Provider.get -> string?
+UniversalNotifier.NET.ChannelRequest.Provider.init -> void
+UniversalNotifier.NET.ChannelResult
+UniversalNotifier.NET.ChannelResult.Channel.get -> UniversalNotifier.NET.NotificationChannel
+UniversalNotifier.NET.ChannelResult.Channel.init -> void
+UniversalNotifier.NET.ChannelResult.ChannelResult() -> void
+UniversalNotifier.NET.ChannelResult.ChannelResult(UniversalNotifier.NET.NotificationChannel Channel, UniversalNotifier.NET.NotifierResponse! Response) -> void
+UniversalNotifier.NET.ChannelResult.Deconstruct(out UniversalNotifier.NET.NotificationChannel Channel, out UniversalNotifier.NET.NotifierResponse! Response) -> void
+UniversalNotifier.NET.ChannelResult.Equals(UniversalNotifier.NET.ChannelResult other) -> bool
+UniversalNotifier.NET.ChannelResult.Response.get -> UniversalNotifier.NET.NotifierResponse!
+UniversalNotifier.NET.ChannelResult.Response.init -> void
+UniversalNotifier.NET.DeliveryStatus
+UniversalNotifier.NET.DeliveryStatus.Accepted = 0 -> UniversalNotifier.NET.DeliveryStatus
+UniversalNotifier.NET.DeliveryStatus.Failed = 2 -> UniversalNotifier.NET.DeliveryStatus
+UniversalNotifier.NET.DeliveryStatus.PartiallyAccepted = 1 -> UniversalNotifier.NET.DeliveryStatus
+UniversalNotifier.NET.DirectoryTemplateStore
+UniversalNotifier.NET.DirectoryTemplateStore.DirectoryTemplateStore(string! rootDirectory) -> void
+UniversalNotifier.NET.DirectoryTemplateStore.TryGetAsync(string! name, UniversalNotifier.NET.NotificationChannel channel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<UniversalNotifier.NET.ChannelContent?>
+UniversalNotifier.NET.EmailAddress
+UniversalNotifier.NET.EmailAddress.Address.get -> string!
+UniversalNotifier.NET.EmailAddress.Address.init -> void
+UniversalNotifier.NET.EmailAddress.Deconstruct(out string! Address, out string? Name) -> void
+UniversalNotifier.NET.EmailAddress.EmailAddress() -> void
+UniversalNotifier.NET.EmailAddress.EmailAddress(string! Address, string? Name = null) -> void
+UniversalNotifier.NET.EmailAddress.Equals(UniversalNotifier.NET.EmailAddress other) -> bool
+UniversalNotifier.NET.EmailAddress.IsValid.get -> bool
+UniversalNotifier.NET.EmailAddress.Name.get -> string?
+UniversalNotifier.NET.EmailAddress.Name.init -> void
+UniversalNotifier.NET.EmailAttachment
+UniversalNotifier.NET.EmailAttachment.<Clone>$() -> UniversalNotifier.NET.EmailAttachment!
+UniversalNotifier.NET.EmailAttachment.Content.get -> System.ReadOnlyMemory<byte>
+UniversalNotifier.NET.EmailAttachment.Content.init -> void
+UniversalNotifier.NET.EmailAttachment.ContentId.get -> string?
+UniversalNotifier.NET.EmailAttachment.ContentId.init -> void
+UniversalNotifier.NET.EmailAttachment.ContentType.get -> string!
+UniversalNotifier.NET.EmailAttachment.ContentType.init -> void
+UniversalNotifier.NET.EmailAttachment.Deconstruct(out string! FileName, out System.ReadOnlyMemory<byte> Content, out string! ContentType, out string? ContentId) -> void
+UniversalNotifier.NET.EmailAttachment.EmailAttachment(string! FileName, System.ReadOnlyMemory<byte> Content, string! ContentType = "application/octet-stream", string? ContentId = null) -> void
+UniversalNotifier.NET.EmailAttachment.Equals(UniversalNotifier.NET.EmailAttachment? other) -> bool
+UniversalNotifier.NET.EmailAttachment.FileName.get -> string!
+UniversalNotifier.NET.EmailAttachment.FileName.init -> void
+UniversalNotifier.NET.EmailMessage
+UniversalNotifier.NET.EmailMessage.Attachments.get -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.EmailAttachment!>!
+UniversalNotifier.NET.EmailMessage.Attachments.init -> void
+UniversalNotifier.NET.EmailMessage.Bcc.get -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.EmailAddress>!
+UniversalNotifier.NET.EmailMessage.Bcc.init -> void
+UniversalNotifier.NET.EmailMessage.Cc.get -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.EmailAddress>!
+UniversalNotifier.NET.EmailMessage.Cc.init -> void
+UniversalNotifier.NET.EmailMessage.EmailMessage() -> void
+UniversalNotifier.NET.EmailMessage.Equals(UniversalNotifier.NET.EmailMessage? other) -> bool
+UniversalNotifier.NET.EmailMessage.From.get -> UniversalNotifier.NET.EmailAddress?
+UniversalNotifier.NET.EmailMessage.From.init -> void
+UniversalNotifier.NET.EmailMessage.Headers.get -> System.Collections.Generic.IReadOnlyDictionary<string!, string!>?
+UniversalNotifier.NET.EmailMessage.Headers.init -> void
+UniversalNotifier.NET.EmailMessage.HtmlBody.get -> string?
+UniversalNotifier.NET.EmailMessage.HtmlBody.init -> void
+UniversalNotifier.NET.EmailMessage.ReplyTo.get -> UniversalNotifier.NET.EmailAddress?
+UniversalNotifier.NET.EmailMessage.ReplyTo.init -> void
+UniversalNotifier.NET.EmailMessage.Subject.get -> string!
+UniversalNotifier.NET.EmailMessage.Subject.init -> void
+UniversalNotifier.NET.EmailMessage.Tags.get -> System.Collections.Generic.IReadOnlyList<string!>!
+UniversalNotifier.NET.EmailMessage.Tags.init -> void
+UniversalNotifier.NET.EmailMessage.TextBody.get -> string?
+UniversalNotifier.NET.EmailMessage.TextBody.init -> void
+UniversalNotifier.NET.EmailMessage.To.get -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.EmailAddress>!
+UniversalNotifier.NET.EmailMessage.To.init -> void
+UniversalNotifier.NET.IEmailNotifier
+UniversalNotifier.NET.InMemoryTemplateStore
+UniversalNotifier.NET.InMemoryTemplateStore.InMemoryTemplateStore(System.Collections.Generic.IEnumerable<UniversalNotifier.NET.TemplateRegistration!>! registrations) -> void
+UniversalNotifier.NET.InMemoryTemplateStore.TryGetAsync(string! name, UniversalNotifier.NET.NotificationChannel channel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<UniversalNotifier.NET.ChannelContent?>
+UniversalNotifier.NET.INotificationChannel
+UniversalNotifier.NET.INotificationChannel.Channel.get -> UniversalNotifier.NET.NotificationChannel
+UniversalNotifier.NET.INotificationChannel.SendAsync(UniversalNotifier.NET.NotificationDelivery! delivery, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<UniversalNotifier.NET.NotifierResponse!>!
+UniversalNotifier.NET.INotificationService
+UniversalNotifier.NET.INotificationService.SendAsync(UniversalNotifier.NET.Notification! notification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<UniversalNotifier.NET.NotificationResult!>!
+UniversalNotifier.NET.INotifier<TMessage>
+UniversalNotifier.NET.INotifier<TMessage>.SendAsync(TMessage! message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<UniversalNotifier.NET.NotifierResponse!>!
+UniversalNotifier.NET.INotifierBuilder
+UniversalNotifier.NET.INotifierBuilder.Services.get -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+UniversalNotifier.NET.IPushNotifier
+UniversalNotifier.NET.ISmsNotifier
+UniversalNotifier.NET.ITelegramNotifier
+UniversalNotifier.NET.ITemplateRenderer
+UniversalNotifier.NET.ITemplateRenderer.Render(string! templateText, UniversalNotifier.NET.TemplateData! data, UniversalNotifier.NET.TemplateFormat format = UniversalNotifier.NET.TemplateFormat.Text) -> string!
+UniversalNotifier.NET.ITemplateStore
+UniversalNotifier.NET.ITemplateStore.TryGetAsync(string! name, UniversalNotifier.NET.NotificationChannel channel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<UniversalNotifier.NET.ChannelContent?>
+UniversalNotifier.NET.IWebPushNotifier
+UniversalNotifier.NET.MissingTokenBehavior
+UniversalNotifier.NET.MissingTokenBehavior.Empty = 2 -> UniversalNotifier.NET.MissingTokenBehavior
+UniversalNotifier.NET.MissingTokenBehavior.KeepToken = 1 -> UniversalNotifier.NET.MissingTokenBehavior
+UniversalNotifier.NET.MissingTokenBehavior.Throw = 0 -> UniversalNotifier.NET.MissingTokenBehavior
+UniversalNotifier.NET.Notification
+UniversalNotifier.NET.Notification.<Clone>$() -> UniversalNotifier.NET.Notification!
+UniversalNotifier.NET.Notification.Channels.get -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.ChannelRequest!>!
+UniversalNotifier.NET.Notification.Channels.init -> void
+UniversalNotifier.NET.Notification.Data.get -> System.Collections.Generic.IReadOnlyDictionary<string!, object?>?
+UniversalNotifier.NET.Notification.Data.init -> void
+UniversalNotifier.NET.Notification.Email(string? subject = null, string? html = null, string? text = null, string? provider = null) -> UniversalNotifier.NET.Notification!
+UniversalNotifier.NET.Notification.Equals(UniversalNotifier.NET.Notification? other) -> bool
+UniversalNotifier.NET.Notification.Id.get -> string?
+UniversalNotifier.NET.Notification.Id.init -> void
+UniversalNotifier.NET.Notification.Metadata.get -> System.Collections.Generic.IReadOnlyDictionary<string!, string!>?
+UniversalNotifier.NET.Notification.Metadata.init -> void
+UniversalNotifier.NET.Notification.Notification() -> void
+UniversalNotifier.NET.Notification.Push(string? title = null, string? body = null, System.Collections.Generic.IReadOnlyDictionary<string!, string!>? data = null, string? provider = null) -> UniversalNotifier.NET.Notification!
+UniversalNotifier.NET.Notification.Recipient.get -> UniversalNotifier.NET.Recipient!
+UniversalNotifier.NET.Notification.Recipient.init -> void
+UniversalNotifier.NET.Notification.Sms(string? text = null, string? provider = null) -> UniversalNotifier.NET.Notification!
+UniversalNotifier.NET.Notification.Telegram(string? text = null, string? html = null, string? provider = null) -> UniversalNotifier.NET.Notification!
+UniversalNotifier.NET.Notification.TemplateName.get -> string?
+UniversalNotifier.NET.Notification.TemplateName.init -> void
+UniversalNotifier.NET.Notification.UseTemplate(string! name) -> UniversalNotifier.NET.Notification!
+UniversalNotifier.NET.Notification.Via(UniversalNotifier.NET.NotificationChannel channel, UniversalNotifier.NET.ChannelContent? content = null, string? provider = null) -> UniversalNotifier.NET.Notification!
+UniversalNotifier.NET.Notification.WebPush(string? title = null, string? body = null, System.Collections.Generic.IReadOnlyDictionary<string!, string!>? data = null, string? provider = null) -> UniversalNotifier.NET.Notification!
+UniversalNotifier.NET.Notification.WithData(object! data) -> UniversalNotifier.NET.Notification!
+UniversalNotifier.NET.Notification.WithData(System.Collections.Generic.IReadOnlyDictionary<string!, object?>! data) -> UniversalNotifier.NET.Notification!
+UniversalNotifier.NET.Notification.WithId(string! id) -> UniversalNotifier.NET.Notification!
+UniversalNotifier.NET.NotificationChannel
+UniversalNotifier.NET.NotificationChannel.Equals(UniversalNotifier.NET.NotificationChannel other) -> bool
+UniversalNotifier.NET.NotificationChannel.Name.get -> string!
+UniversalNotifier.NET.NotificationChannel.NotificationChannel() -> void
+UniversalNotifier.NET.NotificationChannel.NotificationChannel(string! name) -> void
+UniversalNotifier.NET.NotificationDelivery
+UniversalNotifier.NET.NotificationDelivery.<Clone>$() -> UniversalNotifier.NET.NotificationDelivery!
+UniversalNotifier.NET.NotificationDelivery.Content.get -> UniversalNotifier.NET.ChannelContent!
+UniversalNotifier.NET.NotificationDelivery.Content.init -> void
+UniversalNotifier.NET.NotificationDelivery.Deconstruct(out UniversalNotifier.NET.Notification! Notification, out UniversalNotifier.NET.ChannelContent! Content, out string? Provider) -> void
+UniversalNotifier.NET.NotificationDelivery.Equals(UniversalNotifier.NET.NotificationDelivery? other) -> bool
+UniversalNotifier.NET.NotificationDelivery.Notification.get -> UniversalNotifier.NET.Notification!
+UniversalNotifier.NET.NotificationDelivery.Notification.init -> void
+UniversalNotifier.NET.NotificationDelivery.NotificationDelivery(UniversalNotifier.NET.Notification! Notification, UniversalNotifier.NET.ChannelContent! Content, string? Provider) -> void
+UniversalNotifier.NET.NotificationDelivery.Provider.get -> string?
+UniversalNotifier.NET.NotificationDelivery.Provider.init -> void
+UniversalNotifier.NET.NotificationJson
+UniversalNotifier.NET.NotificationResult
+UniversalNotifier.NET.NotificationResult.Channels.get -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.ChannelResult>!
+UniversalNotifier.NET.NotificationResult.NotificationId.get -> string?
+UniversalNotifier.NET.NotificationResult.NotificationResult(string? notificationId, System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.ChannelResult>! channels) -> void
+UniversalNotifier.NET.NotificationResult.Status.get -> UniversalNotifier.NET.DeliveryStatus
+UniversalNotifier.NET.NotificationResult.Success.get -> bool
+UniversalNotifier.NET.NotificationResult.this[UniversalNotifier.NET.NotificationChannel channel].get -> UniversalNotifier.NET.NotifierResponse?
+UniversalNotifier.NET.Notifier
+UniversalNotifier.NET.Notifier.Dispose() -> void
+UniversalNotifier.NET.Notifier.DisposeAsync() -> System.Threading.Tasks.ValueTask
+UniversalNotifier.NET.Notifier.Email.get -> UniversalNotifier.NET.IEmailNotifier!
+UniversalNotifier.NET.Notifier.GetNotifier<TNotifier>(string? provider = null) -> TNotifier!
+UniversalNotifier.NET.Notifier.Push.get -> UniversalNotifier.NET.IPushNotifier!
+UniversalNotifier.NET.Notifier.SendAsync(UniversalNotifier.NET.Notification! notification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<UniversalNotifier.NET.NotificationResult!>!
+UniversalNotifier.NET.Notifier.Sms.get -> UniversalNotifier.NET.ISmsNotifier!
+UniversalNotifier.NET.Notifier.Telegram.get -> UniversalNotifier.NET.ITelegramNotifier!
+UniversalNotifier.NET.Notifier.WebPush.get -> UniversalNotifier.NET.IWebPushNotifier!
+UniversalNotifier.NET.NotifierBase<TMessage>
+UniversalNotifier.NET.NotifierBase<TMessage>.NotifierBase(UniversalNotifier.NET.NotifierContext! context) -> void
+UniversalNotifier.NET.NotifierBase<TMessage>.SendAsync(TMessage! message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<UniversalNotifier.NET.NotifierResponse!>!
+UniversalNotifier.NET.NotifierBuilder
+UniversalNotifier.NET.NotifierBuilder.Build() -> UniversalNotifier.NET.Notifier!
+UniversalNotifier.NET.NotifierBuilder.NotifierBuilder() -> void
+UniversalNotifier.NET.NotifierBuilder.Services.get -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+UniversalNotifier.NET.NotifierBuilderExtensions
+UniversalNotifier.NET.NotifierContext
+UniversalNotifier.NET.NotifierContext.CreateLogger(System.Type! type) -> Microsoft.Extensions.Logging.ILogger!
+UniversalNotifier.NET.NotifierContext.NotifierContext(UniversalNotifier.NET.NotifierOptions? options = null, Microsoft.Extensions.Logging.ILoggerFactory? loggerFactory = null, System.TimeProvider? timeProvider = null) -> void
+UniversalNotifier.NET.NotifierContext.Retry.get -> UniversalNotifier.NET.RetryOptions!
+UniversalNotifier.NET.NotifierContext.TimeProvider.get -> System.TimeProvider!
+UniversalNotifier.NET.NotifierError
+UniversalNotifier.NET.NotifierError.Code.get -> string!
+UniversalNotifier.NET.NotifierError.Code.init -> void
+UniversalNotifier.NET.NotifierError.Deconstruct(out UniversalNotifier.NET.NotifierErrorKind Kind, out string! Code, out string! Message) -> void
+UniversalNotifier.NET.NotifierError.Equals(UniversalNotifier.NET.NotifierError other) -> bool
+UniversalNotifier.NET.NotifierError.Kind.get -> UniversalNotifier.NET.NotifierErrorKind
+UniversalNotifier.NET.NotifierError.Kind.init -> void
+UniversalNotifier.NET.NotifierError.Message.get -> string!
+UniversalNotifier.NET.NotifierError.Message.init -> void
+UniversalNotifier.NET.NotifierError.NotifierError() -> void
+UniversalNotifier.NET.NotifierError.NotifierError(UniversalNotifier.NET.NotifierErrorKind Kind, string! Code, string! Message) -> void
+UniversalNotifier.NET.NotifierErrorKind
+UniversalNotifier.NET.NotifierErrorKind.Configuration = 1 -> UniversalNotifier.NET.NotifierErrorKind
+UniversalNotifier.NET.NotifierErrorKind.Permanent = 2 -> UniversalNotifier.NET.NotifierErrorKind
+UniversalNotifier.NET.NotifierErrorKind.Transient = 3 -> UniversalNotifier.NET.NotifierErrorKind
+UniversalNotifier.NET.NotifierErrorKind.Unknown = 4 -> UniversalNotifier.NET.NotifierErrorKind
+UniversalNotifier.NET.NotifierErrorKind.Validation = 0 -> UniversalNotifier.NET.NotifierErrorKind
+UniversalNotifier.NET.NotifierMessage
+UniversalNotifier.NET.NotifierMessage.Id.get -> string?
+UniversalNotifier.NET.NotifierMessage.Id.init -> void
+UniversalNotifier.NET.NotifierMessage.Metadata.get -> System.Collections.Generic.IReadOnlyDictionary<string!, string!>?
+UniversalNotifier.NET.NotifierMessage.Metadata.init -> void
+UniversalNotifier.NET.NotifierMessage.NotifierMessage() -> void
+UniversalNotifier.NET.NotifierMessage.NotifierMessage(UniversalNotifier.NET.NotifierMessage! original) -> void
+UniversalNotifier.NET.NotifierOptions
+UniversalNotifier.NET.NotifierOptions.NotifierOptions() -> void
+UniversalNotifier.NET.NotifierOptions.Retry.get -> UniversalNotifier.NET.RetryOptions!
+UniversalNotifier.NET.NotifierResponse
+UniversalNotifier.NET.NotifierResponse.Errors.get -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.NotifierError>!
+UniversalNotifier.NET.NotifierResponse.HttpStatusCode.get -> int?
+UniversalNotifier.NET.NotifierResponse.ProviderMessageId.get -> string?
+UniversalNotifier.NET.NotifierResponse.Recipients.get -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.RecipientResult>!
+UniversalNotifier.NET.NotifierResponse.RetryAfter.get -> System.TimeSpan?
+UniversalNotifier.NET.NotifierResponse.Status.get -> UniversalNotifier.NET.DeliveryStatus
+UniversalNotifier.NET.NotifierResponse.Success.get -> bool
+UniversalNotifier.NET.PhoneNumber
+UniversalNotifier.NET.PhoneNumber.Deconstruct(out string! Value) -> void
+UniversalNotifier.NET.PhoneNumber.Equals(UniversalNotifier.NET.PhoneNumber other) -> bool
+UniversalNotifier.NET.PhoneNumber.IsValid.get -> bool
+UniversalNotifier.NET.PhoneNumber.PhoneNumber() -> void
+UniversalNotifier.NET.PhoneNumber.PhoneNumber(string! Value) -> void
+UniversalNotifier.NET.PhoneNumber.Value.get -> string!
+UniversalNotifier.NET.PhoneNumber.Value.init -> void
+UniversalNotifier.NET.PushMessage
+UniversalNotifier.NET.PushMessage.Body.get -> string?
+UniversalNotifier.NET.PushMessage.Body.init -> void
+UniversalNotifier.NET.PushMessage.Data.get -> System.Collections.Generic.IReadOnlyDictionary<string!, string!>?
+UniversalNotifier.NET.PushMessage.Data.init -> void
+UniversalNotifier.NET.PushMessage.Equals(UniversalNotifier.NET.PushMessage? other) -> bool
+UniversalNotifier.NET.PushMessage.PushMessage() -> void
+UniversalNotifier.NET.PushMessage.Title.get -> string?
+UniversalNotifier.NET.PushMessage.Title.init -> void
+UniversalNotifier.NET.PushMessage.Tokens.get -> System.Collections.Generic.IReadOnlyList<string!>!
+UniversalNotifier.NET.PushMessage.Tokens.init -> void
+UniversalNotifier.NET.PushMessage.Topic.get -> string?
+UniversalNotifier.NET.PushMessage.Topic.init -> void
+UniversalNotifier.NET.Recipient
+UniversalNotifier.NET.Recipient.<Clone>$() -> UniversalNotifier.NET.Recipient!
+UniversalNotifier.NET.Recipient.DeviceTokens.get -> System.Collections.Generic.IReadOnlyList<string!>!
+UniversalNotifier.NET.Recipient.DeviceTokens.init -> void
+UniversalNotifier.NET.Recipient.Email.get -> UniversalNotifier.NET.EmailAddress?
+UniversalNotifier.NET.Recipient.Email.init -> void
+UniversalNotifier.NET.Recipient.Equals(UniversalNotifier.NET.Recipient? other) -> bool
+UniversalNotifier.NET.Recipient.Phone.get -> UniversalNotifier.NET.PhoneNumber?
+UniversalNotifier.NET.Recipient.Phone.init -> void
+UniversalNotifier.NET.Recipient.Recipient() -> void
+UniversalNotifier.NET.Recipient.TelegramChatId.get -> string?
+UniversalNotifier.NET.Recipient.TelegramChatId.init -> void
+UniversalNotifier.NET.Recipient.WebPushSubscriptions.get -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.WebPushSubscription!>!
+UniversalNotifier.NET.Recipient.WebPushSubscriptions.init -> void
+UniversalNotifier.NET.RecipientResult
+UniversalNotifier.NET.RecipientResult.Accepted.get -> bool
+UniversalNotifier.NET.RecipientResult.Accepted.init -> void
+UniversalNotifier.NET.RecipientResult.Deconstruct(out string! Recipient, out bool Accepted, out string? ProviderMessageId, out UniversalNotifier.NET.NotifierError? Error) -> void
+UniversalNotifier.NET.RecipientResult.Equals(UniversalNotifier.NET.RecipientResult other) -> bool
+UniversalNotifier.NET.RecipientResult.Error.get -> UniversalNotifier.NET.NotifierError?
+UniversalNotifier.NET.RecipientResult.Error.init -> void
+UniversalNotifier.NET.RecipientResult.ProviderMessageId.get -> string?
+UniversalNotifier.NET.RecipientResult.ProviderMessageId.init -> void
+UniversalNotifier.NET.RecipientResult.Recipient.get -> string!
+UniversalNotifier.NET.RecipientResult.Recipient.init -> void
+UniversalNotifier.NET.RecipientResult.RecipientResult() -> void
+UniversalNotifier.NET.RecipientResult.RecipientResult(string! Recipient, bool Accepted, string? ProviderMessageId = null, UniversalNotifier.NET.NotifierError? Error = null) -> void
+UniversalNotifier.NET.RetryOptions
+UniversalNotifier.NET.RetryOptions.BaseDelay.get -> System.TimeSpan
+UniversalNotifier.NET.RetryOptions.BaseDelay.set -> void
+UniversalNotifier.NET.RetryOptions.MaxAttempts.get -> int
+UniversalNotifier.NET.RetryOptions.MaxAttempts.set -> void
+UniversalNotifier.NET.RetryOptions.MaxDelay.get -> System.TimeSpan
+UniversalNotifier.NET.RetryOptions.MaxDelay.set -> void
+UniversalNotifier.NET.RetryOptions.RetryOptions() -> void
+UniversalNotifier.NET.RetryOptions.RetryUnknownFailures.get -> bool
+UniversalNotifier.NET.RetryOptions.RetryUnknownFailures.set -> void
+UniversalNotifier.NET.SmsMessage
+UniversalNotifier.NET.SmsMessage.Body.get -> string!
+UniversalNotifier.NET.SmsMessage.Body.init -> void
+UniversalNotifier.NET.SmsMessage.Equals(UniversalNotifier.NET.SmsMessage? other) -> bool
+UniversalNotifier.NET.SmsMessage.From.get -> string?
+UniversalNotifier.NET.SmsMessage.From.init -> void
+UniversalNotifier.NET.SmsMessage.SmsMessage() -> void
+UniversalNotifier.NET.SmsMessage.To.get -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.PhoneNumber>!
+UniversalNotifier.NET.SmsMessage.To.init -> void
+UniversalNotifier.NET.TelegramMessage
+UniversalNotifier.NET.TelegramMessage.ChatIds.get -> System.Collections.Generic.IReadOnlyList<string!>!
+UniversalNotifier.NET.TelegramMessage.ChatIds.init -> void
+UniversalNotifier.NET.TelegramMessage.Equals(UniversalNotifier.NET.TelegramMessage? other) -> bool
+UniversalNotifier.NET.TelegramMessage.ParseMode.get -> UniversalNotifier.NET.TelegramParseMode
+UniversalNotifier.NET.TelegramMessage.ParseMode.init -> void
+UniversalNotifier.NET.TelegramMessage.Silent.get -> bool
+UniversalNotifier.NET.TelegramMessage.Silent.init -> void
+UniversalNotifier.NET.TelegramMessage.TelegramMessage() -> void
+UniversalNotifier.NET.TelegramMessage.Text.get -> string!
+UniversalNotifier.NET.TelegramMessage.Text.init -> void
+UniversalNotifier.NET.TelegramParseMode
+UniversalNotifier.NET.TelegramParseMode.Html = 1 -> UniversalNotifier.NET.TelegramParseMode
+UniversalNotifier.NET.TelegramParseMode.MarkdownV2 = 2 -> UniversalNotifier.NET.TelegramParseMode
+UniversalNotifier.NET.TelegramParseMode.None = 0 -> UniversalNotifier.NET.TelegramParseMode
+UniversalNotifier.NET.TemplateData
+UniversalNotifier.NET.TemplateFormat
+UniversalNotifier.NET.TemplateFormat.Html = 1 -> UniversalNotifier.NET.TemplateFormat
+UniversalNotifier.NET.TemplateFormat.Text = 0 -> UniversalNotifier.NET.TemplateFormat
+UniversalNotifier.NET.TemplateOptions
+UniversalNotifier.NET.TemplateOptions.Culture.get -> System.Globalization.CultureInfo!
+UniversalNotifier.NET.TemplateOptions.Culture.set -> void
+UniversalNotifier.NET.TemplateOptions.MaxCachedTemplates.get -> int
+UniversalNotifier.NET.TemplateOptions.MaxCachedTemplates.set -> void
+UniversalNotifier.NET.TemplateOptions.MissingToken.get -> UniversalNotifier.NET.MissingTokenBehavior
+UniversalNotifier.NET.TemplateOptions.MissingToken.set -> void
+UniversalNotifier.NET.TemplateOptions.TemplateOptions() -> void
+UniversalNotifier.NET.TemplateRegistration
+UniversalNotifier.NET.TemplateRegistration.<Clone>$() -> UniversalNotifier.NET.TemplateRegistration!
+UniversalNotifier.NET.TemplateRegistration.Channel.get -> UniversalNotifier.NET.NotificationChannel
+UniversalNotifier.NET.TemplateRegistration.Channel.init -> void
+UniversalNotifier.NET.TemplateRegistration.Content.get -> UniversalNotifier.NET.ChannelContent!
+UniversalNotifier.NET.TemplateRegistration.Content.init -> void
+UniversalNotifier.NET.TemplateRegistration.Deconstruct(out string! Name, out UniversalNotifier.NET.NotificationChannel Channel, out UniversalNotifier.NET.ChannelContent! Content) -> void
+UniversalNotifier.NET.TemplateRegistration.Equals(UniversalNotifier.NET.TemplateRegistration? other) -> bool
+UniversalNotifier.NET.TemplateRegistration.Name.get -> string!
+UniversalNotifier.NET.TemplateRegistration.Name.init -> void
+UniversalNotifier.NET.TemplateRegistration.TemplateRegistration(string! Name, UniversalNotifier.NET.NotificationChannel Channel, UniversalNotifier.NET.ChannelContent! Content) -> void
+UniversalNotifier.NET.TemplateRenderException
+UniversalNotifier.NET.TemplateRenderException.TemplateRenderException(string! message, string? token = null) -> void
+UniversalNotifier.NET.TemplateRenderException.Token.get -> string?
+UniversalNotifier.NET.TokenTemplateRenderer
+UniversalNotifier.NET.TokenTemplateRenderer.Render(string! templateText, UniversalNotifier.NET.TemplateData! data, UniversalNotifier.NET.TemplateFormat format = UniversalNotifier.NET.TemplateFormat.Text) -> string!
+UniversalNotifier.NET.TokenTemplateRenderer.TokenTemplateRenderer(UniversalNotifier.NET.TemplateOptions? options = null) -> void
+UniversalNotifier.NET.WebPushMessage
+UniversalNotifier.NET.WebPushMessage.Body.get -> string?
+UniversalNotifier.NET.WebPushMessage.Body.init -> void
+UniversalNotifier.NET.WebPushMessage.Data.get -> System.Collections.Generic.IReadOnlyDictionary<string!, string!>?
+UniversalNotifier.NET.WebPushMessage.Data.init -> void
+UniversalNotifier.NET.WebPushMessage.Equals(UniversalNotifier.NET.WebPushMessage? other) -> bool
+UniversalNotifier.NET.WebPushMessage.Payload.get -> string?
+UniversalNotifier.NET.WebPushMessage.Payload.init -> void
+UniversalNotifier.NET.WebPushMessage.Subscriptions.get -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.WebPushSubscription!>!
+UniversalNotifier.NET.WebPushMessage.Subscriptions.init -> void
+UniversalNotifier.NET.WebPushMessage.TimeToLive.get -> System.TimeSpan?
+UniversalNotifier.NET.WebPushMessage.TimeToLive.init -> void
+UniversalNotifier.NET.WebPushMessage.Title.get -> string?
+UniversalNotifier.NET.WebPushMessage.Title.init -> void
+UniversalNotifier.NET.WebPushMessage.Topic.get -> string?
+UniversalNotifier.NET.WebPushMessage.Topic.init -> void
+UniversalNotifier.NET.WebPushMessage.Urgency.get -> UniversalNotifier.NET.WebPushUrgency
+UniversalNotifier.NET.WebPushMessage.Urgency.init -> void
+UniversalNotifier.NET.WebPushMessage.WebPushMessage() -> void
+UniversalNotifier.NET.WebPushSubscription
+UniversalNotifier.NET.WebPushSubscription.<Clone>$() -> UniversalNotifier.NET.WebPushSubscription!
+UniversalNotifier.NET.WebPushSubscription.Auth.get -> string!
+UniversalNotifier.NET.WebPushSubscription.Auth.init -> void
+UniversalNotifier.NET.WebPushSubscription.Deconstruct(out string! Endpoint, out string! P256dh, out string! Auth) -> void
+UniversalNotifier.NET.WebPushSubscription.Endpoint.get -> string!
+UniversalNotifier.NET.WebPushSubscription.Endpoint.init -> void
+UniversalNotifier.NET.WebPushSubscription.Equals(UniversalNotifier.NET.WebPushSubscription? other) -> bool
+UniversalNotifier.NET.WebPushSubscription.P256dh.get -> string!
+UniversalNotifier.NET.WebPushSubscription.P256dh.init -> void
+UniversalNotifier.NET.WebPushSubscription.WebPushSubscription(string! Endpoint, string! P256dh, string! Auth) -> void
+UniversalNotifier.NET.WebPushUrgency
+UniversalNotifier.NET.WebPushUrgency.High = 3 -> UniversalNotifier.NET.WebPushUrgency
+UniversalNotifier.NET.WebPushUrgency.Low = 1 -> UniversalNotifier.NET.WebPushUrgency
+UniversalNotifier.NET.WebPushUrgency.Normal = 2 -> UniversalNotifier.NET.WebPushUrgency
+UniversalNotifier.NET.WebPushUrgency.VeryLow = 0 -> UniversalNotifier.NET.WebPushUrgency
+virtual UniversalNotifier.NET.NotifierBase<TMessage>.Classify(System.Exception! exception) -> UniversalNotifier.NET.NotifierError
+virtual UniversalNotifier.NET.NotifierBase<TMessage>.ProviderName.get -> string!
+virtual UniversalNotifier.NET.NotifierMessage.EqualityContract.get -> System.Type!
+virtual UniversalNotifier.NET.NotifierMessage.Equals(UniversalNotifier.NET.NotifierMessage? other) -> bool
+virtual UniversalNotifier.NET.NotifierMessage.PrintMembers(System.Text.StringBuilder! builder) -> bool
+~override UniversalNotifier.NET.ChannelResult.Equals(object obj) -> bool
+~override UniversalNotifier.NET.ChannelResult.ToString() -> string
+~override UniversalNotifier.NET.EmailAddress.Equals(object obj) -> bool
+~override UniversalNotifier.NET.NotifierError.Equals(object obj) -> bool
+~override UniversalNotifier.NET.PhoneNumber.Equals(object obj) -> bool
+~override UniversalNotifier.NET.RecipientResult.Equals(object obj) -> bool
+~override UniversalNotifier.NET.RecipientResult.ToString() -> string

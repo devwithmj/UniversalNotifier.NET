@@ -1,0 +1,18 @@
+#nullable enable
+const UniversalNotifier.NET.Telegram.TelegramNotifier.Name = "telegram" -> string!
+Microsoft.Extensions.DependencyInjection.TelegramBuilderExtensions
+override UniversalNotifier.NET.Telegram.TelegramOptions.ToString() -> string!
+static Microsoft.Extensions.DependencyInjection.TelegramBuilderExtensions.AddTelegram(this UniversalNotifier.NET.INotifierBuilder! builder, System.Action<UniversalNotifier.NET.Telegram.TelegramOptions!>? configure = null, string? name = null) -> UniversalNotifier.NET.INotifierBuilder!
+UniversalNotifier.NET.Telegram.TelegramNotifier
+UniversalNotifier.NET.Telegram.TelegramNotifier.Dispose() -> void
+UniversalNotifier.NET.Telegram.TelegramNotifier.TelegramNotifier(UniversalNotifier.NET.Telegram.TelegramOptions! options, UniversalNotifier.NET.NotifierContext! context) -> void
+UniversalNotifier.NET.Telegram.TelegramOptions
+UniversalNotifier.NET.Telegram.TelegramOptions.BaseAddress.get -> System.Uri!
+UniversalNotifier.NET.Telegram.TelegramOptions.BaseAddress.set -> void
+UniversalNotifier.NET.Telegram.TelegramOptions.BotToken.get -> string!
+UniversalNotifier.NET.Telegram.TelegramOptions.BotToken.set -> void
+UniversalNotifier.NET.Telegram.TelegramOptions.MaxConcurrency.get -> int
+UniversalNotifier.NET.Telegram.TelegramOptions.MaxConcurrency.set -> void
+UniversalNotifier.NET.Telegram.TelegramOptions.TelegramOptions() -> void
+UniversalNotifier.NET.Telegram.TelegramOptions.Timeout.get -> System.TimeSpan
+UniversalNotifier.NET.Telegram.TelegramOptions.Timeout.set -> void

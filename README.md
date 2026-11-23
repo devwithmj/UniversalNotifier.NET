@@ -214,7 +214,7 @@ Measured with BenchmarkDotNet on one developer machine (short job; treat as orde
 
 ## Documentation
 
-- [Architecture](docs/architecture.md)
+- [Architecture](docs/architecture.md) and [decision records](docs/decisions/)
 - [Delivery guarantees](docs/delivery-guarantees.md)
 - [Custom providers and channels](docs/custom-provider.md)
 - [Migrating from 1.x](docs/migration-from-1.x.md)

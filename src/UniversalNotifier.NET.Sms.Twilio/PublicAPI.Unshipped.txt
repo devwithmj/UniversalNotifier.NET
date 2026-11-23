@@ -1,0 +1,25 @@
+#nullable enable
+const UniversalNotifier.NET.Sms.Twilio.TwilioSmsNotifier.Name = "twilio" -> string!
+Microsoft.Extensions.DependencyInjection.TwilioBuilderExtensions
+override UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions.ToString() -> string!
+static Microsoft.Extensions.DependencyInjection.TwilioBuilderExtensions.AddTwilioSms(this UniversalNotifier.NET.INotifierBuilder! builder, System.Action<UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions!>? configure = null, string? name = null) -> UniversalNotifier.NET.INotifierBuilder!
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsNotifier
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsNotifier.TwilioSmsNotifier(UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions! options, System.Net.Http.HttpClient! httpClient, UniversalNotifier.NET.NotifierContext! context) -> void
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions.AccountSid.get -> string!
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions.AccountSid.set -> void
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions.ApiKeySecret.get -> string?
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions.ApiKeySecret.set -> void
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions.ApiKeySid.get -> string?
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions.ApiKeySid.set -> void
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions.AuthToken.get -> string?
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions.AuthToken.set -> void
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions.BaseAddress.get -> System.Uri!
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions.BaseAddress.set -> void
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions.From.get -> string!
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions.From.set -> void
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions.MaxConcurrency.get -> int
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions.MaxConcurrency.set -> void
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions.Timeout.get -> System.TimeSpan
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions.Timeout.set -> void
+UniversalNotifier.NET.Sms.Twilio.TwilioSmsOptions.TwilioSmsOptions() -> void

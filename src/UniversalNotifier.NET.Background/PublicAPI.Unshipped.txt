@@ -1,0 +1,26 @@
+#nullable enable
+Microsoft.Extensions.DependencyInjection.BackgroundBuilderExtensions
+static Microsoft.Extensions.DependencyInjection.BackgroundBuilderExtensions.AddBackgroundDelivery(this UniversalNotifier.NET.INotifierBuilder! builder, System.Action<UniversalNotifier.NET.Background.BackgroundDeliveryOptions!>? configure = null) -> UniversalNotifier.NET.INotifierBuilder!
+UniversalNotifier.NET.Background.BackgroundDeliveryOptions
+UniversalNotifier.NET.Background.BackgroundDeliveryOptions.BackgroundDeliveryOptions() -> void
+UniversalNotifier.NET.Background.BackgroundDeliveryOptions.Capacity.get -> int
+UniversalNotifier.NET.Background.BackgroundDeliveryOptions.Capacity.set -> void
+UniversalNotifier.NET.Background.BackgroundDeliveryOptions.FullMode.get -> UniversalNotifier.NET.Background.QueueFullMode
+UniversalNotifier.NET.Background.BackgroundDeliveryOptions.FullMode.set -> void
+UniversalNotifier.NET.Background.BackgroundDeliveryOptions.MaxConcurrency.get -> int
+UniversalNotifier.NET.Background.BackgroundDeliveryOptions.MaxConcurrency.set -> void
+UniversalNotifier.NET.Background.ChannelNotificationQueue
+UniversalNotifier.NET.Background.ChannelNotificationQueue.ChannelNotificationQueue(Microsoft.Extensions.Options.IOptions<UniversalNotifier.NET.Background.BackgroundDeliveryOptions!>! options) -> void
+UniversalNotifier.NET.Background.ChannelNotificationQueue.ChannelNotificationQueue(UniversalNotifier.NET.Background.BackgroundDeliveryOptions! options) -> void
+UniversalNotifier.NET.Background.ChannelNotificationQueue.Complete() -> void
+UniversalNotifier.NET.Background.ChannelNotificationQueue.DequeueAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Collections.Generic.IAsyncEnumerable<UniversalNotifier.NET.Notification!>!
+UniversalNotifier.NET.Background.ChannelNotificationQueue.EnqueueAsync(UniversalNotifier.NET.Notification! notification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<bool>
+UniversalNotifier.NET.Background.INotificationQueue
+UniversalNotifier.NET.Background.INotificationQueue.Complete() -> void
+UniversalNotifier.NET.Background.INotificationQueue.DequeueAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Collections.Generic.IAsyncEnumerable<UniversalNotifier.NET.Notification!>!
+UniversalNotifier.NET.Background.INotificationQueue.EnqueueAsync(UniversalNotifier.NET.Notification! notification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<bool>
+UniversalNotifier.NET.Background.INotificationResultHandler
+UniversalNotifier.NET.Background.INotificationResultHandler.HandleAsync(UniversalNotifier.NET.Notification! notification, UniversalNotifier.NET.NotificationResult! result, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.ValueTask
+UniversalNotifier.NET.Background.QueueFullMode
+UniversalNotifier.NET.Background.QueueFullMode.Reject = 1 -> UniversalNotifier.NET.Background.QueueFullMode
+UniversalNotifier.NET.Background.QueueFullMode.Wait = 0 -> UniversalNotifier.NET.Background.QueueFullMode

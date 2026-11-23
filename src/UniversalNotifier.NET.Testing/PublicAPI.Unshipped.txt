@@ -1,0 +1,20 @@
+#nullable enable
+static UniversalNotifier.NET.Testing.FakeNotifierBuilderExtensions.AddFakeNotifiers(this UniversalNotifier.NET.INotifierBuilder! builder) -> UniversalNotifier.NET.INotifierBuilder!
+UniversalNotifier.NET.Testing.FakeEmailNotifier
+UniversalNotifier.NET.Testing.FakeEmailNotifier.FakeEmailNotifier() -> void
+UniversalNotifier.NET.Testing.FakeNotifier<TMessage>
+UniversalNotifier.NET.Testing.FakeNotifier<TMessage>.Clear() -> void
+UniversalNotifier.NET.Testing.FakeNotifier<TMessage>.FakeNotifier() -> void
+UniversalNotifier.NET.Testing.FakeNotifier<TMessage>.Responder.get -> System.Func<TMessage!, UniversalNotifier.NET.NotifierResponse!>!
+UniversalNotifier.NET.Testing.FakeNotifier<TMessage>.Responder.set -> void
+UniversalNotifier.NET.Testing.FakeNotifier<TMessage>.SendAsync(TMessage! message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<UniversalNotifier.NET.NotifierResponse!>!
+UniversalNotifier.NET.Testing.FakeNotifier<TMessage>.Sent.get -> System.Collections.Generic.IReadOnlyList<TMessage!>!
+UniversalNotifier.NET.Testing.FakeNotifierBuilderExtensions
+UniversalNotifier.NET.Testing.FakePushNotifier
+UniversalNotifier.NET.Testing.FakePushNotifier.FakePushNotifier() -> void
+UniversalNotifier.NET.Testing.FakeSmsNotifier
+UniversalNotifier.NET.Testing.FakeSmsNotifier.FakeSmsNotifier() -> void
+UniversalNotifier.NET.Testing.FakeTelegramNotifier
+UniversalNotifier.NET.Testing.FakeTelegramNotifier.FakeTelegramNotifier() -> void
+UniversalNotifier.NET.Testing.FakeWebPushNotifier
+UniversalNotifier.NET.Testing.FakeWebPushNotifier.FakeWebPushNotifier() -> void

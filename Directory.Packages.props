@@ -12,6 +12,7 @@
     <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.0" />
     <PackageVersion Include="MailKit" Version="5.0.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="5.6.0" />
     <PackageVersion Include="FirebaseAdmin" Version="3.7.1" />
     <PackageVersion Include="Lib.Net.Http.WebPush" Version="3.3.1" />
   </ItemGroup>
