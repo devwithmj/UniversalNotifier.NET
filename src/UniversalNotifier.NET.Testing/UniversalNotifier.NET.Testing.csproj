@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>UniversalNotifier.NET.Testing</Title>
+    <Description>Fake notifiers for UniversalNotifier.NET. Test your own code without real providers: every message is validated like a real provider would, then recorded.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UniversalNotifier.NET\UniversalNotifier.NET.csproj" />
+  </ItemGroup>
+
+</Project>
