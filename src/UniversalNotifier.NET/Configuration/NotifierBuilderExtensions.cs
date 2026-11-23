@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -49,7 +50,7 @@ public static class NotifierBuilderExtensions
             : throw new InvalidOperationException("Build() is only for NotifierBuilder. With dependency injection, resolve INotificationService from the container instead.");
 
     /// <summary>Registers a handler for a custom channel (or replaces a built-in one).</summary>
-    public static INotifierBuilder AddChannel<THandler>(this INotifierBuilder builder) where THandler : class, INotificationChannel
+    public static INotifierBuilder AddChannel<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] THandler>(this INotifierBuilder builder) where THandler : class, INotificationChannel
     {
         ArgumentNullException.ThrowIfNull(builder);
         builder.Services.AddSingleton<INotificationChannel, THandler>();
@@ -139,7 +140,7 @@ public static class NotifierBuilderExtensions
     }
 
     /// <summary>Adds a custom template store, for example one backed by a database. Stores are asked in registration order.</summary>
-    public static INotifierBuilder AddTemplateStore<TStore>(this INotifierBuilder builder) where TStore : class, ITemplateStore
+    public static INotifierBuilder AddTemplateStore<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TStore>(this INotifierBuilder builder) where TStore : class, ITemplateStore
     {
         ArgumentNullException.ThrowIfNull(builder);
         builder.Services.AddSingleton<ITemplateStore, TStore>();
@@ -147,7 +148,7 @@ public static class NotifierBuilderExtensions
     }
 
     /// <summary>Replaces the built-in token renderer, for example with an adapter for Scriban or Fluid.</summary>
-    public static INotifierBuilder UseTemplateRenderer<TRenderer>(this INotifierBuilder builder) where TRenderer : class, ITemplateRenderer
+    public static INotifierBuilder UseTemplateRenderer<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TRenderer>(this INotifierBuilder builder) where TRenderer : class, ITemplateRenderer
     {
         ArgumentNullException.ThrowIfNull(builder);
         builder.Services.Replace(ServiceDescriptor.Singleton<ITemplateRenderer, TRenderer>());

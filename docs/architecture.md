@@ -43,7 +43,15 @@ Each major decision has a record with context, alternatives and trade-offs in [`
 
 ## Native AOT and trimming
 
-The libraries are not annotated as AOT-compatible. The JSON in the REST providers, Telegram, Web Push and Webhook is source-generated, and dictionary template data is reflection-free, but `WithData(object)`, the built-in renderer's object access and the Scriban data model read public properties by reflection (and `NotificationJson` serializes arbitrary data). An AOT application can use dictionaries for template data and its own source-generated context for queue payloads.
+**The core package (`UniversalNotifier.NET`) is trim and Native AOT compatible** (`IsAotCompatible`, no analyzer warnings). It was also published trimmed and self-contained with `JsonSerializerIsReflectionEnabledByDefault=false`, the switch Native AOT sets, and ran correctly: template rendering, the dispatcher and a JSON round trip of a notification with nested dictionary and list data.
+
+What that needs from you:
+
+- Pass template data as a dictionary: `WithData(new Dictionary<string, object?> { ["Name"] = "Ada" })`. `WithData(object)` reads public properties with reflection, so it is marked `RequiresUnreferencedCode` and trimming tools warn when you call it.
+- Keep values to strings, numbers, booleans, dates, GUIDs, `JsonElement`s, and dictionaries or lists of those. `NotificationJson` is source generated for exactly these. In a normal runtime any other value (a custom class) still serializes through reflection; under Native AOT it throws instead of silently losing data.
+- Register notifiers with the `AddX` methods as usual; the generic registrations are annotated for trimming.
+
+**The provider packages are not yet marked AOT compatible.** The REST providers (Mailgun, SendGrid, SES, Twilio, Telegram, Webhook) use source-generated JSON, but they have not been trimmed or published with AOT, and SMTP (MailKit), Firebase Admin and Web Push depend on SDKs with their own reflection use. The Scriban, Fluid and Handlebars adapters read data through reflection by design. Native AOT itself was not run here: publishing stopped at native linking because the Visual Studio C++ tools are not installed on the machine that did this work, after compiling and analyzing without warnings. Run `dotnet publish -p:PublishAot=true` on a machine with them to confirm.
 
 ## Project layout
 

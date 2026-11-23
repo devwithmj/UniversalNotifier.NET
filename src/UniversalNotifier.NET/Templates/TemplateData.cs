@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text.Json;
 
@@ -31,12 +32,17 @@ public sealed class TemplateData
         _ => new TemplateData(data),
     };
 
-    /// <summary>Copies the public properties of an object (or the entries of a dictionary) into an independent dictionary.</summary>
-    internal static IReadOnlyDictionary<string, object?> Snapshot(object data)
+    /// <summary>Copies the entries of a dictionary into an independent dictionary. Does not use reflection.</summary>
+    internal static IReadOnlyDictionary<string, object?> Snapshot(IReadOnlyDictionary<string, object?> data) =>
+        new Dictionary<string, object?>(data, StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>Copies the public properties of an object into an independent dictionary. Uses reflection.</summary>
+    [RequiresUnreferencedCode("Reads the public properties of the object with reflection, which trimming can remove. Pass a dictionary for trimming or Native AOT.")]
+    internal static IReadOnlyDictionary<string, object?> SnapshotProperties(object data)
     {
         if (data is IReadOnlyDictionary<string, object?> dictionary)
         {
-            return new Dictionary<string, object?>(dictionary, StringComparer.OrdinalIgnoreCase);
+            return Snapshot(dictionary);
         }
 
         var snapshot = new Dictionary<string, object?>(StringComparer.OrdinalIgnoreCase);
@@ -122,6 +128,8 @@ public sealed class TemplateData
         return false;
     }
 
+    // Reached only when a caller put a plain object where a dictionary, list, JSON element or primitive was expected; WithData(object) is already marked as needing reflection.
+    [UnconditionalSuppressMessage("Trimming", "IL2070", Justification = "Plain objects only reach this path when the caller chose the reflection-based WithData(object) or nested a plain object; dictionaries, lists and JSON never do.")]
     private static PropertyInfo? FindProperty(Type type, string name)
     {
         try

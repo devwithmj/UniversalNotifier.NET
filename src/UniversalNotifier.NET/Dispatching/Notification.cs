@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 namespace UniversalNotifier.NET;
 
 /// <summary>One channel a notification should go out on, with optional inline content and an optional provider choice.</summary>
@@ -93,11 +94,15 @@ public sealed record Notification
         return this with { TemplateName = name };
     }
 
-    /// <summary>Sets the token values from an object's public properties. The values are copied now.</summary>
+    /// <summary>
+    /// Sets the token values from an object's public properties. The values are copied now. This reads the properties with
+    /// reflection, so under trimming or Native AOT pass a dictionary instead (<see cref="WithData(IReadOnlyDictionary{string, object})"/>).
+    /// </summary>
+    [RequiresUnreferencedCode("Reads the public properties of the object with reflection, which trimming can remove. Pass a dictionary for trimming or Native AOT.")]
     public Notification WithData(object data)
     {
         ArgumentNullException.ThrowIfNull(data);
-        return this with { Data = TemplateData.Snapshot(data) };
+        return this with { Data = TemplateData.SnapshotProperties(data) };
     }
 
     /// <summary>Sets the token values from a dictionary. The values are copied now.</summary>
