@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>UniversalNotifier.NET.Receipts</Title>
+    <Description>Delivery receipts for UniversalNotifier.NET: verifies and parses provider webhooks (Mailgun events, Twilio status callbacks) into one provider-neutral delivery event, with no web framework dependency.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UniversalNotifier.NET\UniversalNotifier.NET.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="UniversalNotifier.NET.Tests" />
+  </ItemGroup>
+
+</Project>

@@ -12,7 +12,7 @@ It does **not** mean:
 - the SMS reached the handset (carriers report that later),
 - the device displayed the push notification.
 
-Delivery receipts, bounces and read events arrive through provider callbacks and need an inbound HTTP endpoint, which a client library cannot be. They are intentionally not part of this library: use your provider's webhooks (Mailgun events, Twilio status callbacks, ...) in your own application and match on `ProviderMessageId`.
+Delivery receipts, bounces and read events arrive through provider callbacks and need an inbound HTTP endpoint, which a client library cannot be. The `UniversalNotifier.NET.Receipts` package does the hard part, so your endpoint stays a few lines: it verifies the provider's signature and turns the call into one provider-neutral `DeliveryEvent` that you match on `ProviderMessageId` (see "Receiving delivery reports" below).
 
 ## The stages you can observe
 
@@ -78,3 +78,29 @@ For delivery that survives restarts, implement `INotificationQueue` over a datab
 | Webhook | endpoint answered 2xx | one request per message to a named endpoint; the response body is ignored |
 
 Cc and Bcc are only allowed with a single `To` recipient, because bulk email is delivered as individual messages.
+
+## Receiving delivery reports
+
+`UniversalNotifier.NET.Receipts` has no web framework dependency. Host the endpoint yourself and hand the raw request to the provider's verifier; for example with a minimal API:
+
+```csharp
+var mailgun = new MailgunDeliveryWebhook(builder.Configuration["Mailgun:WebhookSigningKey"]!);
+
+app.MapPost("/hooks/mailgun", async (HttpRequest http) =>
+{
+    using var body = new MemoryStream();
+    await http.Body.CopyToAsync(body);
+    var headers = http.Headers.ToDictionary(h => h.Key, h => h.Value.ToString());
+    var result = mailgun.Process(new WebhookRequest(new Uri(http.GetEncodedUrl()), headers, body.ToArray()));
+    if (!result.Authentic) return Results.Unauthorized();
+
+    foreach (var e in result.Events) { /* match e.ProviderMessageId to your record and update its status */ }
+    return Results.Ok();
+});
+```
+
+- **Mailgun:** use the HTTP webhook signing key (not the API key). A call more than five minutes old is rejected, so a captured request cannot be replayed. The event carries the message id without angle brackets; the parser adds them so it equals the `ProviderMessageId` the send returned.
+- **Twilio:** use the Auth Token; `Url` must be the exact public URL configured at Twilio (behind a proxy, rebuild it from the forwarded scheme and host). Twilio signs with HMAC-SHA1, which the protocol requires. WhatsApp reports arrive here too (`delivered`, `read`, `undelivered`).
+- Answer 401 when `Authentic` is false and ignore the call. Reply 200 quickly and do slow work after, or the provider retries.
+- `Recipient` is personal data: do not log events. `Reason` is only the provider error code, never message text.
+- Not covered yet: SendGrid (its event webhook uses an ECDSA signature), SES (SNS notifications) and FCM (no receipts exist).
