@@ -1,0 +1,27 @@
+#nullable enable
+const UniversalNotifier.NET.Email.Ses.SesNotifier.Name = "ses" -> string!
+Microsoft.Extensions.DependencyInjection.SesBuilderExtensions
+override UniversalNotifier.NET.Email.Ses.SesOptions.ToString() -> string!
+static Microsoft.Extensions.DependencyInjection.SesBuilderExtensions.AddSes(this UniversalNotifier.NET.INotifierBuilder! builder, System.Action<UniversalNotifier.NET.Email.Ses.SesOptions!>? configure = null, string? name = null) -> UniversalNotifier.NET.INotifierBuilder!
+UniversalNotifier.NET.Email.Ses.SesNotifier
+UniversalNotifier.NET.Email.Ses.SesNotifier.SesNotifier(UniversalNotifier.NET.Email.Ses.SesOptions! options, System.Net.Http.HttpClient! httpClient, UniversalNotifier.NET.NotifierContext! context) -> void
+UniversalNotifier.NET.Email.Ses.SesOptions
+UniversalNotifier.NET.Email.Ses.SesOptions.AccessKeyId.get -> string!
+UniversalNotifier.NET.Email.Ses.SesOptions.AccessKeyId.set -> void
+UniversalNotifier.NET.Email.Ses.SesOptions.BaseAddress.get -> System.Uri?
+UniversalNotifier.NET.Email.Ses.SesOptions.BaseAddress.set -> void
+UniversalNotifier.NET.Email.Ses.SesOptions.ConfigurationSetName.get -> string?
+UniversalNotifier.NET.Email.Ses.SesOptions.ConfigurationSetName.set -> void
+UniversalNotifier.NET.Email.Ses.SesOptions.From.get -> UniversalNotifier.NET.EmailAddress
+UniversalNotifier.NET.Email.Ses.SesOptions.From.set -> void
+UniversalNotifier.NET.Email.Ses.SesOptions.MaxConcurrency.get -> int
+UniversalNotifier.NET.Email.Ses.SesOptions.MaxConcurrency.set -> void
+UniversalNotifier.NET.Email.Ses.SesOptions.Region.get -> string!
+UniversalNotifier.NET.Email.Ses.SesOptions.Region.set -> void
+UniversalNotifier.NET.Email.Ses.SesOptions.SecretAccessKey.get -> string!
+UniversalNotifier.NET.Email.Ses.SesOptions.SecretAccessKey.set -> void
+UniversalNotifier.NET.Email.Ses.SesOptions.SesOptions() -> void
+UniversalNotifier.NET.Email.Ses.SesOptions.SessionToken.get -> string?
+UniversalNotifier.NET.Email.Ses.SesOptions.SessionToken.set -> void
+UniversalNotifier.NET.Email.Ses.SesOptions.Timeout.get -> System.TimeSpan
+UniversalNotifier.NET.Email.Ses.SesOptions.Timeout.set -> void
