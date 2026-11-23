@@ -1,0 +1,20 @@
+#nullable enable
+const UniversalNotifier.NET.Email.SendGrid.SendGridNotifier.Name = "sendgrid" -> string!
+Microsoft.Extensions.DependencyInjection.SendGridBuilderExtensions
+override UniversalNotifier.NET.Email.SendGrid.SendGridOptions.ToString() -> string!
+static Microsoft.Extensions.DependencyInjection.SendGridBuilderExtensions.AddSendGrid(this UniversalNotifier.NET.INotifierBuilder! builder, System.Action<UniversalNotifier.NET.Email.SendGrid.SendGridOptions!>? configure = null, string? name = null) -> UniversalNotifier.NET.INotifierBuilder!
+UniversalNotifier.NET.Email.SendGrid.SendGridNotifier
+UniversalNotifier.NET.Email.SendGrid.SendGridNotifier.SendGridNotifier(UniversalNotifier.NET.Email.SendGrid.SendGridOptions! options, System.Net.Http.HttpClient! httpClient, UniversalNotifier.NET.NotifierContext! context) -> void
+UniversalNotifier.NET.Email.SendGrid.SendGridOptions
+UniversalNotifier.NET.Email.SendGrid.SendGridOptions.ApiKey.get -> string!
+UniversalNotifier.NET.Email.SendGrid.SendGridOptions.ApiKey.set -> void
+UniversalNotifier.NET.Email.SendGrid.SendGridOptions.From.get -> UniversalNotifier.NET.EmailAddress
+UniversalNotifier.NET.Email.SendGrid.SendGridOptions.From.set -> void
+UniversalNotifier.NET.Email.SendGrid.SendGridOptions.Region.get -> UniversalNotifier.NET.Email.SendGrid.SendGridRegion
+UniversalNotifier.NET.Email.SendGrid.SendGridOptions.Region.set -> void
+UniversalNotifier.NET.Email.SendGrid.SendGridOptions.SendGridOptions() -> void
+UniversalNotifier.NET.Email.SendGrid.SendGridOptions.Timeout.get -> System.TimeSpan
+UniversalNotifier.NET.Email.SendGrid.SendGridOptions.Timeout.set -> void
+UniversalNotifier.NET.Email.SendGrid.SendGridRegion
+UniversalNotifier.NET.Email.SendGrid.SendGridRegion.Eu = 1 -> UniversalNotifier.NET.Email.SendGrid.SendGridRegion
+UniversalNotifier.NET.Email.SendGrid.SendGridRegion.Us = 0 -> UniversalNotifier.NET.Email.SendGrid.SendGridRegion

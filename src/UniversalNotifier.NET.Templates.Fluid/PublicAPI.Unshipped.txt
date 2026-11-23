@@ -1,0 +1,6 @@
+#nullable enable
+Microsoft.Extensions.DependencyInjection.FluidBuilderExtensions
+static Microsoft.Extensions.DependencyInjection.FluidBuilderExtensions.UseFluid(this UniversalNotifier.NET.INotifierBuilder! builder) -> UniversalNotifier.NET.INotifierBuilder!
+UniversalNotifier.NET.Templates.Fluid.FluidTemplateRenderer
+UniversalNotifier.NET.Templates.Fluid.FluidTemplateRenderer.FluidTemplateRenderer(UniversalNotifier.NET.TemplateOptions? options = null) -> void
+UniversalNotifier.NET.Templates.Fluid.FluidTemplateRenderer.Render(string! templateText, UniversalNotifier.NET.TemplateData! data, UniversalNotifier.NET.TemplateFormat format = UniversalNotifier.NET.TemplateFormat.Text) -> string!

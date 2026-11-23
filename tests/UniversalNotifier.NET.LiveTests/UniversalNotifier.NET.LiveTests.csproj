@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net11.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <NoWarn>$(NoWarn);CA1707;CA2007</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET.Email.Smtp\UniversalNotifier.NET.Email.Smtp.csproj" />
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET.Email.Mailgun\UniversalNotifier.NET.Email.Mailgun.csproj" />
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET.Email.SendGrid\UniversalNotifier.NET.Email.SendGrid.csproj" />
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET.Sms.Twilio\UniversalNotifier.NET.Sms.Twilio.csproj" />
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET.Push.Fcm\UniversalNotifier.NET.Push.Fcm.csproj" />
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET.Telegram\UniversalNotifier.NET.Telegram.csproj" />
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET.WebPush\UniversalNotifier.NET.WebPush.csproj" />
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET.Webhook\UniversalNotifier.NET.Webhook.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="NUnit.Framework" />
+  </ItemGroup>
+
+</Project>

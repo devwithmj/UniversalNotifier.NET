@@ -1,0 +1,16 @@
+#nullable enable
+const UniversalNotifier.NET.Push.Fcm.FcmPushNotifier.Name = "fcm" -> string!
+Microsoft.Extensions.DependencyInjection.FcmBuilderExtensions
+override UniversalNotifier.NET.Push.Fcm.FcmPushOptions.ToString() -> string!
+static Microsoft.Extensions.DependencyInjection.FcmBuilderExtensions.AddFcm(this UniversalNotifier.NET.INotifierBuilder! builder, System.Action<UniversalNotifier.NET.Push.Fcm.FcmPushOptions!>? configure = null, string? name = null) -> UniversalNotifier.NET.INotifierBuilder!
+UniversalNotifier.NET.Push.Fcm.FcmPushNotifier
+UniversalNotifier.NET.Push.Fcm.FcmPushNotifier.Dispose() -> void
+UniversalNotifier.NET.Push.Fcm.FcmPushNotifier.FcmPushNotifier(UniversalNotifier.NET.Push.Fcm.FcmPushOptions! options, UniversalNotifier.NET.NotifierContext! context) -> void
+UniversalNotifier.NET.Push.Fcm.FcmPushOptions
+UniversalNotifier.NET.Push.Fcm.FcmPushOptions.CredentialJson.get -> string?
+UniversalNotifier.NET.Push.Fcm.FcmPushOptions.CredentialJson.set -> void
+UniversalNotifier.NET.Push.Fcm.FcmPushOptions.CredentialPath.get -> string?
+UniversalNotifier.NET.Push.Fcm.FcmPushOptions.CredentialPath.set -> void
+UniversalNotifier.NET.Push.Fcm.FcmPushOptions.FcmPushOptions() -> void
+UniversalNotifier.NET.Push.Fcm.FcmPushOptions.ProjectId.get -> string?
+UniversalNotifier.NET.Push.Fcm.FcmPushOptions.ProjectId.set -> void

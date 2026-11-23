@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>UniversalNotifier.NET.Webhook</Title>
+    <Description>Webhook provider for UniversalNotifier.NET: Slack, Microsoft Teams and any HTTP endpoint, with optional HMAC signing. Webhook URLs stay out of logs.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UniversalNotifier.NET\UniversalNotifier.NET.csproj" />
+    <Compile Include="..\Shared\ProviderHttp.cs" Link="Shared\ProviderHttp.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="UniversalNotifier.NET.Tests" />
+  </ItemGroup>
+
+</Project>

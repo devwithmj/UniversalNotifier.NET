@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>UniversalNotifier.NET.Telegram</Title>
+    <Description>Telegram bot provider for UniversalNotifier.NET. Dependency-free Bot API integration that keeps the bot token out of HTTP client logs.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UniversalNotifier.NET\UniversalNotifier.NET.csproj" />
+    <Compile Include="..\Shared\ProviderHttp.cs" Link="Shared\ProviderHttp.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="UniversalNotifier.NET.Tests" />
+  </ItemGroup>
+
+</Project>

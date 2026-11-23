@@ -1,0 +1,35 @@
+#nullable enable
+const UniversalNotifier.NET.WebPush.WebPushNotifier.Name = "webpush" -> string!
+Microsoft.Extensions.DependencyInjection.WebPushBuilderExtensions
+override UniversalNotifier.NET.WebPush.VapidKeys.Equals(object? obj) -> bool
+override UniversalNotifier.NET.WebPush.VapidKeys.GetHashCode() -> int
+override UniversalNotifier.NET.WebPush.VapidKeys.ToString() -> string!
+override UniversalNotifier.NET.WebPush.WebPushOptions.ToString() -> string!
+static Microsoft.Extensions.DependencyInjection.WebPushBuilderExtensions.AddWebPush(this UniversalNotifier.NET.INotifierBuilder! builder, System.Action<UniversalNotifier.NET.WebPush.WebPushOptions!>? configure = null, string? name = null) -> UniversalNotifier.NET.INotifierBuilder!
+static UniversalNotifier.NET.WebPush.VapidKeys.Generate() -> UniversalNotifier.NET.WebPush.VapidKeys!
+static UniversalNotifier.NET.WebPush.VapidKeys.operator !=(UniversalNotifier.NET.WebPush.VapidKeys? left, UniversalNotifier.NET.WebPush.VapidKeys? right) -> bool
+static UniversalNotifier.NET.WebPush.VapidKeys.operator ==(UniversalNotifier.NET.WebPush.VapidKeys? left, UniversalNotifier.NET.WebPush.VapidKeys? right) -> bool
+UniversalNotifier.NET.WebPush.VapidKeys
+UniversalNotifier.NET.WebPush.VapidKeys.<Clone>$() -> UniversalNotifier.NET.WebPush.VapidKeys!
+UniversalNotifier.NET.WebPush.VapidKeys.Deconstruct(out string! PublicKey, out string! PrivateKey) -> void
+UniversalNotifier.NET.WebPush.VapidKeys.Equals(UniversalNotifier.NET.WebPush.VapidKeys? other) -> bool
+UniversalNotifier.NET.WebPush.VapidKeys.PrivateKey.get -> string!
+UniversalNotifier.NET.WebPush.VapidKeys.PrivateKey.init -> void
+UniversalNotifier.NET.WebPush.VapidKeys.PublicKey.get -> string!
+UniversalNotifier.NET.WebPush.VapidKeys.PublicKey.init -> void
+UniversalNotifier.NET.WebPush.VapidKeys.VapidKeys(string! PublicKey, string! PrivateKey) -> void
+UniversalNotifier.NET.WebPush.WebPushNotifier
+UniversalNotifier.NET.WebPush.WebPushNotifier.Dispose() -> void
+UniversalNotifier.NET.WebPush.WebPushNotifier.WebPushNotifier(UniversalNotifier.NET.WebPush.WebPushOptions! options, UniversalNotifier.NET.NotifierContext! context) -> void
+UniversalNotifier.NET.WebPush.WebPushOptions
+UniversalNotifier.NET.WebPush.WebPushOptions.MaxConcurrency.get -> int
+UniversalNotifier.NET.WebPush.WebPushOptions.MaxConcurrency.set -> void
+UniversalNotifier.NET.WebPush.WebPushOptions.PrivateKey.get -> string!
+UniversalNotifier.NET.WebPush.WebPushOptions.PrivateKey.set -> void
+UniversalNotifier.NET.WebPush.WebPushOptions.PublicKey.get -> string!
+UniversalNotifier.NET.WebPush.WebPushOptions.PublicKey.set -> void
+UniversalNotifier.NET.WebPush.WebPushOptions.Subject.get -> string!
+UniversalNotifier.NET.WebPush.WebPushOptions.Subject.set -> void
+UniversalNotifier.NET.WebPush.WebPushOptions.Timeout.get -> System.TimeSpan
+UniversalNotifier.NET.WebPush.WebPushOptions.Timeout.set -> void
+UniversalNotifier.NET.WebPush.WebPushOptions.WebPushOptions() -> void

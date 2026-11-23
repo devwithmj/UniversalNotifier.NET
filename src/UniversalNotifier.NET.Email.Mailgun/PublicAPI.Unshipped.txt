@@ -1,0 +1,22 @@
+#nullable enable
+const UniversalNotifier.NET.Email.Mailgun.MailgunNotifier.Name = "mailgun" -> string!
+Microsoft.Extensions.DependencyInjection.MailgunBuilderExtensions
+override UniversalNotifier.NET.Email.Mailgun.MailgunOptions.ToString() -> string!
+static Microsoft.Extensions.DependencyInjection.MailgunBuilderExtensions.AddMailgun(this UniversalNotifier.NET.INotifierBuilder! builder, System.Action<UniversalNotifier.NET.Email.Mailgun.MailgunOptions!>? configure = null, string? name = null) -> UniversalNotifier.NET.INotifierBuilder!
+UniversalNotifier.NET.Email.Mailgun.MailgunNotifier
+UniversalNotifier.NET.Email.Mailgun.MailgunNotifier.MailgunNotifier(UniversalNotifier.NET.Email.Mailgun.MailgunOptions! options, System.Net.Http.HttpClient! httpClient, UniversalNotifier.NET.NotifierContext! context) -> void
+UniversalNotifier.NET.Email.Mailgun.MailgunOptions
+UniversalNotifier.NET.Email.Mailgun.MailgunOptions.ApiKey.get -> string!
+UniversalNotifier.NET.Email.Mailgun.MailgunOptions.ApiKey.set -> void
+UniversalNotifier.NET.Email.Mailgun.MailgunOptions.Domain.get -> string!
+UniversalNotifier.NET.Email.Mailgun.MailgunOptions.Domain.set -> void
+UniversalNotifier.NET.Email.Mailgun.MailgunOptions.From.get -> UniversalNotifier.NET.EmailAddress
+UniversalNotifier.NET.Email.Mailgun.MailgunOptions.From.set -> void
+UniversalNotifier.NET.Email.Mailgun.MailgunOptions.MailgunOptions() -> void
+UniversalNotifier.NET.Email.Mailgun.MailgunOptions.Region.get -> UniversalNotifier.NET.Email.Mailgun.MailgunRegion
+UniversalNotifier.NET.Email.Mailgun.MailgunOptions.Region.set -> void
+UniversalNotifier.NET.Email.Mailgun.MailgunOptions.Timeout.get -> System.TimeSpan
+UniversalNotifier.NET.Email.Mailgun.MailgunOptions.Timeout.set -> void
+UniversalNotifier.NET.Email.Mailgun.MailgunRegion
+UniversalNotifier.NET.Email.Mailgun.MailgunRegion.Eu = 1 -> UniversalNotifier.NET.Email.Mailgun.MailgunRegion
+UniversalNotifier.NET.Email.Mailgun.MailgunRegion.Us = 0 -> UniversalNotifier.NET.Email.Mailgun.MailgunRegion
