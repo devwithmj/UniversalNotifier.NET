@@ -22,6 +22,7 @@
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.Email.Smtp\UniversalNotifier.NET.Email.Smtp.csproj" />
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.Sms.Twilio\UniversalNotifier.NET.Sms.Twilio.csproj" />
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.Push.Fcm\UniversalNotifier.NET.Push.Fcm.csproj" />
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET.Telegram\UniversalNotifier.NET.Telegram.csproj" />
   </ItemGroup>
 
   <ItemGroup>
