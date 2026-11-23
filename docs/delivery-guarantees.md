@@ -101,12 +101,19 @@ public sealed class MyReceiptHandler : IDeliveryReceiptHandler
 }
 ```
 
-The endpoint answers 401 for a wrong signature, 413 above 1 MiB, 200 once every handler has run, and lets a handler exception through so the host answers 500 and the provider retries. Reply quickly: do slow work after. Outside ASP.NET Core, build a `WebhookRequest` (URL, headers, raw body) and call `webhook.Process(...)` yourself.
+The endpoint answers 401 for a wrong signature, 413 above 1 MiB, 200 once every handler has run, and lets a handler exception through so the host answers 500 and the provider retries. Reply quickly: do slow work after. Outside ASP.NET Core, build a `WebhookRequest` (URL, headers, raw body) and call `await webhook.ProcessAsync(request, cancellationToken)` yourself.
 
 - **Mailgun:** use the HTTP webhook signing key (not the API key). A call more than five minutes old is rejected, so a captured request cannot be replayed. The event carries the message id without angle brackets; the parser adds them so it equals the `ProviderMessageId` the send returned.
 - **Twilio:** use the Auth Token; `Url` must be the exact public URL configured at Twilio (behind a proxy, rebuild it from the forwarded scheme and host). Twilio signs with HMAC-SHA1, which the protocol requires. WhatsApp reports arrive here too (`delivered`, `read`, `undelivered`).
 - Answer 401 when `Authentic` is false and ignore the call. Reply 200 quickly and do slow work after, or the provider retries.
 - `Recipient` is personal data: do not log events. `Reason` is only the provider error code, never message text.
 - **SendGrid:** `SendGridDeliveryWebhook` takes the verification key from the SendGrid webhook settings (turn on "Signature Verification" there) and checks the ECDSA signature over the timestamp header plus the raw body; calls older than five minutes are rejected. One call carries a batch, so `Events` can hold many. The send id is the part of `sg_message_id` before `.filter`, which is what the parser returns, and the reason is the status code (for example `5.1.1`), never the free-text reason that quotes the address.
-- Not covered yet: SES (events arrive through SNS) and FCM (no receipts exist).
+- **Amazon SES:** SES publishes events to an SNS topic, which posts to your endpoint. In the SES console create an event destination (or a notification topic) that publishes to an SNS topic, then subscribe your HTTPS endpoint to it:
+
+  ```csharp
+  app.MapDeliveryReceipts("/hooks/ses", new SesDeliveryWebhook("arn:aws:sns:eu-west-1:123456789012:ses-events", httpClientFactory.CreateClient()));
+  ```
+
+  `SesDeliveryWebhook` checks the SNS signature against the AWS certificate (downloaded once, only from `sns.<region>.amazonaws.com`) and **requires the message to come from your own topic ARN**, because anyone can create a topic and post validly signed messages. It confirms the subscription for you (pass `confirmSubscriptions: false` to do it in the console). SNS retries for hours, so there is no replay window: make the handler idempotent. The reason is only the bounce sub-type, complaint type or delay type, never SES's diagnostic text, which quotes the address. The signing format is covered by tests that sign with a generated key; it has not been checked against a live SNS message, and SNS signing is not in the AWS documentation index available while building it, so treat the first live message as the real test.
+- Not covered: FCM (it has no delivery receipts).
 - Twilio signs the exact public URL. Behind a proxy or load balancer call `app.UseForwardedHeaders()` so the scheme and host the application sees match the URL configured at Twilio.

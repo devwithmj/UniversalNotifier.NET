@@ -47,7 +47,7 @@ public static partial class DeliveryReceiptEndpoints
             headers[name] = values.ToString();
         }
 
-        var result = webhook.Process(new WebhookRequest(new Uri(http.Request.GetEncodedUrl()), headers, body));
+        var result = await webhook.ProcessAsync(new WebhookRequest(new Uri(http.Request.GetEncodedUrl()), headers, body), cancellationToken).ConfigureAwait(false);
         if (!result.Authentic)
         {
             Log.Rejected(http.RequestServices.GetRequiredService<ILoggerFactory>().CreateLogger("UniversalNotifier.NET.Receipts"), webhook.Provider);

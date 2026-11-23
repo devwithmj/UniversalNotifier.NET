@@ -57,7 +57,7 @@ The libraries are not annotated as AOT-compatible. The JSON in the REST provider
 | `UniversalNotifier.NET.Telegram` | yes | Telegram Bot API |
 | `UniversalNotifier.NET.WebPush` | yes | Lib.Net.Http.WebPush |
 | `UniversalNotifier.NET.Email.SendGrid` | yes | SendGrid v3 REST |
-| `UniversalNotifier.NET.Receipts` | yes | provider webhook verification and parsing (Mailgun, SendGrid, Twilio) |
+| `UniversalNotifier.NET.Receipts` | yes | provider webhook verification and parsing (Mailgun, SendGrid, Amazon SES, Twilio) |
 | `UniversalNotifier.NET.Receipts.AspNetCore` | yes | `MapDeliveryReceipts` endpoint and `IDeliveryReceiptHandler` |
 | `UniversalNotifier.NET.Email.Ses` | yes | Amazon SES v2 REST, built-in SigV4 signing |
 | `UniversalNotifier.NET.InApp` | yes | per-user inbox, in-memory store, `IInAppStore` |

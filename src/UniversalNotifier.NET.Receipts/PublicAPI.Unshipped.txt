@@ -1,6 +1,7 @@
 #nullable enable
 const UniversalNotifier.NET.Receipts.MailgunDeliveryWebhook.Name = "mailgun" -> string!
 const UniversalNotifier.NET.Receipts.SendGridDeliveryWebhook.Name = "sendgrid" -> string!
+const UniversalNotifier.NET.Receipts.SesDeliveryWebhook.Name = "ses" -> string!
 const UniversalNotifier.NET.Receipts.TwilioDeliveryWebhook.Name = "twilio" -> string!
 override UniversalNotifier.NET.Receipts.DeliveryEvent.Equals(object? obj) -> bool
 override UniversalNotifier.NET.Receipts.DeliveryEvent.GetHashCode() -> int
@@ -46,12 +47,13 @@ UniversalNotifier.NET.Receipts.DeliveryOutcome.Other = 8 -> UniversalNotifier.NE
 UniversalNotifier.NET.Receipts.DeliveryOutcome.Read = 7 -> UniversalNotifier.NET.Receipts.DeliveryOutcome
 UniversalNotifier.NET.Receipts.DeliveryOutcome.Unsubscribed = 4 -> UniversalNotifier.NET.Receipts.DeliveryOutcome
 UniversalNotifier.NET.Receipts.IDeliveryWebhook
-UniversalNotifier.NET.Receipts.IDeliveryWebhook.Process(UniversalNotifier.NET.Receipts.WebhookRequest! request) -> UniversalNotifier.NET.Receipts.ReceiptResult!
+UniversalNotifier.NET.Receipts.IDeliveryWebhook.ProcessAsync(UniversalNotifier.NET.Receipts.WebhookRequest! request, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.ValueTask<UniversalNotifier.NET.Receipts.ReceiptResult!>
 UniversalNotifier.NET.Receipts.IDeliveryWebhook.Provider.get -> string!
 UniversalNotifier.NET.Receipts.MailgunDeliveryWebhook
 UniversalNotifier.NET.Receipts.MailgunDeliveryWebhook.MailgunDeliveryWebhook(string! signingKey) -> void
 UniversalNotifier.NET.Receipts.MailgunDeliveryWebhook.MailgunDeliveryWebhook(string! signingKey, System.TimeProvider! timeProvider) -> void
 UniversalNotifier.NET.Receipts.MailgunDeliveryWebhook.Process(UniversalNotifier.NET.Receipts.WebhookRequest! request) -> UniversalNotifier.NET.Receipts.ReceiptResult!
+UniversalNotifier.NET.Receipts.MailgunDeliveryWebhook.ProcessAsync(UniversalNotifier.NET.Receipts.WebhookRequest! request, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.ValueTask<UniversalNotifier.NET.Receipts.ReceiptResult!>
 UniversalNotifier.NET.Receipts.MailgunDeliveryWebhook.Provider.get -> string!
 UniversalNotifier.NET.Receipts.ReceiptResult
 UniversalNotifier.NET.Receipts.ReceiptResult.<Clone>$() -> UniversalNotifier.NET.Receipts.ReceiptResult!
@@ -64,11 +66,18 @@ UniversalNotifier.NET.Receipts.ReceiptResult.Events.init -> void
 UniversalNotifier.NET.Receipts.ReceiptResult.ReceiptResult(bool Authentic, System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.Receipts.DeliveryEvent!>! Events) -> void
 UniversalNotifier.NET.Receipts.SendGridDeliveryWebhook
 UniversalNotifier.NET.Receipts.SendGridDeliveryWebhook.Process(UniversalNotifier.NET.Receipts.WebhookRequest! request) -> UniversalNotifier.NET.Receipts.ReceiptResult!
+UniversalNotifier.NET.Receipts.SendGridDeliveryWebhook.ProcessAsync(UniversalNotifier.NET.Receipts.WebhookRequest! request, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.ValueTask<UniversalNotifier.NET.Receipts.ReceiptResult!>
 UniversalNotifier.NET.Receipts.SendGridDeliveryWebhook.Provider.get -> string!
 UniversalNotifier.NET.Receipts.SendGridDeliveryWebhook.SendGridDeliveryWebhook(string! verificationKey) -> void
 UniversalNotifier.NET.Receipts.SendGridDeliveryWebhook.SendGridDeliveryWebhook(string! verificationKey, System.TimeProvider! timeProvider) -> void
+UniversalNotifier.NET.Receipts.SesDeliveryWebhook
+UniversalNotifier.NET.Receipts.SesDeliveryWebhook.ProcessAsync(UniversalNotifier.NET.Receipts.WebhookRequest! request, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.ValueTask<UniversalNotifier.NET.Receipts.ReceiptResult!>
+UniversalNotifier.NET.Receipts.SesDeliveryWebhook.Provider.get -> string!
+UniversalNotifier.NET.Receipts.SesDeliveryWebhook.SesDeliveryWebhook(string! topicArn, System.Net.Http.HttpClient! httpClient) -> void
+UniversalNotifier.NET.Receipts.SesDeliveryWebhook.SesDeliveryWebhook(string! topicArn, System.Net.Http.HttpClient! httpClient, bool confirmSubscriptions, System.TimeProvider! timeProvider) -> void
 UniversalNotifier.NET.Receipts.TwilioDeliveryWebhook
 UniversalNotifier.NET.Receipts.TwilioDeliveryWebhook.Process(UniversalNotifier.NET.Receipts.WebhookRequest! request) -> UniversalNotifier.NET.Receipts.ReceiptResult!
+UniversalNotifier.NET.Receipts.TwilioDeliveryWebhook.ProcessAsync(UniversalNotifier.NET.Receipts.WebhookRequest! request, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.ValueTask<UniversalNotifier.NET.Receipts.ReceiptResult!>
 UniversalNotifier.NET.Receipts.TwilioDeliveryWebhook.Provider.get -> string!
 UniversalNotifier.NET.Receipts.TwilioDeliveryWebhook.TwilioDeliveryWebhook(string! authToken) -> void
 UniversalNotifier.NET.Receipts.TwilioDeliveryWebhook.TwilioDeliveryWebhook(string! authToken, System.TimeProvider! timeProvider) -> void

@@ -79,12 +79,15 @@ public sealed record ReceiptResult(bool Authentic, IReadOnlyList<DeliveryEvent> 
     public static ReceiptResult Rejected { get; } = new(false, []);
 }
 
-/// <summary>Verifies and parses one provider's delivery webhook. Implementations never throw for bad input: they return <see cref="ReceiptResult.Rejected"/>.</summary>
+/// <summary>
+/// Verifies and parses one provider's delivery webhook. Implementations never throw for bad input: they return <see cref="ReceiptResult.Rejected"/>.
+/// The method is asynchronous because some providers (Amazon SNS) need a network call to check a signature.
+/// </summary>
 public interface IDeliveryWebhook
 {
     /// <summary>The provider name, matching the notifier's provider name (for example <c>mailgun</c>).</summary>
     string Provider { get; }
 
     /// <summary>Checks the provider's signature and turns the call into delivery events.</summary>
-    ReceiptResult Process(WebhookRequest request);
+    ValueTask<ReceiptResult> ProcessAsync(WebhookRequest request, CancellationToken cancellationToken);
 }

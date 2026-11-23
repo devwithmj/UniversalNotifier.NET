@@ -36,6 +36,9 @@ public sealed class TwilioDeliveryWebhook : IDeliveryWebhook
     public string Provider => Name;
 
     /// <inheritdoc />
+    public ValueTask<ReceiptResult> ProcessAsync(WebhookRequest request, CancellationToken cancellationToken) => ValueTask.FromResult(Process(request));
+
+    /// <summary>Checks the signature and parses the call. Needs no network, so it is also available synchronously.</summary>
     public ReceiptResult Process(WebhookRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
