@@ -55,6 +55,22 @@ public class ConfigurationTests
     }
 
     [Test]
+    public void Provider_options_can_be_supplied_through_named_options_for_configuration_binding()
+    {
+        using var provider = new ServiceCollection()
+            .Configure<UniversalNotifier.NET.Email.Mailgun.MailgunOptions>("mailgun", o =>
+            {
+                o.ApiKey = "k";
+                o.Domain = "mg.example.com";
+                o.From = "a@mg.example.com";
+            })
+            .AddUniversalNotifier(n => n.AddMailgun())
+            .BuildServiceProvider();
+
+        Assert.That(provider.GetRequiredService<IEmailNotifier>(), Is.InstanceOf<UniversalNotifier.NET.Email.Mailgun.MailgunNotifier>());
+    }
+
+    [Test]
     public void Calling_AddUniversalNotifier_twice_does_not_duplicate_services()
     {
         using var provider = new ServiceCollection()
