@@ -87,6 +87,16 @@ public class MessageValidationTests
     }
 
     [Test]
+    public void Cc_and_bcc_are_only_allowed_with_a_single_recipient()
+    {
+        var bulk = new EmailMessage { To = ["a@example.com", "b@example.com"], Cc = ["c@example.com"], Subject = "s", TextBody = "b" };
+        var single = new EmailMessage { To = ["a@example.com"], Cc = ["c@example.com"], Bcc = ["d@example.com"], Subject = "s", TextBody = "b" };
+
+        Assert.That(bulk.Validate().Select(e => e.Code), Does.Contain("email.copies.bulk"));
+        Assert.That(single.Validate(), Is.Empty);
+    }
+
+    [Test]
     public void Email_attachments_are_validated()
     {
         var bad = EmailMessage.Create("a@example.com", "s", "b") with

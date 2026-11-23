@@ -17,7 +17,10 @@ public sealed record EmailMessage : NotifierMessage
     /// <summary>Overrides the sender configured on the provider.</summary>
     public EmailAddress? From { get; init; }
 
-    /// <summary>The primary recipients. Providers deliver to each one separately, so addresses are never revealed to each other.</summary>
+    /// <summary>
+    /// The primary recipients. With more than one, each recipient gets an individual message and never sees the others
+    /// (bulk send). Cc and Bcc are only allowed with a single recipient.
+    /// </summary>
     public IReadOnlyList<EmailAddress> To { get; init; } = [];
 
     /// <summary>Visible copy recipients.</summary>
@@ -59,6 +62,11 @@ public sealed record EmailMessage : NotifierMessage
         if (To.Count + Cc.Count + Bcc.Count == 0)
         {
             errors.Add("email.recipients.required", "At least one recipient in To, Cc or Bcc is required.");
+        }
+
+        if (To.Count > 1 && (Cc.Count > 0 || Bcc.Count > 0))
+        {
+            errors.Add("email.copies.bulk", "Cc and Bcc can only be used with a single To recipient. Send one message per recipient instead.");
         }
 
         CheckAddresses(ref errors, To, nameof(To));

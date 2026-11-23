@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\UniversalNotifier.NET\UniversalNotifier.NET.csproj" />
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.Testing\UniversalNotifier.NET.Testing.csproj" />
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET.Email.Mailgun\UniversalNotifier.NET.Email.Mailgun.csproj" />
   </ItemGroup>
 
   <ItemGroup>
