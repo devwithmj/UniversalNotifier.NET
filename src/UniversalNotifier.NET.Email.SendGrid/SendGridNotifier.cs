@@ -21,6 +21,7 @@ public sealed class SendGridNotifier : NotifierBase<EmailMessage>, IEmailNotifie
     private readonly HttpClient _http;
     private readonly Uri _sendUri;
     private readonly SendGridAddress _from;
+    private readonly bool _sandbox;
     private readonly AuthenticationHeaderValue _authorization;
 
     /// <summary>Creates the notifier. With dependency injection use <c>AddSendGrid</c> instead.</summary>
@@ -37,6 +38,7 @@ public sealed class SendGridNotifier : NotifierBase<EmailMessage>, IEmailNotifie
 
         _http = httpClient;
         _from = ToAddress(options.From);
+        _sandbox = options.SandboxMode;
         _sendUri = new Uri(options.Region == SendGridRegion.Eu ? "https://api.eu.sendgrid.com/v3/mail/send" : "https://api.sendgrid.com/v3/mail/send");
         _authorization = new AuthenticationHeaderValue("Bearer", options.ApiKey);
     }
@@ -113,7 +115,8 @@ public sealed class SendGridNotifier : NotifierBase<EmailMessage>, IEmailNotifie
             Convert.ToBase64String(a.Content.Span), a.FileName, a.ContentType, a.ContentId is null ? "attachment" : "inline", a.ContentId))],
         message.Headers is { Count: > 0 } headers ? new Dictionary<string, string>(headers) : null,
         message.Tags.Count == 0 ? null : [.. message.Tags],
-        message.Metadata is { Count: > 0 } metadata ? new Dictionary<string, string>(metadata) : null);
+        message.Metadata is { Count: > 0 } metadata ? new Dictionary<string, string>(metadata) : null,
+        _sandbox ? new SendGridMailSettings(new SendGridSandboxMode(true)) : null);
 
     // SendGrid requires text/plain before text/html.
     private static SendGridContent[] Contents(EmailMessage message)

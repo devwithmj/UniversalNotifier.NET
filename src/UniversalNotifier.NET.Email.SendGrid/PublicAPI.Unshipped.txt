@@ -12,6 +12,8 @@ UniversalNotifier.NET.Email.SendGrid.SendGridOptions.From.get -> UniversalNotifi
 UniversalNotifier.NET.Email.SendGrid.SendGridOptions.From.set -> void
 UniversalNotifier.NET.Email.SendGrid.SendGridOptions.Region.get -> UniversalNotifier.NET.Email.SendGrid.SendGridRegion
 UniversalNotifier.NET.Email.SendGrid.SendGridOptions.Region.set -> void
+UniversalNotifier.NET.Email.SendGrid.SendGridOptions.SandboxMode.get -> bool
+UniversalNotifier.NET.Email.SendGrid.SendGridOptions.SandboxMode.set -> void
 UniversalNotifier.NET.Email.SendGrid.SendGridOptions.SendGridOptions() -> void
 UniversalNotifier.NET.Email.SendGrid.SendGridOptions.Timeout.get -> System.TimeSpan
 UniversalNotifier.NET.Email.SendGrid.SendGridOptions.Timeout.set -> void

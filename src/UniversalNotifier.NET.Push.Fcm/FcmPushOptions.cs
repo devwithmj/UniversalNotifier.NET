@@ -15,6 +15,12 @@ public sealed class FcmPushOptions
     public string? ProjectId { get; set; }
 
     /// <summary>
+    /// Validates every message with FCM without delivering it (the API's dry-run mode). Safe for checking live credentials and
+    /// real device tokens: a bad token is still reported, nothing reaches the device.
+    /// </summary>
+    public bool DryRun { get; set; }
+
+    /// <summary>
     /// Without <see cref="CredentialJson"/> or <see cref="CredentialPath"/>, Google Application Default Credentials are
     /// used (the <c>GOOGLE_APPLICATION_CREDENTIALS</c> variable, or the identity of the Google Cloud host).
     /// </summary>

@@ -20,6 +20,7 @@ public sealed class MailgunNotifier : NotifierBase<EmailMessage>, IEmailNotifier
     private readonly HttpClient _http;
     private readonly Uri _messagesUri;
     private readonly string _from;
+    private readonly bool _testMode;
     private readonly AuthenticationHeaderValue _authorization;
 
     /// <summary>Creates the notifier. With dependency injection use <c>AddMailgun</c> instead.</summary>
@@ -36,6 +37,7 @@ public sealed class MailgunNotifier : NotifierBase<EmailMessage>, IEmailNotifier
 
         _http = httpClient;
         _from = options.From.ToString();
+        _testMode = options.TestMode;
         var host = options.Region == MailgunRegion.Eu ? "api.eu.mailgun.net" : "api.mailgun.net";
         _messagesUri = new Uri($"https://{host}/v3/{Uri.EscapeDataString(options.Domain)}/messages");
         _authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes("api:" + options.ApiKey)));
@@ -127,6 +129,11 @@ public sealed class MailgunNotifier : NotifierBase<EmailMessage>, IEmailNotifier
             }
 
             Add(form, "recipient-variables", JsonSerializer.Serialize(variables));
+        }
+
+        if (_testMode)
+        {
+            Add(form, "o:testmode", "yes");
         }
 
         Add(form, "subject", message.Subject);

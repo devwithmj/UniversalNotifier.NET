@@ -24,6 +24,12 @@ public sealed class SendGridOptions
     /// <summary>The account region.</summary>
     public SendGridRegion Region { get; set; } = SendGridRegion.Us;
 
+    /// <summary>
+    /// Turns on SendGrid's sandbox mode: the request is fully validated but the message is never delivered. Safe for checking a
+    /// live API key and sender.
+    /// </summary>
+    public bool SandboxMode { get; set; }
+
     /// <summary>How long a single API call may take.</summary>
     public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(30);
 

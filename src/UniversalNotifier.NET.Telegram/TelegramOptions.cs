@@ -11,6 +11,12 @@ public sealed class TelegramOptions
     /// <summary>The Bot API address. Change it only to use a self-hosted Bot API server.</summary>
     public Uri BaseAddress { get; set; } = new("https://api.telegram.org");
 
+    /// <summary>
+    /// Uses Telegram's separate test environment (<c>/bot&lt;token&gt;/test/METHOD</c>). It has its own test accounts and bots, so
+    /// nothing reaches real users. The bot token must come from a bot created in the test environment.
+    /// </summary>
+    public bool UseTestEnvironment { get; set; }
+
     /// <summary>How long a single API call may take.</summary>
     public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(30);
 

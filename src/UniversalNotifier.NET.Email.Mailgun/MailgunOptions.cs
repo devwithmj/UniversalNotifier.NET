@@ -28,6 +28,12 @@ public sealed class MailgunOptions
     /// <summary>The default sender. A message can override it with <see cref="EmailMessage.From"/>.</summary>
     public EmailAddress From { get; set; }
 
+    /// <summary>
+    /// Sends in Mailgun's test mode (<c>o:testmode=yes</c>): Mailgun accepts and processes the message, fires webhooks and
+    /// counts it for validation, but does not deliver it. Safe for checking a live API key and domain.
+    /// </summary>
+    public bool TestMode { get; set; }
+
     /// <summary>How long a single API call may take.</summary>
     public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(30);
 

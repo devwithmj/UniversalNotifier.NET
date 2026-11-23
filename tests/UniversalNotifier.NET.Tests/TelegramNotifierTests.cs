@@ -199,4 +199,17 @@ public class TelegramNotifierTests
 
         Assert.Throws<OptionsValidationException>(() => provider.GetRequiredService<ITelegramNotifier>());
     }
+
+    [Test]
+    public async Task The_test_environment_uses_the_test_path_and_is_off_by_default()
+    {
+        var normal = new StubHttpHandler(HttpStatusCode.OK, Ok);
+        var test = new StubHttpHandler(HttpStatusCode.OK, Ok);
+
+        await Create(normal).SendAsync(TelegramMessage.Create("1", "x"));
+        await Create(test, o => o.UseTestEnvironment = true).SendAsync(TelegramMessage.Create("1", "x"));
+
+        Assert.That(normal.OnlyRequest.Uri.AbsolutePath, Is.EqualTo($"/bot{Token}/sendMessage"));
+        Assert.That(test.OnlyRequest.Uri.AbsolutePath, Is.EqualTo($"/bot{Token}/test/sendMessage"));
+    }
 }
