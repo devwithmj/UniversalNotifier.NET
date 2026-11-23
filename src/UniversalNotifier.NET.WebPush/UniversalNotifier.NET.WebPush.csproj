@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>UniversalNotifier.NET.WebPush</Title>
+    <Description>Browser Web Push (VAPID) provider for UniversalNotifier.NET, built on Lib.Net.Http.WebPush. Reports expired subscriptions so you can remove them.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lib.Net.Http.WebPush" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UniversalNotifier.NET\UniversalNotifier.NET.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="UniversalNotifier.NET.Tests" />
+  </ItemGroup>
+
+</Project>
