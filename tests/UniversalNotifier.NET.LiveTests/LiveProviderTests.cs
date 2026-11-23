@@ -2,6 +2,7 @@ using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using UniversalNotifier.NET.Email.Mailgun;
 using UniversalNotifier.NET.Email.SendGrid;
+using UniversalNotifier.NET.Email.Ses;
 using UniversalNotifier.NET.Email.Smtp;
 using UniversalNotifier.NET.Push.Fcm;
 using UniversalNotifier.NET.Twilio;
@@ -178,6 +179,30 @@ public class LiveProviderTests
             new NotifierContext());
 
         await AssertAccepted(await notifier.SendAsync(LiveEmail("Mailgun test mode")));
+    }
+
+    [Test]
+    public async Task Ses_mailbox_simulator()
+    {
+        // SES's mailbox simulator accepts the message and simulates the outcome without delivering or counting against bounce limits.
+        Require("LIVE_SES_REGION", "LIVE_SES_ACCESS_KEY_ID", "LIVE_SES_SECRET_ACCESS_KEY", "LIVE_SES_FROM");
+        using var http = new HttpClient();
+        var notifier = new SesNotifier(
+            new SesOptions
+            {
+                Region = Env("LIVE_SES_REGION"),
+                AccessKeyId = Env("LIVE_SES_ACCESS_KEY_ID"),
+                SecretAccessKey = Env("LIVE_SES_SECRET_ACCESS_KEY"),
+                SessionToken = string.IsNullOrEmpty(Env("LIVE_SES_SESSION_TOKEN")) ? null : Env("LIVE_SES_SESSION_TOKEN"),
+                From = Env("LIVE_SES_FROM"),
+            },
+            http,
+            new NotifierContext());
+
+        await AssertAccepted(await notifier.SendAsync(EmailMessage.Create("success@simulator.amazonses.com", "SES simulator", "UniversalNotifier.NET test")));
+
+        var bounce = await notifier.SendAsync(EmailMessage.Create("bounce@simulator.amazonses.com", "SES simulator", "UniversalNotifier.NET test"));
+        Assert.That(bounce.Success, Is.True, "a simulated bounce is still accepted; the bounce arrives later as an event");
     }
 
     [Test]

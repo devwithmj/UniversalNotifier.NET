@@ -31,6 +31,18 @@ n.AddSendGrid(o => { o.ApiKey = "SG...."; o.From = "noreply@example.com"; });
 - Create an API key with the **Mail Send** permission, and verify the sender or the domain; unverified senders are rejected.
 - At most 10 categories (tags); each recipient is its own personalization.
 
+## Amazon SES (`UniversalNotifier.NET.Email.Ses`)
+
+```csharp
+n.AddSes(o => { o.Region = "eu-west-1"; o.AccessKeyId = "AKIA..."; o.SecretAccessKey = "..."; o.From = "noreply@example.com"; });
+```
+
+- Verify the sender identity (address or domain) in the same region. A new account is in the SES sandbox and can only send to verified addresses until you request production access.
+- The IAM user needs `ses:SendEmail`. Temporary credentials work: also set `SessionToken`. There is no automatic credential lookup (environment, profile, instance role); resolve credentials yourself and pass them, which keeps the package free of the AWS SDK.
+- Requests are signed in the package (AWS Signature Version 4, checked against AWS's published example). Each recipient is its own request, a few in parallel, so recipients never see each other.
+- Tags and metadata become SES tags (tag names allow letters, digits, `_` and `-`). `ConfigurationSetName` applies a configuration set. Only the SES error type is surfaced, never its message, which can quote addresses.
+- Try it without delivering: send to `success@simulator.amazonses.com`.
+
 ## Twilio SMS and WhatsApp (`UniversalNotifier.NET.Twilio`)
 
 ```csharp
