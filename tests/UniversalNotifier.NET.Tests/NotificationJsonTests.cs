@@ -65,7 +65,7 @@ public class NotificationJsonTests
     [Test]
     public void Json_values_render_by_kind_and_html_is_still_encoded()
     {
-        var data = TemplateData.From(JsonElement.Parse("""{"S":"<b>","N":3,"B":false,"Z":null,"O":{"Inner":"x"}}"""));
+        var data = TemplateData.From(JsonDocument.Parse("""{"S":"<b>","N":3,"B":false,"Z":null,"O":{"Inner":"x"}}""").RootElement);
         var renderer = new TokenTemplateRenderer();
 
         Assert.That(renderer.Render("{{S}}|{{N}}|{{B}}|{{Z}}|{{O.Inner}}|{{o.inner}}", data), Is.EqualTo("<b>|3|false||x|x"));
