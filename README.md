@@ -1,6 +1,6 @@
 # UniversalNotifier.NET
 
-**One API for every notification channel.** Send email, SMS, mobile push, web push, Telegram, Slack, Teams and webhooks from .NET through the same small API, without writing or learning each provider's integration. Switch providers by changing configuration, not code.
+**One API for every notification channel.** Send email, SMS, mobile push, web push, Telegram, Slack, Teams, webhooks and in-app notifications from .NET through the same small API, without writing or learning each provider's integration. Switch providers by changing configuration, not code.
 
 ```csharp
 await notifications.SendAsync(
@@ -29,11 +29,13 @@ dotnet add package UniversalNotifier.NET.Email.Smtp
 |---|---|---|
 | Email | `UniversalNotifier.NET.Email.Smtp` | any SMTP server (MailKit) |
 | Email | `UniversalNotifier.NET.Email.Mailgun` | Mailgun (US and EU) |
+| Email | `UniversalNotifier.NET.Email.SendGrid` | SendGrid (US and EU) |
 | SMS | `UniversalNotifier.NET.Sms.Twilio` | Twilio |
 | Mobile push | `UniversalNotifier.NET.Push.Fcm` | Firebase Cloud Messaging |
 | Browser push | `UniversalNotifier.NET.WebPush` | Web Push / VAPID |
 | Telegram | `UniversalNotifier.NET.Telegram` | Telegram bots |
 | Webhooks | `UniversalNotifier.NET.Webhook` | Slack, Microsoft Teams, generic JSON (HMAC signing) |
+| In-app | `UniversalNotifier.NET.InApp` | per-user inbox: unread counts, mark as read, your own store |
 | Templates | `UniversalNotifier.NET.Templates.Scriban` | Scriban: conditionals, loops, filters |
 | Background delivery | `UniversalNotifier.NET.Background` | in-memory queue and worker |
 | Tests | `UniversalNotifier.NET.Testing` | fake notifiers |
@@ -155,6 +157,19 @@ n.AddWebhook(o => o
 
 await notifications.SendAsync(
     Notification.To(new Recipient { WebhookEndpoint = "ops" }).Webhook("Deploy {{Version}}", "All services healthy.").WithData(new { Version = "2.0" }));
+```
+
+## In-app notifications
+
+```csharp
+n.AddInApp();   // in-memory by default; register your own IInAppStore first to persist
+
+await notifications.SendAsync(Notification.To(new Recipient { UserId = "u-42" }).InApp("Order shipped", "Order 1001 is on its way."));
+
+// in your endpoints, inject IInAppStore
+var unread = await store.CountUnreadAsync(userId);
+var inbox = await store.ListAsync(userId, unreadOnly: true, limit: 20);
+await store.MarkReadAsync(userId, inbox[0].Id);
 ```
 
 ## Richer templates with Scriban

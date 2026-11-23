@@ -1,0 +1,47 @@
+#nullable enable
+const UniversalNotifier.NET.InApp.InAppNotifier.Name = "inapp" -> string!
+Microsoft.Extensions.DependencyInjection.InAppBuilderExtensions
+override UniversalNotifier.NET.InApp.InAppNotification.Equals(object? obj) -> bool
+override UniversalNotifier.NET.InApp.InAppNotification.GetHashCode() -> int
+override UniversalNotifier.NET.InApp.InAppNotification.ToString() -> string!
+static Microsoft.Extensions.DependencyInjection.InAppBuilderExtensions.AddInApp(this UniversalNotifier.NET.INotifierBuilder! builder, System.Action<UniversalNotifier.NET.InApp.InAppOptions!>? configure = null, string? name = null) -> UniversalNotifier.NET.INotifierBuilder!
+static UniversalNotifier.NET.InApp.InAppNotification.operator !=(UniversalNotifier.NET.InApp.InAppNotification? left, UniversalNotifier.NET.InApp.InAppNotification? right) -> bool
+static UniversalNotifier.NET.InApp.InAppNotification.operator ==(UniversalNotifier.NET.InApp.InAppNotification? left, UniversalNotifier.NET.InApp.InAppNotification? right) -> bool
+UniversalNotifier.NET.InApp.IInAppStore
+UniversalNotifier.NET.InApp.IInAppStore.AddAsync(UniversalNotifier.NET.InApp.InAppNotification! notification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask
+UniversalNotifier.NET.InApp.IInAppStore.CountUnreadAsync(string! userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<int>
+UniversalNotifier.NET.InApp.IInAppStore.ListAsync(string! userId, bool unreadOnly = false, int limit = 50, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.InApp.InAppNotification!>!>
+UniversalNotifier.NET.InApp.IInAppStore.MarkAllReadAsync(string! userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask
+UniversalNotifier.NET.InApp.IInAppStore.MarkReadAsync(string! userId, string! notificationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<bool>
+UniversalNotifier.NET.InApp.InAppNotification
+UniversalNotifier.NET.InApp.InAppNotification.<Clone>$() -> UniversalNotifier.NET.InApp.InAppNotification!
+UniversalNotifier.NET.InApp.InAppNotification.CreatedAt.get -> System.DateTimeOffset
+UniversalNotifier.NET.InApp.InAppNotification.CreatedAt.init -> void
+UniversalNotifier.NET.InApp.InAppNotification.Data.get -> System.Collections.Generic.IReadOnlyDictionary<string!, string!>?
+UniversalNotifier.NET.InApp.InAppNotification.Data.init -> void
+UniversalNotifier.NET.InApp.InAppNotification.Deconstruct(out string! Id, out string! UserId, out string? Title, out string! Text, out System.Collections.Generic.IReadOnlyDictionary<string!, string!>? Data, out System.DateTimeOffset CreatedAt, out bool IsRead) -> void
+UniversalNotifier.NET.InApp.InAppNotification.Equals(UniversalNotifier.NET.InApp.InAppNotification? other) -> bool
+UniversalNotifier.NET.InApp.InAppNotification.Id.get -> string!
+UniversalNotifier.NET.InApp.InAppNotification.Id.init -> void
+UniversalNotifier.NET.InApp.InAppNotification.InAppNotification(string! Id, string! UserId, string? Title, string! Text, System.Collections.Generic.IReadOnlyDictionary<string!, string!>? Data, System.DateTimeOffset CreatedAt, bool IsRead) -> void
+UniversalNotifier.NET.InApp.InAppNotification.IsRead.get -> bool
+UniversalNotifier.NET.InApp.InAppNotification.IsRead.init -> void
+UniversalNotifier.NET.InApp.InAppNotification.Text.get -> string!
+UniversalNotifier.NET.InApp.InAppNotification.Text.init -> void
+UniversalNotifier.NET.InApp.InAppNotification.Title.get -> string?
+UniversalNotifier.NET.InApp.InAppNotification.Title.init -> void
+UniversalNotifier.NET.InApp.InAppNotification.UserId.get -> string!
+UniversalNotifier.NET.InApp.InAppNotification.UserId.init -> void
+UniversalNotifier.NET.InApp.InAppNotifier
+UniversalNotifier.NET.InApp.InAppNotifier.InAppNotifier(UniversalNotifier.NET.InApp.IInAppStore! store, UniversalNotifier.NET.NotifierContext! context) -> void
+UniversalNotifier.NET.InApp.InAppOptions
+UniversalNotifier.NET.InApp.InAppOptions.InAppOptions() -> void
+UniversalNotifier.NET.InApp.InAppOptions.MaxPerUser.get -> int
+UniversalNotifier.NET.InApp.InAppOptions.MaxPerUser.set -> void
+UniversalNotifier.NET.InApp.InMemoryInAppStore
+UniversalNotifier.NET.InApp.InMemoryInAppStore.AddAsync(UniversalNotifier.NET.InApp.InAppNotification! notification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask
+UniversalNotifier.NET.InApp.InMemoryInAppStore.CountUnreadAsync(string! userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<int>
+UniversalNotifier.NET.InApp.InMemoryInAppStore.InMemoryInAppStore(int maxPerUser = 200) -> void
+UniversalNotifier.NET.InApp.InMemoryInAppStore.ListAsync(string! userId, bool unreadOnly = false, int limit = 50, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.InApp.InAppNotification!>!>
+UniversalNotifier.NET.InApp.InMemoryInAppStore.MarkAllReadAsync(string! userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask
+UniversalNotifier.NET.InApp.InMemoryInAppStore.MarkReadAsync(string! userId, string! notificationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<bool>

@@ -49,6 +49,7 @@ public static class ServiceCollectionExtensions
         services.TryAddEnumerable(ServiceDescriptor.Singleton<INotificationChannel, WebPushChannel>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<INotificationChannel, TelegramChannel>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<INotificationChannel, WebhookChannel>());
+        services.TryAddEnumerable(ServiceDescriptor.Singleton<INotificationChannel, InAppChannel>());
         return services;
     }
 

@@ -67,6 +67,10 @@ public sealed record Notification
     public Notification Telegram(string? text = null, string? html = null, string? provider = null) =>
         Via(NotificationChannel.Telegram, Inline(new ChannelContent { Text = text, Html = html }), provider);
 
+    /// <summary>Adds the in-app channel (an inbox entry for <see cref="Recipient.UserId"/>). Parts left out come from the template.</summary>
+    public Notification InApp(string? title = null, string? text = null, IReadOnlyDictionary<string, string>? data = null, string? provider = null) =>
+        Via(NotificationChannel.InApp, Inline(new ChannelContent { Title = title, Text = text, Data = data }), provider);
+
     /// <summary>Adds the webhook channel (Slack, Teams, generic). The title and text come from the template when left out.</summary>
     public Notification Webhook(string? title = null, string? text = null, string? provider = null) =>
         Via(NotificationChannel.Webhook, Inline(new ChannelContent { Title = title, Text = text }), provider);

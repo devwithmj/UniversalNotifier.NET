@@ -21,6 +21,9 @@ public sealed record Recipient
     /// <summary>The Telegram chat id.</summary>
     public string? TelegramChatId { get; init; }
 
+    /// <summary>Your own user id, used for in-app notifications.</summary>
+    public string? UserId { get; init; }
+
     /// <summary>The name of a configured webhook endpoint (for example a Slack channel or Teams workflow).</summary>
     public string? WebhookEndpoint { get; init; }
 

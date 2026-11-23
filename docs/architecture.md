@@ -56,6 +56,8 @@ The libraries are not annotated as AOT-compatible. The JSON in the REST provider
 | `UniversalNotifier.NET.Push.Fcm` | yes | Firebase Admin SDK |
 | `UniversalNotifier.NET.Telegram` | yes | Telegram Bot API |
 | `UniversalNotifier.NET.WebPush` | yes | Lib.Net.Http.WebPush |
+| `UniversalNotifier.NET.Email.SendGrid` | yes | SendGrid v3 REST |
+| `UniversalNotifier.NET.InApp` | yes | per-user inbox, in-memory store, `IInAppStore` |
 | `UniversalNotifier.NET.Webhook` | yes | Slack, Teams, generic JSON webhooks |
 | `UniversalNotifier.NET.Templates.Scriban` | yes | Scriban renderer |
 | `UniversalNotifier.NET.Background` | yes | in-memory queue, worker, result handlers |

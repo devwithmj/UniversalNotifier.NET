@@ -35,6 +35,9 @@ public readonly struct NotificationChannel : IEquatable<NotificationChannel>
     /// <summary>Telegram bot messages.</summary>
     public static NotificationChannel Telegram { get; } = new("telegram");
 
+    /// <summary>In-app notifications stored for the user's inbox.</summary>
+    public static NotificationChannel InApp { get; } = new("inapp");
+
     /// <summary>Webhooks: Slack, Microsoft Teams and generic HTTP endpoints.</summary>
     public static NotificationChannel Webhook { get; } = new("webhook");
 

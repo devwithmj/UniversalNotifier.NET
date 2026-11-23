@@ -17,6 +17,8 @@ A ground-up redesign. See [Migrating from 1.x](docs/migration-from-1.x.md).
 - `UniversalNotifier.NET.Background`: bounded in-memory queue with backpressure, concurrent worker, graceful shutdown, result handlers.
 - `NotificationJson` for storing notifications in durable queues.
 - `UniversalNotifier.NET.Testing` fake notifiers.
+- `UniversalNotifier.NET.Email.SendGrid`: SendGrid v3 provider, one personalization per recipient.
+- `UniversalNotifier.NET.InApp`: per-user inbox channel with unread counts, mark as read and a replaceable store.
 - `UniversalNotifier.NET.Webhook`: Slack, Microsoft Teams (Adaptive Card) and generic JSON webhooks by endpoint name, optional HMAC signing.
 - `UniversalNotifier.NET.Templates.Scriban`: Scriban renderer with execution limits, no `include` and a sanitized data model.
 - `WithRateLimit(perSecond, burst)`: timer-free per-notifier rate limiting.

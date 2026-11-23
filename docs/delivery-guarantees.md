@@ -71,6 +71,8 @@ For delivery that survives restarts, implement `INotificationQueue` over a datab
 | FCM | FCM returned a message id | one message per token, batches of 500, per-token result |
 | Telegram | Bot API `ok: true` | one request per chat, a few in parallel |
 | Web Push | push service returned 201 | one push per subscription, per-subscription result (`webpush.gone` = remove it) |
+| SendGrid | API returned 202 (queued) | one personalization per recipient, up to 1000 per request; a failed request fails its chunk |
+| In-app | the store accepted the entry | one entry per user; "delivered" means stored, display is up to your UI |
 | Webhook | endpoint answered 2xx | one request per message to a named endpoint; the response body is ignored |
 
 Cc and Bcc are only allowed with a single `To` recipient, because bulk email is delivered as individual messages.

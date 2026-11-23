@@ -20,6 +20,8 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <!-- Checks every package for compatibility across its target frameworks at pack time. After the first stable release also set PackageValidationBaselineVersion. -->
+    <EnablePackageValidation>true</EnablePackageValidation>
     <PackageTags>notification;notifier;email;sms;push;telegram;webpush;mailgun;twilio;firebase;fcm</PackageTags>
   </PropertyGroup>
 

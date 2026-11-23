@@ -206,3 +206,34 @@ internal sealed class WebhookChannel(IServiceProvider services) : INotificationC
             cancellationToken);
     }
 }
+
+internal sealed class InAppChannel(IServiceProvider services) : INotificationChannel
+{
+    public NotificationChannel Channel => NotificationChannel.InApp;
+
+    public Task<NotifierResponse> SendAsync(NotificationDelivery delivery, CancellationToken cancellationToken)
+    {
+        if (delivery.Notification.Recipient.UserId is not { } userId)
+        {
+            return Task.FromResult(ChannelSupport.NoAddress(Channel, "user id"));
+        }
+
+        var notifier = ChannelSupport.Resolve<IInAppNotifier>(services, delivery.Provider);
+        if (notifier is null)
+        {
+            return Task.FromResult(ChannelSupport.NoProvider(Channel, delivery.Provider));
+        }
+
+        return notifier.SendAsync(
+            new InAppMessage
+            {
+                Id = delivery.Notification.Id,
+                Metadata = delivery.Notification.Metadata,
+                UserId = userId,
+                Title = delivery.Content.Title ?? delivery.Content.Subject,
+                Text = delivery.Content.Text ?? string.Empty,
+                Data = delivery.Content.Data,
+            },
+            cancellationToken);
+    }
+}
