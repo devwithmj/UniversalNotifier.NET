@@ -4,3 +4,4 @@ static Microsoft.Extensions.DependencyInjection.FluidBuilderExtensions.UseFluid(
 UniversalNotifier.NET.Templates.Fluid.FluidTemplateRenderer
 UniversalNotifier.NET.Templates.Fluid.FluidTemplateRenderer.FluidTemplateRenderer(UniversalNotifier.NET.TemplateOptions? options = null) -> void
 UniversalNotifier.NET.Templates.Fluid.FluidTemplateRenderer.Render(string! templateText, UniversalNotifier.NET.TemplateData! data, UniversalNotifier.NET.TemplateFormat format = UniversalNotifier.NET.TemplateFormat.Text) -> string!
+UniversalNotifier.NET.Templates.Fluid.FluidTemplateRenderer.Validate(string! templateText) -> string?

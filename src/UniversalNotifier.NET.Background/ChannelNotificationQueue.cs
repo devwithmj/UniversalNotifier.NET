@@ -1,17 +1,21 @@
 using System.Collections.Concurrent;
+using System.Diagnostics.Metrics;
 using System.Threading.Channels;
 using Microsoft.Extensions.Options;
 
 namespace UniversalNotifier.NET.Background;
 
 /// <summary>The built-in in-memory queue, a bounded <see cref="Channel{T}"/>. Lock-free for the common path and safe for many producers and workers.</summary>
-public sealed class ChannelNotificationQueue : INotificationQueue
+public sealed class ChannelNotificationQueue : INotificationQueue, IDisposable
 {
     private readonly Channel<Notification> _channel;
     private readonly QueueFullMode _fullMode;
     private readonly TimeSpan _deduplicationWindow;
     private readonly TimeProvider _time;
     private readonly ConcurrentDictionary<string, long> _seenKeys = new(StringComparer.Ordinal);
+    private readonly Meter _meter = new(NotifierTelemetry.BackgroundMeterName);
+    private readonly Counter<long> _rejected;
+    private readonly Counter<long> _deduplicated;
 
     /// <summary>Creates the queue from options.</summary>
     public ChannelNotificationQueue(IOptions<BackgroundDeliveryOptions> options)
@@ -44,6 +48,8 @@ public sealed class ChannelNotificationQueue : INotificationQueue
         _fullMode = options.FullMode;
         _deduplicationWindow = options.DeduplicationWindow;
         _time = timeProvider;
+        _rejected = _meter.CreateCounter<long>("notifier.queue.rejected", "{notification}", "Notifications refused because the queue was full or closed.");
+        _deduplicated = _meter.CreateCounter<long>("notifier.queue.deduplicated", "{notification}", "Notifications dropped as repeats of an idempotency key.");
         _channel = Channel.CreateBounded<Notification>(new BoundedChannelOptions(options.Capacity)
         {
             FullMode = BoundedChannelFullMode.Wait,
@@ -51,6 +57,7 @@ public sealed class ChannelNotificationQueue : INotificationQueue
             SingleWriter = false,
             AllowSynchronousContinuations = false, // a producer must never run a worker's continuation inline
         });
+        _meter.CreateObservableGauge("notifier.queue.depth", () => _channel.Reader.Count, "{notification}", "Notifications waiting for delivery.");
     }
 
     /// <inheritdoc />
@@ -61,6 +68,7 @@ public sealed class ChannelNotificationQueue : INotificationQueue
         var key = notification.IdempotencyKey;
         if (key is not null && _deduplicationWindow > TimeSpan.Zero && !TryRegisterKey(key))
         {
+            _deduplicated.Add(1);
             return true; // already accepted: the earlier submission carries it, so this one is a harmless repeat
         }
 
@@ -88,9 +96,13 @@ public sealed class ChannelNotificationQueue : INotificationQueue
     // A notification that was not queued must not block the caller's next attempt with the same key.
     private bool Release(bool queued, string? key)
     {
-        if (!queued && key is not null)
+        if (!queued)
         {
-            _seenKeys.TryRemove(key, out _);
+            _rejected.Add(1);
+            if (key is not null)
+            {
+                _seenKeys.TryRemove(key, out _);
+            }
         }
 
         return queued;
@@ -142,4 +154,7 @@ public sealed class ChannelNotificationQueue : INotificationQueue
 
     /// <inheritdoc />
     public void Complete() => _channel.Writer.TryComplete();
+
+    /// <summary>Stops publishing the queue's metrics.</summary>
+    public void Dispose() => _meter.Dispose();
 }

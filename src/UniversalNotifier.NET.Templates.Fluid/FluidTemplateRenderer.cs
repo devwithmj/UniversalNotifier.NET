@@ -18,7 +18,7 @@ namespace UniversalNotifier.NET.Templates.Fluid;
 /// Variable names are case-sensitive. <see cref="MissingTokenBehavior.Throw"/> makes an undefined variable an error; the
 /// other behaviors render it as empty. Parsed templates are cached.
 /// </remarks>
-public sealed class FluidTemplateRenderer : ITemplateRenderer
+public sealed class FluidTemplateRenderer : IValidatingTemplateRenderer
 {
     private const int MaxDepth = 8;
 
@@ -68,6 +68,13 @@ public sealed class FluidTemplateRenderer : ITemplateRenderer
         {
             throw new TemplateRenderException($"The template could not be rendered: {exception.Message}");
         }
+    }
+
+    /// <inheritdoc />
+    public string? Validate(string templateText)
+    {
+        ArgumentNullException.ThrowIfNull(templateText);
+        return Parser.TryParse(templateText, out _, out var error) ? null : error;
     }
 
     private IFluidTemplate GetTemplate(string text)

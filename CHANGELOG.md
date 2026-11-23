@@ -4,6 +4,8 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ## [2.0.0-preview.1] - unreleased
 
+Release notes: [v2.0.0-preview.1](docs/releases/v2.0.0-preview.1.md).
+
 A ground-up redesign. See [Migrating from 1.x](docs/migration-from-1.x.md).
 
 ### Added
@@ -24,6 +26,8 @@ A ground-up redesign. See [Migrating from 1.x](docs/migration-from-1.x.md).
 - `UniversalNotifier.NET.Templates.Scriban`: Scriban renderer with execution limits, no `include` and a sanitized data model.
 - `WithRateLimit(perSecond, burst)`: timer-free per-notifier rate limiting.
 - `Notification.IdempotencyKey` and `BackgroundDeliveryOptions.DeduplicationWindow`: repeated submissions are queued once.
+- Traces and metrics through `System.Diagnostics` (`NotifierTelemetry`): a span per send and per notification, message, retry and duration metrics, and queue depth, rejected and deduplicated metrics. No recipients or content in tags.
+- Template validation at startup (`TemplateValidator`) for the Scriban and Fluid renderers, and an embedded-resource template store (`AddEmbeddedTemplates`).
 - A shared provider contract test suite and public API tracking (`PublicApiAnalyzers`).
 - Targets .NET 10 and .NET 11.
 

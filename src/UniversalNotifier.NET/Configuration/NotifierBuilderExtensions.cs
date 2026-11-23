@@ -127,6 +127,17 @@ public static class NotifierBuilderExtensions
         return builder;
     }
 
+    /// <summary>Loads templates compiled into an assembly. See <see cref="EmbeddedTemplateStore"/> for the layout.</summary>
+    /// <param name="builder">The builder.</param>
+    /// <param name="assembly">The assembly that holds the embedded resources.</param>
+    /// <param name="resourcePrefix">The resource prefix of the templates folder, for example <c>MyApp.Templates</c>.</param>
+    public static INotifierBuilder AddEmbeddedTemplates(this INotifierBuilder builder, System.Reflection.Assembly assembly, string resourcePrefix)
+    {
+        ArgumentNullException.ThrowIfNull(builder);
+        builder.Services.AddSingleton<ITemplateStore>(new EmbeddedTemplateStore(assembly, resourcePrefix));
+        return builder;
+    }
+
     /// <summary>Adds a custom template store, for example one backed by a database. Stores are asked in registration order.</summary>
     public static INotifierBuilder AddTemplateStore<TStore>(this INotifierBuilder builder) where TStore : class, ITemplateStore
     {

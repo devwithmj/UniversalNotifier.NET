@@ -1,10 +1,11 @@
+using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 
 namespace UniversalNotifier.NET;
 
 /// <summary>
 /// The base class for providers. It owns the rules every provider shares (validation, one error model, cancellation,
-/// logging, optional retries) so a provider only implements the call to its service.
+/// logging, telemetry, optional rate limiting and retries) so a provider only implements the call to its service.
 /// </summary>
 /// <typeparam name="TMessage">The message type this provider sends.</typeparam>
 public abstract class NotifierBase<TMessage> : INotifier<TMessage> where TMessage : NotifierMessage
@@ -22,7 +23,7 @@ public abstract class NotifierBase<TMessage> : INotifier<TMessage> where TMessag
         _rateGate = context.RateLimit.Enabled ? new RateGate(context.RateLimit, context.TimeProvider) : null;
     }
 
-    /// <summary>The name used in logs. Defaults to the class name.</summary>
+    /// <summary>The name used in logs and telemetry. Defaults to the class name.</summary>
     protected virtual string ProviderName => GetType().Name;
 
     /// <inheritdoc />
@@ -33,12 +34,16 @@ public abstract class NotifierBase<TMessage> : INotifier<TMessage> where TMessag
 
         var messageType = typeof(TMessage).Name;
         var id = message.Id ?? "-";
+        var started = Stopwatch.GetTimestamp();
+        using var activity = NotifierTelemetry.Source.StartActivity($"{ProviderName} send", ActivityKind.Client);
+        activity?.SetTag("notifier.provider", ProviderName);
+        activity?.SetTag("notifier.message_type", messageType);
 
         var errors = message.Validate();
         if (errors.Count > 0)
         {
             NotifierLog.Invalid(_logger, ProviderName, messageType, id, JoinCodes(errors));
-            return NotifierResponse.Failed(errors);
+            return Finish(NotifierResponse.Failed(errors), messageType, attempts: 0, started, activity);
         }
 
         var retry = _context.Retry;
@@ -55,7 +60,7 @@ public abstract class NotifierBase<TMessage> : INotifier<TMessage> where TMessag
             if (response.Success)
             {
                 NotifierLog.Completed(_logger, ProviderName, response.Status, messageType, id, response.ProviderMessageId);
-                return response;
+                return Finish(response, messageType, attempt, started, activity);
             }
 
             if (attempt >= retry.MaxAttempts || !CanRetry(response, retry))
@@ -65,11 +70,12 @@ public abstract class NotifierBase<TMessage> : INotifier<TMessage> where TMessag
                     NotifierLog.Failed(_logger, ProviderName, response.Status, messageType, id, attempt, JoinCodes(response.Errors));
                 }
 
-                return response;
+                return Finish(response, messageType, attempt, started, activity);
             }
 
             var delay = GetDelay(retry, attempt, response.RetryAfter);
             NotifierLog.Retrying(_logger, ProviderName, messageType, id, delay, attempt);
+            NotifierTelemetry.Retries.Add(1, new KeyValuePair<string, object?>("provider", ProviderName), new KeyValuePair<string, object?>("message_type", messageType));
             await Task.Delay(delay, _context.TimeProvider, cancellationToken).ConfigureAwait(false);
         }
     }
@@ -91,6 +97,36 @@ public abstract class NotifierBase<TMessage> : INotifier<TMessage> where TMessag
             => new NotifierError(NotifierErrorKind.Unknown, "network.timeout", "The request to the provider timed out."),
         _ => new NotifierError(NotifierErrorKind.Unknown, "provider.error", $"{exception.GetType().Name}: {exception.Message}"),
     };
+
+    // Records the outcome as a span status and metrics. Tags never include recipients, content or credentials.
+    private NotifierResponse Finish(NotifierResponse response, string messageType, int attempts, long started, Activity? activity)
+    {
+        var status = response.Status.ToString();
+        var errorKind = response.Success || response.Errors.Count == 0 ? "none" : response.Errors[0].Kind.ToString();
+
+        var tags = new TagList
+        {
+            { "provider", ProviderName },
+            { "message_type", messageType },
+            { "status", status },
+            { "error_kind", errorKind },
+        };
+        NotifierTelemetry.Messages.Add(1, tags);
+        NotifierTelemetry.Duration.Record(NotifierTelemetry.ElapsedMilliseconds(started), tags);
+
+        if (activity is not null)
+        {
+            activity.SetTag("notifier.status", status);
+            activity.SetTag("notifier.attempts", attempts);
+            if (!response.Success)
+            {
+                activity.SetTag("notifier.error_code", response.Errors.Count > 0 ? response.Errors[0].Code : "none");
+                activity.SetStatus(ActivityStatusCode.Error, response.Errors.Count > 0 ? response.Errors[0].Code : status);
+            }
+        }
+
+        return response;
+    }
 
     private async Task<NotifierResponse> TrySendAsync(TMessage message, CancellationToken cancellationToken)
     {

@@ -16,7 +16,7 @@ public interface ITemplateStore
 public sealed record TemplateRegistration(string Name, NotificationChannel Channel, ChannelContent Content);
 
 /// <summary>Holds templates registered in code.</summary>
-public sealed class InMemoryTemplateStore : ITemplateStore
+public sealed class InMemoryTemplateStore : IListableTemplateStore
 {
     private readonly Dictionary<string, Dictionary<string, ChannelContent>> _templates = new(StringComparer.OrdinalIgnoreCase);
 
@@ -39,13 +39,17 @@ public sealed class InMemoryTemplateStore : ITemplateStore
     public ValueTask<ChannelContent?> TryGetAsync(string name, NotificationChannel channel, CancellationToken cancellationToken = default) =>
         ValueTask.FromResult(
             _templates.TryGetValue(name, out var channels) && channels.TryGetValue(channel.Name, out var content) ? content : null);
+
+    /// <inheritdoc />
+    public IEnumerable<TemplateEntry> List() =>
+        _templates.SelectMany(t => t.Value.Select(c => new TemplateEntry(t.Key, new NotificationChannel(c.Key), c.Value)));
 }
 
 /// <summary>
 /// Loads templates from a folder: <c>{root}/{template}/{channel}.subject.txt</c>, <c>.title.txt</c>, <c>.text.txt</c> and <c>.html</c>,
 /// for example <c>templates/welcome/email.subject.txt</c> and <c>templates/welcome/email.html</c>. Loaded templates are cached.
 /// </summary>
-public sealed class DirectoryTemplateStore : ITemplateStore
+public sealed class DirectoryTemplateStore : IListableTemplateStore
 {
     private readonly string _root;
     private readonly ConcurrentDictionary<(string Name, string Channel), ChannelContent> _cache = new();
@@ -91,6 +95,37 @@ public sealed class DirectoryTemplateStore : ITemplateStore
         var content = new ChannelContent { Subject = subject, Title = title, Text = text, Html = html };
         _cache[(name, channel.Name)] = content;
         return content;
+    }
+
+    /// <inheritdoc />
+    public IEnumerable<TemplateEntry> List()
+    {
+        if (!Directory.Exists(_root))
+        {
+            yield break;
+        }
+
+        foreach (var directory in Directory.EnumerateDirectories(_root))
+        {
+            var name = Path.GetFileName(directory);
+            var channels = Directory.EnumerateFiles(directory)
+                .Select(f => Path.GetFileName(f).Split('.')[0])
+                .Distinct(StringComparer.Ordinal);
+
+            foreach (var channelName in channels)
+            {
+                if (!IsSafeSegment(name) || !IsSafeSegment(channelName))
+                {
+                    continue;
+                }
+
+                var channel = new NotificationChannel(channelName);
+                if (TryGetAsync(name, channel).AsTask().GetAwaiter().GetResult() is { } content)
+                {
+                    yield return new TemplateEntry(name, channel, content);
+                }
+            }
+        }
     }
 
     private static bool IsSafeSegment(string value)
