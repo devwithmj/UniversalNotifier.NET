@@ -2,6 +2,7 @@ using System.Net;
 using FirebaseAdmin.Messaging;
 using Microsoft.Extensions.Logging;
 using UniversalNotifier.NET.Email.Mailgun;
+using UniversalNotifier.NET.Email.SendGrid;
 using UniversalNotifier.NET.Email.Smtp;
 using UniversalNotifier.NET.Push.Fcm;
 using UniversalNotifier.NET.Sms.Twilio;
@@ -429,5 +430,37 @@ public class WebhookContractTests : ProviderContractTests<WebhookMessage>
 
         var options = new WebhookOptions().Add("ops", "https://hooks.slack.com/services/T0SECRET/B0SECRET/xyzSECRET", WebhookFormat.Slack, "signing-SECRET");
         return new WebhookNotifier(options, Context, _handler);
+    }
+}
+
+[TestFixture]
+public class SendGridContractTests : ProviderContractTests<EmailMessage>
+{
+    private StubHttpHandler _handler = new(HttpStatusCode.OK);
+
+    protected override EmailMessage Valid => EmailMessage.Create("contract-recipient@example.com", "Subject", "Body");
+
+    protected override EmailMessage Invalid => new();
+
+    protected override IReadOnlyList<string> Secrets => ["SG.SECRET-key"];
+
+    protected override IReadOnlyList<string> PersonalData => ["contract-recipient@example.com"];
+
+    protected override int BackendCalls => _handler.Requests.Count;
+
+    protected override INotifier<EmailMessage> Create(ContractScenario scenario)
+    {
+        _handler = scenario switch
+        {
+            ContractScenario.Accepts => new StubHttpHandler(HttpStatusCode.Accepted, string.Empty),
+            ContractScenario.RejectsPermanently => new StubHttpHandler(HttpStatusCode.BadRequest, """{"errors":[{"message":"The to email address contract-recipient@example.com is invalid","field":"personalizations.0.to.0.email"}]}"""),
+            ContractScenario.RejectsTransiently => new StubHttpHandler(HttpStatusCode.TooManyRequests, "{}"),
+            _ => new StubHttpHandler(_ => throw new HttpRequestException(HttpRequestError.ConnectionError, "down")),
+        };
+
+        return new SendGridNotifier(
+            new SendGridOptions { ApiKey = "SG.SECRET-key", From = "from@example.com" },
+            new HttpClient(_handler),
+            Context);
     }
 }
