@@ -2,6 +2,9 @@
 abstract UniversalNotifier.NET.NotifierBase<TMessage>.SendCoreAsync(TMessage! message, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<UniversalNotifier.NET.NotifierResponse!>!
 abstract UniversalNotifier.NET.NotifierMessage.<Clone>$() -> UniversalNotifier.NET.NotifierMessage!
 abstract UniversalNotifier.NET.NotifierMessage.Validate() -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.NotifierError>!
+const UniversalNotifier.NET.NotifierTelemetry.BackgroundMeterName = "UniversalNotifier.NET.Background" -> string!
+const UniversalNotifier.NET.NotifierTelemetry.MeterName = "UniversalNotifier.NET" -> string!
+const UniversalNotifier.NET.NotifierTelemetry.SourceName = "UniversalNotifier.NET" -> string!
 Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions
 override sealed UniversalNotifier.NET.EmailMessage.Equals(UniversalNotifier.NET.NotifierMessage? other) -> bool
 override sealed UniversalNotifier.NET.InAppMessage.Equals(UniversalNotifier.NET.NotifierMessage? other) -> bool
@@ -403,6 +406,7 @@ UniversalNotifier.NET.NotifierResponse.Recipients.get -> System.Collections.Gene
 UniversalNotifier.NET.NotifierResponse.RetryAfter.get -> System.TimeSpan?
 UniversalNotifier.NET.NotifierResponse.Status.get -> UniversalNotifier.NET.DeliveryStatus
 UniversalNotifier.NET.NotifierResponse.Success.get -> bool
+UniversalNotifier.NET.NotifierTelemetry
 UniversalNotifier.NET.PhoneNumber
 UniversalNotifier.NET.PhoneNumber.Deconstruct(out string! Value) -> void
 UniversalNotifier.NET.PhoneNumber.Equals(UniversalNotifier.NET.PhoneNumber other) -> bool

@@ -18,6 +18,7 @@ UniversalNotifier.NET.Background.ChannelNotificationQueue.ChannelNotificationQue
 UniversalNotifier.NET.Background.ChannelNotificationQueue.ChannelNotificationQueue(UniversalNotifier.NET.Background.BackgroundDeliveryOptions! options, System.TimeProvider! timeProvider) -> void
 UniversalNotifier.NET.Background.ChannelNotificationQueue.Complete() -> void
 UniversalNotifier.NET.Background.ChannelNotificationQueue.DequeueAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Collections.Generic.IAsyncEnumerable<UniversalNotifier.NET.Notification!>!
+UniversalNotifier.NET.Background.ChannelNotificationQueue.Dispose() -> void
 UniversalNotifier.NET.Background.ChannelNotificationQueue.EnqueueAsync(UniversalNotifier.NET.Notification! notification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<bool>
 UniversalNotifier.NET.Background.INotificationQueue
 UniversalNotifier.NET.Background.INotificationQueue.Complete() -> void

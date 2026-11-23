@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace UniversalNotifier.NET;
 
 internal sealed class NotificationService : INotificationService
@@ -28,19 +30,37 @@ internal sealed class NotificationService : INotificationService
         cancellationToken.ThrowIfCancellationRequested();
         var data = TemplateData.From(notification.Data);
 
+        using var activity = NotifierTelemetry.Source.StartActivity("notify", ActivityKind.Internal);
+        activity?.SetTag("notifier.channels", notification.Channels.Count);
+
+        NotificationResult result;
         if (notification.Channels.Count == 1)
         {
             var single = await SendChannelAsync(notification, notification.Channels[0], data, cancellationToken).ConfigureAwait(false);
-            return new NotificationResult(notification.Id, [single]);
+            result = new NotificationResult(notification.Id, [single]);
         }
-
-        var tasks = new Task<ChannelResult>[notification.Channels.Count];
-        for (var i = 0; i < tasks.Length; i++)
+        else
         {
-            tasks[i] = SendChannelAsync(notification, notification.Channels[i], data, cancellationToken);
+            var tasks = new Task<ChannelResult>[notification.Channels.Count];
+            for (var i = 0; i < tasks.Length; i++)
+            {
+                tasks[i] = SendChannelAsync(notification, notification.Channels[i], data, cancellationToken);
+            }
+
+            result = new NotificationResult(notification.Id, await Task.WhenAll(tasks).ConfigureAwait(false));
         }
 
-        return new NotificationResult(notification.Id, await Task.WhenAll(tasks).ConfigureAwait(false));
+        NotifierTelemetry.Notifications.Add(1, new KeyValuePair<string, object?>("status", result.Status.ToString()));
+        if (activity is not null)
+        {
+            activity.SetTag("notifier.status", result.Status.ToString());
+            if (!result.Success)
+            {
+                activity.SetStatus(ActivityStatusCode.Error, result.Status.ToString());
+            }
+        }
+
+        return result;
     }
 
     private async Task<ChannelResult> SendChannelAsync(Notification notification, ChannelRequest request, TemplateData data, CancellationToken cancellationToken)

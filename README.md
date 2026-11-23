@@ -232,6 +232,18 @@ await queue.EnqueueAsync(notification.WithIdempotencyKey($"order-{order.Id}-ship
 
 The queue is bounded: a full queue slows producers down (or rejects, if you choose) instead of growing memory. Shutdown drains what is queued until the host's timeout. The in-memory queue loses queued notifications if the process crashes, so for guaranteed delivery implement `INotificationQueue` over your database or broker (`NotificationJson` serializes a notification) and register it. Register an `INotificationResultHandler` to store results, alert on failures or dead-letter.
 
+## Observability
+
+Traces and metrics use `System.Diagnostics` only (no extra dependency, near-zero cost with no listener) and never contain recipients, content or credentials:
+
+```csharp
+builder.Services.AddOpenTelemetry()
+    .WithTracing(t => t.AddSource(NotifierTelemetry.SourceName))
+    .WithMetrics(m => m.AddMeter(NotifierTelemetry.MeterName, NotifierTelemetry.BackgroundMeterName));
+```
+
+Spans per send and per notification; counters for messages (by provider, status and error kind), retries and notifications; a duration histogram; queue depth, rejected and deduplicated. See [Observability](docs/observability.md).
+
 ## Testing your code
 
 ```csharp
@@ -270,6 +282,7 @@ Measured with BenchmarkDotNet on one developer machine (short job; treat as orde
 
 - [Architecture](docs/architecture.md) and [decision records](docs/decisions/)
 - [Delivery guarantees](docs/delivery-guarantees.md)
+- [Observability](docs/observability.md)
 - [Live testing against real providers](docs/live-testing.md)
 - [Custom providers and channels](docs/custom-provider.md)
 - [Migrating from 1.x](docs/migration-from-1.x.md)
