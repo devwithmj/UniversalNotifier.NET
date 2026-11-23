@@ -81,23 +81,27 @@ Cc and Bcc are only allowed with a single `To` recipient, because bulk email is 
 
 ## Receiving delivery reports
 
-`UniversalNotifier.NET.Receipts` has no web framework dependency. Host the endpoint yourself and hand the raw request to the provider's verifier; for example with a minimal API:
+`UniversalNotifier.NET.Receipts` verifies a provider webhook and returns provider-neutral `DeliveryEvent`s, with no web framework dependency. In ASP.NET Core, `UniversalNotifier.NET.Receipts.AspNetCore` hosts the endpoint for you:
 
 ```csharp
-var mailgun = new MailgunDeliveryWebhook(builder.Configuration["Mailgun:WebhookSigningKey"]!);
+builder.Services.AddSingleton<IDeliveryReceiptHandler, MyReceiptHandler>();   // updates your message records
 
-app.MapPost("/hooks/mailgun", async (HttpRequest http) =>
-{
-    using var body = new MemoryStream();
-    await http.Body.CopyToAsync(body);
-    var headers = http.Headers.ToDictionary(h => h.Key, h => h.Value.ToString());
-    var result = mailgun.Process(new WebhookRequest(new Uri(http.GetEncodedUrl()), headers, body.ToArray()));
-    if (!result.Authentic) return Results.Unauthorized();
-
-    foreach (var e in result.Events) { /* match e.ProviderMessageId to your record and update its status */ }
-    return Results.Ok();
-});
+app.MapDeliveryReceipts("/hooks/mailgun", new MailgunDeliveryWebhook(builder.Configuration["Mailgun:WebhookSigningKey"]!));
+app.MapDeliveryReceipts("/hooks/twilio", new TwilioDeliveryWebhook(builder.Configuration["Twilio:AuthToken"]!));
 ```
+
+```csharp
+public sealed class MyReceiptHandler : IDeliveryReceiptHandler
+{
+    public ValueTask HandleAsync(DeliveryEvent e, CancellationToken ct)
+    {
+        // match e.ProviderMessageId to the id you stored when the send was accepted, then update its status
+        return ValueTask.CompletedTask;
+    }
+}
+```
+
+The endpoint answers 401 for a wrong signature, 413 above 1 MiB, 200 once every handler has run, and lets a handler exception through so the host answers 500 and the provider retries. Reply quickly: do slow work after. Outside ASP.NET Core, build a `WebhookRequest` (URL, headers, raw body) and call `webhook.Process(...)` yourself.
 
 - **Mailgun:** use the HTTP webhook signing key (not the API key). A call more than five minutes old is rejected, so a captured request cannot be replayed. The event carries the message id without angle brackets; the parser adds them so it equals the `ProviderMessageId` the send returned.
 - **Twilio:** use the Auth Token; `Url` must be the exact public URL configured at Twilio (behind a proxy, rebuild it from the forwarded scheme and host). Twilio signs with HMAC-SHA1, which the protocol requires. WhatsApp reports arrive here too (`delivered`, `read`, `undelivered`).
@@ -105,3 +109,4 @@ app.MapPost("/hooks/mailgun", async (HttpRequest http) =>
 - `Recipient` is personal data: do not log events. `Reason` is only the provider error code, never message text.
 - **SendGrid:** `SendGridDeliveryWebhook` takes the verification key from the SendGrid webhook settings (turn on "Signature Verification" there) and checks the ECDSA signature over the timestamp header plus the raw body; calls older than five minutes are rejected. One call carries a batch, so `Events` can hold many. The send id is the part of `sg_message_id` before `.filter`, which is what the parser returns, and the reason is the status code (for example `5.1.1`), never the free-text reason that quotes the address.
 - Not covered yet: SES (events arrive through SNS) and FCM (no receipts exist).
+- Twilio signs the exact public URL. Behind a proxy or load balancer call `app.UseForwardedHeaders()` so the scheme and host the application sees match the URL configured at Twilio.
