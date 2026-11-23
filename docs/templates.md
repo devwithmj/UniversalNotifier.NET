@@ -73,6 +73,7 @@ MSBuild writes `order-shipped` as `order_shipped` in the resource name; lookups 
 ```csharp
 n.UseScriban();   // UniversalNotifier.NET.Templates.Scriban
 n.UseFluid();     // UniversalNotifier.NET.Templates.Fluid (Liquid syntax)
+n.UseHandlebars(); // UniversalNotifier.NET.Templates.Handlebars
 ```
 
 ```
@@ -80,7 +81,9 @@ n.UseFluid();     // UniversalNotifier.NET.Templates.Fluid (Liquid syntax)
 {{ for line in Lines }}<li>{{ line.Sku }} x {{ line.Qty }}</li>{{ end }}
 ```
 
-Both engines limit execution (loops, recursion, output size), have no `include`, give templates plain data (no .NET method calls), HTML-encode string values in HTML parts and treat an undefined variable as an error by default. Names are case-sensitive in the engines. To plug in anything else, implement `ITemplateRenderer` (see `samples/CustomExtensions`); for a database, implement `ITemplateStore`.
+Handlebars (`{{#if IsLarge}}Free shipping{{/if}}`, `{{#each Lines}}<li>{{Sku}} x {{Qty}}</li>{{/each}}`) has no comparison operators, so compute flags like `IsLarge` in your data. It disables partials and files, and HTML-encodes every string value in HTML parts, so `{{{raw}}}` does not bypass the encoding. Handlebars.Net has no step or output limits, but without partials a template can only loop over the data you pass.
+
+Scriban and Fluid limit execution (loops, recursion, output size), have no `include`, give templates plain data (no .NET method calls), HTML-encode string values in HTML parts and treat an undefined variable as an error by default. Names are case-sensitive in the engines. To plug in anything else, implement `ITemplateRenderer` (see `samples/CustomExtensions`); for a database, implement `ITemplateStore`.
 
 ## Check templates at startup
 
