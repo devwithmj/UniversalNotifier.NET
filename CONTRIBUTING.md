@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping. This project aims to stay small, fast and boring to use, so changes are judged by how much complexity they take off the people who use the library.
+Thanks for helping. Please read the [code of conduct](CODE_OF_CONDUCT.md); report security problems privately as described in [SECURITY.md](SECURITY.md), never as a public issue. This project aims to stay small, fast and boring to use, so changes are judged by how much complexity they take off the people who use the library.
 
 ## Build and test
 
@@ -32,6 +32,17 @@ The libraries and the test project target `net10.0` and `net11.0`, so the whole 
 4. Add tests next to the others in `tests/UniversalNotifier.NET.Tests`: request construction, every response branch, per-recipient results for bulk, classification of every error, option validation, DI registration.
 5. Add a fixture for it to `tests/UniversalNotifier.NET.Tests/ProviderContractTests.cs`: the shared contract (accepts, validates before I/O, cancellation, classified failures, no leaked secrets) must pass.
 6. Add it to the table in the README and to `docs/delivery-guarantees.md`.
+
+## Releasing
+
+Maintainers only. Releases are tagged and published by `.github/workflows/release.yml` using NuGet trusted publishing, so no API key is stored.
+
+1. Update `CHANGELOG.md` and write `docs/releases/v<version>.md` (the GitHub release body).
+2. Set `<Version>` in `src/Directory.Build.props`.
+3. Make sure CI is green on `main`, then push the tag: `git tag v2.0.0 && git push origin v2.0.0`.
+4. After the first stable release: move each project's `PublicAPI.Unshipped.txt` into `PublicAPI.Shipped.txt` and set `PackageValidationBaselineVersion` to the released version, so later releases are checked for breaking changes.
+
+One-time setup: create a trusted publishing policy on nuget.org for this repository and `release.yml`, create a GitHub environment named `release`, and set the `NUGET_USER` secret to the nuget.org profile name.
 
 ## Commits and pull requests
 

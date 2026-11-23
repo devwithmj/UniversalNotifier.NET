@@ -1,0 +1,14 @@
+# Normalize line endings so commits are identical on Windows and Linux.
+* text=auto
+
+*.sln text eol=crlf
+*.cs text diff=csharp
+*.csproj text
+*.props text
+*.md text diff=markdown
+*.yml text
+*.json text
+
+*.nupkg binary
+*.snupkg binary
+*.png binary

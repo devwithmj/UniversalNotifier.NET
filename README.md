@@ -273,7 +273,8 @@ Measured with BenchmarkDotNet on one developer machine (short job; treat as orde
 - [Live testing against real providers](docs/live-testing.md)
 - [Custom providers and channels](docs/custom-provider.md)
 - [Migrating from 1.x](docs/migration-from-1.x.md)
-- [Contributing](CONTRIBUTING.md) and [Changelog](CHANGELOG.md)
+- [Roadmap and known gaps](docs/roadmap.md)
+- [Contributing](CONTRIBUTING.md), [code of conduct](CODE_OF_CONDUCT.md), [security policy](SECURITY.md) and [changelog](CHANGELOG.md)
 
 ## License
 

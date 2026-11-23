@@ -4,6 +4,8 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ## [2.0.0-preview.1] - unreleased
 
+Release notes: [v2.0.0-preview.1](docs/releases/v2.0.0-preview.1.md).
+
 A ground-up redesign. See [Migrating from 1.x](docs/migration-from-1.x.md).
 
 ### Added
