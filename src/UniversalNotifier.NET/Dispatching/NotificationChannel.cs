@@ -1,3 +1,6 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 namespace UniversalNotifier.NET;
 
 /// <summary>
@@ -5,6 +8,7 @@ namespace UniversalNotifier.NET;
 /// <c>new NotificationChannel("slack")</c> and register an <see cref="INotificationChannel"/> for it.
 /// Names are case-insensitive.
 /// </summary>
+[JsonConverter(typeof(NotificationChannelJsonConverter))]
 public readonly struct NotificationChannel : IEquatable<NotificationChannel>
 {
     private readonly string? _name;
@@ -51,4 +55,13 @@ public readonly struct NotificationChannel : IEquatable<NotificationChannel>
 
     /// <summary>Compares two channels by name.</summary>
     public static bool operator !=(NotificationChannel left, NotificationChannel right) => !left.Equals(right);
+}
+
+internal sealed class NotificationChannelJsonConverter : JsonConverter<NotificationChannel>
+{
+    public override NotificationChannel Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
+        new(reader.GetString() ?? throw new JsonException("A channel name is required."));
+
+    public override void Write(Utf8JsonWriter writer, NotificationChannel value, JsonSerializerOptions options) =>
+        writer.WriteStringValue(value.Name);
 }

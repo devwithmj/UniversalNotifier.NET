@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Reflection;
+using System.Text.Json;
 
 namespace UniversalNotifier.NET;
 
@@ -71,6 +72,10 @@ public sealed class TemplateData
             case IReadOnlyDictionary<string, object?> dictionary:
                 return dictionary.TryGetValue(name, out value);
 
+            case JsonElement element:
+                // Values that came back from a serialized (for example queued) notification are JSON elements.
+                return TryGetJsonProperty(element, name, out value);
+
             case IDictionary legacy:
                 if (legacy.Contains(name))
                 {
@@ -86,6 +91,32 @@ public sealed class TemplateData
                 value = property?.GetValue(source);
                 return property is not null;
         }
+    }
+
+    private static bool TryGetJsonProperty(JsonElement element, string name, out object? value)
+    {
+        value = null;
+        if (element.ValueKind != JsonValueKind.Object)
+        {
+            return false;
+        }
+
+        if (element.TryGetProperty(name, out var exact))
+        {
+            value = exact;
+            return true;
+        }
+
+        foreach (var property in element.EnumerateObject())
+        {
+            if (property.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+            {
+                value = property.Value;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static PropertyInfo? FindProperty(Type type, string name)

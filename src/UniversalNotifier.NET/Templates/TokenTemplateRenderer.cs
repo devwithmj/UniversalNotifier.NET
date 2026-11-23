@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using System.Globalization;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 
 namespace UniversalNotifier.NET;
 
@@ -74,6 +75,10 @@ public sealed class TokenTemplateRenderer : ITemplateRenderer
     {
         null => string.Empty,
         string text => text,
+        bool flag => flag ? "true" : "false", // same text as a JSON boolean, so a queued notification renders identically
+        JsonElement { ValueKind: JsonValueKind.String } element => element.GetString() ?? string.Empty,
+        JsonElement { ValueKind: JsonValueKind.Null or JsonValueKind.Undefined } => string.Empty,
+        JsonElement element => element.GetRawText(),
         IFormattable formattable => formattable.ToString(null, _options.Culture),
         _ => value.ToString() ?? string.Empty,
     };
