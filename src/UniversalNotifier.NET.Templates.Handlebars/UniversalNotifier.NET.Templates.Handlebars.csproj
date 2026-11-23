@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>UniversalNotifier.NET.Templates.Handlebars</Title>
+    <Description>Handlebars template engine for UniversalNotifier.NET: conditionals, loops and block helpers in notification templates, with no file or partial access and an explicit, sanitized data model.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Handlebars.Net" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UniversalNotifier.NET\UniversalNotifier.NET.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="UniversalNotifier.NET.Tests" />
+  </ItemGroup>
+
+</Project>

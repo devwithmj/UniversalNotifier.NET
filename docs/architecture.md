@@ -64,6 +64,7 @@ The libraries are not annotated as AOT-compatible. The JSON in the REST provider
 | `UniversalNotifier.NET.Webhook` | yes | Slack, Teams, generic JSON webhooks |
 | `UniversalNotifier.NET.Templates.Scriban` | yes | Scriban renderer |
 | `UniversalNotifier.NET.Templates.Fluid` | yes | Fluid (Liquid) renderer |
+| `UniversalNotifier.NET.Templates.Handlebars` | yes | Handlebars.Net renderer |
 | `UniversalNotifier.NET.Background` | yes | in-memory queue, worker, result handlers |
 | `UniversalNotifier.NET.Testing` | yes | fake notifiers |
 | `src/Shared/ProviderHttp.cs` | no | small helpers compiled into the REST providers (not public API) |

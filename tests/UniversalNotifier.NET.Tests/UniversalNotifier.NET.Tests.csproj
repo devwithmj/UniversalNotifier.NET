@@ -35,6 +35,7 @@
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.Email.Ses\UniversalNotifier.NET.Email.Ses.csproj" />
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.InApp\UniversalNotifier.NET.InApp.csproj" />
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.Templates.Fluid\UniversalNotifier.NET.Templates.Fluid.csproj" />
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET.Templates.Handlebars\UniversalNotifier.NET.Templates.Handlebars.csproj" />
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.Templates.Scriban\UniversalNotifier.NET.Templates.Scriban.csproj" />
   </ItemGroup>
 
