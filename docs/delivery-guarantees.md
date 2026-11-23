@@ -103,4 +103,5 @@ app.MapPost("/hooks/mailgun", async (HttpRequest http) =>
 - **Twilio:** use the Auth Token; `Url` must be the exact public URL configured at Twilio (behind a proxy, rebuild it from the forwarded scheme and host). Twilio signs with HMAC-SHA1, which the protocol requires. WhatsApp reports arrive here too (`delivered`, `read`, `undelivered`).
 - Answer 401 when `Authentic` is false and ignore the call. Reply 200 quickly and do slow work after, or the provider retries.
 - `Recipient` is personal data: do not log events. `Reason` is only the provider error code, never message text.
-- Not covered yet: SendGrid (its event webhook uses an ECDSA signature), SES (SNS notifications) and FCM (no receipts exist).
+- **SendGrid:** `SendGridDeliveryWebhook` takes the verification key from the SendGrid webhook settings (turn on "Signature Verification" there) and checks the ECDSA signature over the timestamp header plus the raw body; calls older than five minutes are rejected. One call carries a batch, so `Events` can hold many. The send id is the part of `sg_message_id` before `.filter`, which is what the parser returns, and the reason is the status code (for example `5.1.1`), never the free-text reason that quotes the address.
+- Not covered yet: SES (events arrive through SNS) and FCM (no receipts exist).

@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Time.Testing;
 using UniversalNotifier.NET.Receipts;
@@ -122,6 +123,82 @@ public class DeliveryReceiptTests
         Assert.That(fresh.Process(Mailgun("not json")).Authentic, Is.False);
         Assert.That(fresh.Process(Mailgun("{}")).Authentic, Is.False);
         Assert.That(fresh.Process(Mailgun("""{"signature":{"timestamp":"x","token":"t","signature":"s"}}""")).Authentic, Is.False);
+    }
+
+    private static (string PublicKey, Func<string, string, string> Sign) SendGridKeys()
+    {
+        var key = ECDsa.Create(ECCurve.NamedCurves.nistP256);
+        return (Convert.ToBase64String(key.ExportSubjectPublicKeyInfo()),
+            (timestamp, body) => Convert.ToBase64String(key.SignData(Encoding.UTF8.GetBytes(timestamp + body), HashAlgorithmName.SHA256, DSASignatureFormat.Rfc3279DerSequence)));
+    }
+
+    private static WebhookRequest SendGrid(string body, string? signature, string timestamp) =>
+        new(new Uri("https://example.com/hooks/sendgrid"),
+            signature is null
+                ? new Dictionary<string, string>()
+                : new Dictionary<string, string> { ["X-Twilio-Email-Event-Webhook-Signature"] = signature, ["X-Twilio-Email-Event-Webhook-Timestamp"] = timestamp },
+            Encoding.UTF8.GetBytes(body));
+
+    [Test]
+    public void SendGrid_verifies_the_ecdsa_signature_and_maps_every_event_in_the_batch()
+    {
+        var (publicKey, sign) = SendGridKeys();
+        var webhook = new SendGridDeliveryWebhook(publicKey, Clock(1_700_000_000));
+        const string Body = """
+            [{"email":"ada@example.com","timestamp":1699999990,"event":"delivered","sg_message_id":"abc123.filter0001.16648.5515E0B88.0"},
+             {"email":"bob@example.com","timestamp":1699999991,"event":"bounce","type":"bounce","status":"5.1.1","reason":"550 bob@example.com does not exist","sg_message_id":"def456.filter0002.1.2.0"},
+             {"email":"cy@example.com","timestamp":1699999992,"event":"deferred","sg_message_id":"ghi789.filter0003.1.2.0"},
+             {"email":"di@example.com","timestamp":1699999993,"event":"spamreport","sg_message_id":"jkl.filter1"},
+             {"email":"ed@example.com","timestamp":1699999994,"event":"open","sg_message_id":"mno.filter1"},
+             {"email":"fy@example.com","timestamp":1699999995,"event":"processed","sg_message_id":"pqr.filter1"}]
+            """;
+
+        var result = webhook.Process(SendGrid(Body, sign("1700000000", Body), "1700000000"));
+
+        Assert.That(result.Authentic, Is.True);
+        Assert.That(result.Events.Select(e => e.Outcome), Is.EqualTo(new[]
+        {
+            DeliveryOutcome.Delivered, DeliveryOutcome.Failed, DeliveryOutcome.Deferred, DeliveryOutcome.Complained, DeliveryOutcome.Opened, DeliveryOutcome.Other,
+        }));
+        Assert.That(result.Events[0].ProviderMessageId, Is.EqualTo("abc123"), "the send id, without the .filter suffix");
+        Assert.That(result.Events[0].OccurredAt, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1_699_999_990)));
+        Assert.That(result.Events[1].Reason, Is.EqualTo("5.1.1"), "the status code, never the free-text reason that quotes the address");
+        Assert.That(result.Events[1].Recipient, Is.EqualTo("bob@example.com"));
+    }
+
+    [Test]
+    public void SendGrid_rejects_a_tampered_body_a_wrong_key_a_stale_timestamp_and_missing_headers()
+    {
+        var (publicKey, sign) = SendGridKeys();
+        var other = SendGridKeys().PublicKey;
+        const string Body = """[{"event":"delivered","sg_message_id":"a.filter1"}]""";
+        var signature = sign("1700000000", Body);
+        var webhook = new SendGridDeliveryWebhook(publicKey, Clock(1_700_000_000));
+
+        Assert.That(webhook.Process(SendGrid(Body, signature, "1700000000")).Authentic, Is.True);
+        Assert.That(webhook.Process(SendGrid(Body.Replace("delivered", "bounce", StringComparison.Ordinal), signature, "1700000000")).Authentic, Is.False, "tampered body");
+        Assert.That(webhook.Process(SendGrid(Body, signature, "1700000001")).Authentic, Is.False, "the timestamp is part of the signed text");
+        Assert.That(new SendGridDeliveryWebhook(other, Clock(1_700_000_000)).Process(SendGrid(Body, signature, "1700000000")).Authentic, Is.False, "wrong key");
+        Assert.That(new SendGridDeliveryWebhook(publicKey, Clock(1_700_000_000 + 600)).Process(SendGrid(Body, signature, "1700000000")).Authentic, Is.False, "replayed later");
+        Assert.That(webhook.Process(SendGrid(Body, null, "1700000000")).Authentic, Is.False, "signature verification is off at SendGrid");
+        Assert.That(webhook.Process(SendGrid(Body, "not base64!", "1700000000")).Authentic, Is.False);
+        Assert.That(webhook.Process(SendGrid(Body, signature, "abc")).Authentic, Is.False);
+    }
+
+    [Test]
+    public void SendGrid_authentic_but_unreadable_bodies_report_nothing_and_a_bad_key_is_refused_up_front()
+    {
+        var (publicKey, sign) = SendGridKeys();
+        var webhook = new SendGridDeliveryWebhook(publicKey, Clock(1_700_000_000));
+
+        var notJson = webhook.Process(SendGrid("nope", sign("1700000000", "nope"), "1700000000"));
+        var notArray = webhook.Process(SendGrid("{}", sign("1700000000", "{}"), "1700000000"));
+
+        Assert.That(notJson, Is.EqualTo(new ReceiptResult(true, [])).Using<ReceiptResult>((a, b) => a.Authentic == b.Authentic && a.Events.Count == b.Events.Count));
+        Assert.That(notArray.Authentic && notArray.Events.Count == 0, Is.True);
+        Assert.Throws<ArgumentException>(() => new SendGridDeliveryWebhook("not a key"));
+        Assert.Throws<ArgumentException>(() => new SendGridDeliveryWebhook(Convert.ToBase64String(new byte[] { 1, 2, 3 })));
+        Assert.That(new SendGridDeliveryWebhook(publicKey).Provider, Is.EqualTo("sendgrid"));
     }
 
     [Test]

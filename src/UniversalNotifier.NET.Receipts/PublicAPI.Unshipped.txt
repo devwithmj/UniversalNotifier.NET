@@ -1,5 +1,6 @@
 #nullable enable
 const UniversalNotifier.NET.Receipts.MailgunDeliveryWebhook.Name = "mailgun" -> string!
+const UniversalNotifier.NET.Receipts.SendGridDeliveryWebhook.Name = "sendgrid" -> string!
 const UniversalNotifier.NET.Receipts.TwilioDeliveryWebhook.Name = "twilio" -> string!
 override UniversalNotifier.NET.Receipts.DeliveryEvent.Equals(object? obj) -> bool
 override UniversalNotifier.NET.Receipts.DeliveryEvent.GetHashCode() -> int
@@ -61,6 +62,11 @@ UniversalNotifier.NET.Receipts.ReceiptResult.Equals(UniversalNotifier.NET.Receip
 UniversalNotifier.NET.Receipts.ReceiptResult.Events.get -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.Receipts.DeliveryEvent!>!
 UniversalNotifier.NET.Receipts.ReceiptResult.Events.init -> void
 UniversalNotifier.NET.Receipts.ReceiptResult.ReceiptResult(bool Authentic, System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.Receipts.DeliveryEvent!>! Events) -> void
+UniversalNotifier.NET.Receipts.SendGridDeliveryWebhook
+UniversalNotifier.NET.Receipts.SendGridDeliveryWebhook.Process(UniversalNotifier.NET.Receipts.WebhookRequest! request) -> UniversalNotifier.NET.Receipts.ReceiptResult!
+UniversalNotifier.NET.Receipts.SendGridDeliveryWebhook.Provider.get -> string!
+UniversalNotifier.NET.Receipts.SendGridDeliveryWebhook.SendGridDeliveryWebhook(string! verificationKey) -> void
+UniversalNotifier.NET.Receipts.SendGridDeliveryWebhook.SendGridDeliveryWebhook(string! verificationKey, System.TimeProvider! timeProvider) -> void
 UniversalNotifier.NET.Receipts.TwilioDeliveryWebhook
 UniversalNotifier.NET.Receipts.TwilioDeliveryWebhook.Process(UniversalNotifier.NET.Receipts.WebhookRequest! request) -> UniversalNotifier.NET.Receipts.ReceiptResult!
 UniversalNotifier.NET.Receipts.TwilioDeliveryWebhook.Provider.get -> string!
