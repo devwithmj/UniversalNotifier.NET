@@ -17,7 +17,7 @@ A ground-up redesign. See [Migrating from 1.x](docs/migration-from-1.x.md).
 - `UniversalNotifier.NET.Background`: bounded in-memory queue with backpressure, concurrent worker, graceful shutdown, result handlers.
 - `NotificationJson` for storing notifications in durable queues.
 - `UniversalNotifier.NET.Testing` fake notifiers.
-- Targets .NET 8, .NET 10 and .NET 11.
+- Targets .NET 10 and .NET 11.
 
 ### Fixed (relative to 1.x)
 

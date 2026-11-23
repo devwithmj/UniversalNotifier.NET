@@ -23,7 +23,7 @@ public class WebPushNotifierTests
         new(Options(configure), new NotifierContext(), handler);
 
     // A real browser subscription: a P-256 public key and a 16-byte auth secret, both base64url.
-    private static WebPushSubscription Subscription(string endpoint = "https://push.example.com/send/abc")
+    internal static WebPushSubscription Subscription(string endpoint = "https://push.example.com/send/abc")
     {
         using var browserKey = ECDiffieHellman.Create(ECCurve.NamedCurves.nistP256);
         var q = browserKey.ExportParameters(false).Q;

@@ -11,7 +11,7 @@ dotnet test --filter "FullyQualifiedName~Mailgun"     # one area
 dotnet run -c Release --project benchmarks/UniversalNotifier.NET.Benchmarks -- --filter "*"
 ```
 
-The libraries and the test project target `net8.0`, `net10.0` and `net11.0`, so the whole suite runs on every supported runtime. Warnings are errors.
+The libraries and the test project target `net10.0` and `net11.0`, so the whole suite runs on every supported runtime. Warnings are errors.
 
 ## Ground rules
 

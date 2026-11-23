@@ -36,7 +36,7 @@ dotnet add package UniversalNotifier.NET.Email.Smtp
 | Background delivery | `UniversalNotifier.NET.Background` | in-memory queue and worker |
 | Tests | `UniversalNotifier.NET.Testing` | fake notifiers |
 
-Targets .NET 8, .NET 10 and .NET 11.
+Targets .NET 10 (LTS) and .NET 11. .NET 8 reached end of support on 10 November 2026.
 
 ## Five-minute quick start (ASP.NET Core, Worker Service, any host)
 

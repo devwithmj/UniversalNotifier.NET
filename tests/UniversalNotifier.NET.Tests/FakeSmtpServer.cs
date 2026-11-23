@@ -13,6 +13,7 @@ public sealed class FakeSmtpServer : IDisposable
     private readonly CancellationTokenSource _stop = new();
     private readonly List<ReceivedMail> _mails = [];
     private readonly Task _acceptLoop;
+    private int _disposed;
 
     public FakeSmtpServer()
     {
@@ -41,6 +42,11 @@ public sealed class FakeSmtpServer : IDisposable
 
     public void Dispose()
     {
+        if (Interlocked.Exchange(ref _disposed, 1) == 1)
+        {
+            return;
+        }
+
         _stop.Cancel();
         _listener.Stop();
         try
