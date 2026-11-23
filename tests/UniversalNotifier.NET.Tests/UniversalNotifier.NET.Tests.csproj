@@ -26,6 +26,7 @@
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.WebPush\UniversalNotifier.NET.WebPush.csproj" />
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.Background\UniversalNotifier.NET.Background.csproj" />
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.Webhook\UniversalNotifier.NET.Webhook.csproj" />
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET.Templates.Scriban\UniversalNotifier.NET.Templates.Scriban.csproj" />
   </ItemGroup>
 
   <ItemGroup>

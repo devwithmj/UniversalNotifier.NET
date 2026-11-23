@@ -12,7 +12,7 @@ It does **not** mean:
 - the SMS reached the handset (carriers report that later),
 - the device displayed the push notification.
 
-Delivery receipts, bounces and read events arrive through provider webhooks. They are not part of this library yet; use your provider's webhooks and match on `ProviderMessageId`.
+Delivery receipts, bounces and read events arrive through provider callbacks and need an inbound HTTP endpoint, which a client library cannot be. They are intentionally not part of this library: use your provider's webhooks (Mailgun events, Twilio status callbacks, ...) in your own application and match on `ProviderMessageId`.
 
 ## The stages you can observe
 
@@ -44,7 +44,11 @@ Off by default. `WithRetries(maxAttempts: n)` repeats a send only when:
 
 Waits double with jitter up to `maxDelay`. A provider's `Retry-After` hint takes precedence.
 
-There is no idempotency-key support yet. If duplicates matter, keep `retryUnknownFailures` off and deduplicate by your own notification id.
+Provider APIs do not share an idempotency mechanism, so retries never rely on one: they are limited to failures that are provably safe (above). To make *your own* repeated submissions harmless, give the notification an `IdempotencyKey` and enable `DeduplicationWindow` on background delivery.
+
+## Rate limiting
+
+`WithRateLimit(perSecond, burst)` spaces calls per notifier (a timer-free generic cell rate algorithm on the injectable clock). Calls wait for their turn rather than fail, and the wait honors the caller's cancellation token. It prevents provider 429 responses; it does not replace a provider's account-level limits.
 
 ## Background delivery
 
@@ -52,6 +56,7 @@ There is no idempotency-key support yet. If duplicates matter, keep `retryUnknow
 
 - Queued notifications are lost if the process crashes or the shutdown timeout expires before they are delivered. Graceful shutdown drains the queue first.
 - A full queue makes producers wait (default) or return `false` (`QueueFullMode.Reject`). It never grows without bound.
+- With `DeduplicationWindow` set, enqueuing a notification whose `IdempotencyKey` was seen inside the window returns `true` but queues nothing (it is already accepted). A notification that was refused or cancelled does not consume its key. The memory is per process; a durable queue needs its own deduplication.
 - Each notification is attempted once by the worker (plus any configured retries). The result, including failures, goes to every registered `INotificationResultHandler`: store it, alert, or dead-letter it there.
 
 For delivery that survives restarts, implement `INotificationQueue` over a database or message broker. `NotificationJson.Serialize` / `Deserialize` store a notification; the JSON contains recipient addresses and message text, so protect it as personal data.
@@ -66,5 +71,6 @@ For delivery that survives restarts, implement `INotificationQueue` over a datab
 | FCM | FCM returned a message id | one message per token, batches of 500, per-token result |
 | Telegram | Bot API `ok: true` | one request per chat, a few in parallel |
 | Web Push | push service returned 201 | one push per subscription, per-subscription result (`webpush.gone` = remove it) |
+| Webhook | endpoint answered 2xx | one request per message to a named endpoint; the response body is ignored |
 
 Cc and Bcc are only allowed with a single `To` recipient, because bulk email is delivered as individual messages.

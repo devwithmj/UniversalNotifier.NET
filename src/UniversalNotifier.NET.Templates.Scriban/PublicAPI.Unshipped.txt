@@ -1,0 +1,6 @@
+#nullable enable
+Microsoft.Extensions.DependencyInjection.ScribanBuilderExtensions
+static Microsoft.Extensions.DependencyInjection.ScribanBuilderExtensions.UseScriban(this UniversalNotifier.NET.INotifierBuilder! builder) -> UniversalNotifier.NET.INotifierBuilder!
+UniversalNotifier.NET.Templates.Scriban.ScribanTemplateRenderer
+UniversalNotifier.NET.Templates.Scriban.ScribanTemplateRenderer.Render(string! templateText, UniversalNotifier.NET.TemplateData! data, UniversalNotifier.NET.TemplateFormat format = UniversalNotifier.NET.TemplateFormat.Text) -> string!
+UniversalNotifier.NET.Templates.Scriban.ScribanTemplateRenderer.ScribanTemplateRenderer(UniversalNotifier.NET.TemplateOptions? options = null) -> void

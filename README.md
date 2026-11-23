@@ -1,6 +1,6 @@
 # UniversalNotifier.NET
 
-**One API for every notification channel.** Send email, SMS, mobile push, web push and Telegram from .NET through the same small API, without writing or learning each provider's integration. Switch providers by changing configuration, not code.
+**One API for every notification channel.** Send email, SMS, mobile push, web push, Telegram, Slack, Teams and webhooks from .NET through the same small API, without writing or learning each provider's integration. Switch providers by changing configuration, not code.
 
 ```csharp
 await notifications.SendAsync(
@@ -33,6 +33,8 @@ dotnet add package UniversalNotifier.NET.Email.Smtp
 | Mobile push | `UniversalNotifier.NET.Push.Fcm` | Firebase Cloud Messaging |
 | Browser push | `UniversalNotifier.NET.WebPush` | Web Push / VAPID |
 | Telegram | `UniversalNotifier.NET.Telegram` | Telegram bots |
+| Webhooks | `UniversalNotifier.NET.Webhook` | Slack, Microsoft Teams, generic JSON (HMAC signing) |
+| Templates | `UniversalNotifier.NET.Templates.Scriban` | Scriban: conditionals, loops, filters |
 | Background delivery | `UniversalNotifier.NET.Background` | in-memory queue and worker |
 | Tests | `UniversalNotifier.NET.Testing` | fake notifiers |
 
@@ -141,6 +143,33 @@ n.AddTemplatesFromDirectory("templates");   // templates/welcome/email.subject.t
 
 The built-in renderer is intentionally small: no expressions, loops or code. To use Scriban, Fluid or anything else, implement `ITemplateRenderer` and call `UseTemplateRenderer<T>()`. To load templates from a database, implement `ITemplateStore`.
 
+## Slack, Teams and webhooks
+
+Webhook URLs are secrets, so messages name an endpoint and the URL stays in configuration:
+
+```csharp
+n.AddWebhook(o => o
+    .Add("ops", slackUrl, WebhookFormat.Slack)
+    .Add("oncall", teamsWorkflowUrl, WebhookFormat.Teams)
+    .Add("audit", "https://example.com/hooks/audit", WebhookFormat.Json, signingSecret: secret));   // X-Signature-256: sha256=<HMAC>
+
+await notifications.SendAsync(
+    Notification.To(new Recipient { WebhookEndpoint = "ops" }).Webhook("Deploy {{Version}}", "All services healthy.").WithData(new { Version = "2.0" }));
+```
+
+## Richer templates with Scriban
+
+```csharp
+n.UseScriban();   // dotnet add package UniversalNotifier.NET.Templates.Scriban
+```
+
+```
+{{ if Total > 100 }}Free shipping!{{ end }}
+{{ for line in Lines }}<li>{{ line.Sku }} x {{ line.Qty }}</li>{{ end }}
+```
+
+Existing `{{Name}}` templates keep working. The adapter limits loops, recursion and output size, has no `include`, gives templates plain data instead of .NET objects (no method calls), and HTML-encodes every string value in HTML parts.
+
 ## Results and errors
 
 `SendAsync` does not throw for delivery problems. Every result carries classified errors:
@@ -159,6 +188,7 @@ Turn on retries when you want them:
 
 ```csharp
 n.WithRetries(maxAttempts: 3);   // exponential backoff with jitter; honors Retry-After; never after a partial success
+n.WithRateLimit(permitsPerSecond: 10, burst: 5);   // each notifier waits its turn instead of provoking 429s
 ```
 
 See [Delivery guarantees](docs/delivery-guarantees.md) for exactly what "accepted" means per provider.
@@ -174,6 +204,12 @@ builder.Services.AddUniversalNotifier(n => n
 
 // anywhere:
 var queued = await queue.EnqueueAsync(notification);   // INotificationQueue; false means the queue refused it
+```
+
+Give a notification an idempotency key and set `o.DeduplicationWindow` to make a client retry or double submit harmless: a repeat inside the window is accepted but delivered once.
+
+```csharp
+await queue.EnqueueAsync(notification.WithIdempotencyKey($"order-{order.Id}-shipped"));
 ```
 
 The queue is bounded: a full queue slows producers down (or rejects, if you choose) instead of growing memory. Shutdown drains what is queued until the host's timeout. The in-memory queue loses queued notifications if the process crashes, so for guaranteed delivery implement `INotificationQueue` over your database or broker (`NotificationJson` serializes a notification) and register it. Register an `INotificationResultHandler` to store results, alert on failures or dead-letter.

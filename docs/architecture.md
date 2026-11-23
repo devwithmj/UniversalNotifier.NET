@@ -41,6 +41,10 @@ Each major decision has a record with context, alternatives and trade-offs in [`
 
 **Provider registration convention.** An unnamed `AddX()` becomes the channel's default and is also reachable by the provider's own name; `AddX(name: "...")` is reachable only by that name. The last unnamed registration wins, as with any DI service. Options are named by the registration key, so `services.Configure<MailgunOptions>("mailgun", section)` binds configuration.
 
+## Native AOT and trimming
+
+The libraries are not annotated as AOT-compatible. The JSON in the REST providers, Telegram, Web Push and Webhook is source-generated, and dictionary template data is reflection-free, but `WithData(object)`, the built-in renderer's object access and the Scriban data model read public properties by reflection (and `NotificationJson` serializes arbitrary data). An AOT application can use dictionaries for template data and its own source-generated context for queue payloads.
+
 ## Project layout
 
 | Project | Package | Role |
@@ -52,6 +56,8 @@ Each major decision has a record with context, alternatives and trade-offs in [`
 | `UniversalNotifier.NET.Push.Fcm` | yes | Firebase Admin SDK |
 | `UniversalNotifier.NET.Telegram` | yes | Telegram Bot API |
 | `UniversalNotifier.NET.WebPush` | yes | Lib.Net.Http.WebPush |
+| `UniversalNotifier.NET.Webhook` | yes | Slack, Teams, generic JSON webhooks |
+| `UniversalNotifier.NET.Templates.Scriban` | yes | Scriban renderer |
 | `UniversalNotifier.NET.Background` | yes | in-memory queue, worker, result handlers |
 | `UniversalNotifier.NET.Testing` | yes | fake notifiers |
 | `src/Shared/ProviderHttp.cs` | no | small helpers compiled into the REST providers (not public API) |

@@ -17,6 +17,9 @@ public sealed class TemplateData
 
     private TemplateData(object? root) => _root = root;
 
+    /// <summary>The wrapped dictionary or object. Template engines read it to build their own data model.</summary>
+    public object? Value => _root;
+
     /// <summary>Data with no values.</summary>
     public static TemplateData Empty { get; } = new(null);
 

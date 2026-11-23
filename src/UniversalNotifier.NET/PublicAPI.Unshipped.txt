@@ -471,6 +471,7 @@ UniversalNotifier.NET.TelegramParseMode.Html = 1 -> UniversalNotifier.NET.Telegr
 UniversalNotifier.NET.TelegramParseMode.MarkdownV2 = 2 -> UniversalNotifier.NET.TelegramParseMode
 UniversalNotifier.NET.TelegramParseMode.None = 0 -> UniversalNotifier.NET.TelegramParseMode
 UniversalNotifier.NET.TemplateData
+UniversalNotifier.NET.TemplateData.Value.get -> object?
 UniversalNotifier.NET.TemplateFormat
 UniversalNotifier.NET.TemplateFormat.Html = 1 -> UniversalNotifier.NET.TemplateFormat
 UniversalNotifier.NET.TemplateFormat.Text = 0 -> UniversalNotifier.NET.TemplateFormat
