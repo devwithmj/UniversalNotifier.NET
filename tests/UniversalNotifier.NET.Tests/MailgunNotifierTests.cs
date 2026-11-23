@@ -321,15 +321,18 @@ public class MailgunNotifierTests
     }
 
     [Test]
-    public async Task It_works_without_dependency_injection()
+    public async Task It_works_end_to_end_without_dependency_injection()
     {
         var handler = new StubHttpHandler(HttpStatusCode.OK, Accepted);
-        using var notifier = new NotifierBuilder()
-            .AddMailgun(o => { o.ApiKey = "k"; o.Domain = "mg.example.com"; o.From = "a@mg.example.com"; })
-            .Build();
+        var builder = new NotifierBuilder()
+            .AddMailgun(o => { o.ApiKey = "k"; o.Domain = "mg.example.com"; o.From = "a@mg.example.com"; });
+        builder.Services.AddHttpClient("UniversalNotifier.Mailgun.mailgun").ConfigurePrimaryHttpMessageHandler(() => handler);
+        await using var notifier = builder.Build();
 
+        var response = await notifier.SendAsync(Notification.To("ada@example.com").Email("Hi {{Name}}", text: "x").WithData(new { Name = "Ada" }));
+
+        Assert.That(response.Success, Is.True);
         Assert.That(notifier.Email, Is.InstanceOf<MailgunNotifier>());
-        await Task.CompletedTask;
-        _ = handler;
+        Assert.That(handler.OnlyRequest.Body, Does.Contain("Hi Ada"));
     }
 }
