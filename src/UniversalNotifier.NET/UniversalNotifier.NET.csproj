@@ -3,6 +3,7 @@
   <PropertyGroup>
     <Title>UniversalNotifier.NET</Title>
     <Description>One API for every notification channel: email, SMS, push, web push and Telegram. Provider-independent contracts, safe templates, dispatcher and optional retries.</Description>
+    <IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
 
   <ItemGroup>

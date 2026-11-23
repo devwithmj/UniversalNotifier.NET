@@ -32,7 +32,7 @@ An honest list of what is not done, ordered by how much it matters. "Spec" refer
 
 ## Engineering
 
-- **Native AOT / trimming.** Object data paths use reflection, so the libraries are not marked AOT-compatible. A reflection-free `WithData<T>` with a source generator would fix it.
+- **Native AOT / trimming.** Done for the core (see [architecture](architecture.md#native-aot-and-trimming)): analyzers clean, verified with a trimmed self-contained publish and JSON reflection disabled. Still open: a real `PublishAot` run (needs the Visual Studio C++ tools), and checking or annotating each provider package (the REST ones are the likeliest to pass; SMTP, Firebase and Web Push depend on SDKs).
 - **Code coverage** is not collected in CI.
 - **Option reload.** Providers read options when first created; `IOptionsMonitor` changes are not applied.
 - **International email.** Validation rejects quoted local parts and does not handle SMTPUTF8.
