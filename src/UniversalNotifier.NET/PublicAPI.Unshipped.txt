@@ -16,6 +16,7 @@ override sealed UniversalNotifier.NET.SmsMessage.Equals(UniversalNotifier.NET.No
 override sealed UniversalNotifier.NET.TelegramMessage.Equals(UniversalNotifier.NET.NotifierMessage? other) -> bool
 override sealed UniversalNotifier.NET.WebhookMessage.Equals(UniversalNotifier.NET.NotifierMessage? other) -> bool
 override sealed UniversalNotifier.NET.WebPushMessage.Equals(UniversalNotifier.NET.NotifierMessage? other) -> bool
+override sealed UniversalNotifier.NET.WhatsAppMessage.Equals(UniversalNotifier.NET.NotifierMessage? other) -> bool
 override UniversalNotifier.NET.ChannelContent.Equals(object? obj) -> bool
 override UniversalNotifier.NET.ChannelContent.GetHashCode() -> int
 override UniversalNotifier.NET.ChannelContent.ToString() -> string!
@@ -85,6 +86,10 @@ override UniversalNotifier.NET.WebPushMessage.Validate() -> System.Collections.G
 override UniversalNotifier.NET.WebPushSubscription.Equals(object? obj) -> bool
 override UniversalNotifier.NET.WebPushSubscription.GetHashCode() -> int
 override UniversalNotifier.NET.WebPushSubscription.ToString() -> string!
+override UniversalNotifier.NET.WhatsAppMessage.<Clone>$() -> UniversalNotifier.NET.WhatsAppMessage!
+override UniversalNotifier.NET.WhatsAppMessage.Equals(object? obj) -> bool
+override UniversalNotifier.NET.WhatsAppMessage.GetHashCode() -> int
+override UniversalNotifier.NET.WhatsAppMessage.Validate() -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.NotifierError>!
 static Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions.AddUniversalNotifier(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<UniversalNotifier.NET.INotifierBuilder!>? configure = null) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
 static UniversalNotifier.NET.ChannelContent.operator !=(UniversalNotifier.NET.ChannelContent? left, UniversalNotifier.NET.ChannelContent? right) -> bool
 static UniversalNotifier.NET.ChannelContent.operator ==(UniversalNotifier.NET.ChannelContent? left, UniversalNotifier.NET.ChannelContent? right) -> bool
@@ -116,6 +121,7 @@ static UniversalNotifier.NET.NotificationChannel.Sms.get -> UniversalNotifier.NE
 static UniversalNotifier.NET.NotificationChannel.Telegram.get -> UniversalNotifier.NET.NotificationChannel
 static UniversalNotifier.NET.NotificationChannel.Webhook.get -> UniversalNotifier.NET.NotificationChannel
 static UniversalNotifier.NET.NotificationChannel.WebPush.get -> UniversalNotifier.NET.NotificationChannel
+static UniversalNotifier.NET.NotificationChannel.WhatsApp.get -> UniversalNotifier.NET.NotificationChannel
 static UniversalNotifier.NET.NotificationDelivery.operator !=(UniversalNotifier.NET.NotificationDelivery? left, UniversalNotifier.NET.NotificationDelivery? right) -> bool
 static UniversalNotifier.NET.NotificationDelivery.operator ==(UniversalNotifier.NET.NotificationDelivery? left, UniversalNotifier.NET.NotificationDelivery? right) -> bool
 static UniversalNotifier.NET.NotificationJson.Deserialize(string! json) -> UniversalNotifier.NET.Notification!
@@ -175,6 +181,10 @@ static UniversalNotifier.NET.WebPushMessage.operator !=(UniversalNotifier.NET.We
 static UniversalNotifier.NET.WebPushMessage.operator ==(UniversalNotifier.NET.WebPushMessage? left, UniversalNotifier.NET.WebPushMessage? right) -> bool
 static UniversalNotifier.NET.WebPushSubscription.operator !=(UniversalNotifier.NET.WebPushSubscription? left, UniversalNotifier.NET.WebPushSubscription? right) -> bool
 static UniversalNotifier.NET.WebPushSubscription.operator ==(UniversalNotifier.NET.WebPushSubscription? left, UniversalNotifier.NET.WebPushSubscription? right) -> bool
+static UniversalNotifier.NET.WhatsAppMessage.Create(UniversalNotifier.NET.PhoneNumber to, string! body) -> UniversalNotifier.NET.WhatsAppMessage!
+static UniversalNotifier.NET.WhatsAppMessage.FromTemplate(UniversalNotifier.NET.PhoneNumber to, string! templateId, System.Collections.Generic.IReadOnlyDictionary<string!, string!>? variables = null) -> UniversalNotifier.NET.WhatsAppMessage!
+static UniversalNotifier.NET.WhatsAppMessage.operator !=(UniversalNotifier.NET.WhatsAppMessage? left, UniversalNotifier.NET.WhatsAppMessage? right) -> bool
+static UniversalNotifier.NET.WhatsAppMessage.operator ==(UniversalNotifier.NET.WhatsAppMessage? left, UniversalNotifier.NET.WhatsAppMessage? right) -> bool
 UniversalNotifier.NET.ChannelContent
 UniversalNotifier.NET.ChannelContent.<Clone>$() -> UniversalNotifier.NET.ChannelContent!
 UniversalNotifier.NET.ChannelContent.ChannelContent() -> void
@@ -308,6 +318,7 @@ UniversalNotifier.NET.IValidatingTemplateRenderer
 UniversalNotifier.NET.IValidatingTemplateRenderer.Validate(string! templateText) -> string?
 UniversalNotifier.NET.IWebhookNotifier
 UniversalNotifier.NET.IWebPushNotifier
+UniversalNotifier.NET.IWhatsAppNotifier
 UniversalNotifier.NET.MissingTokenBehavior
 UniversalNotifier.NET.MissingTokenBehavior.Empty = 2 -> UniversalNotifier.NET.MissingTokenBehavior
 UniversalNotifier.NET.MissingTokenBehavior.KeepToken = 1 -> UniversalNotifier.NET.MissingTokenBehavior
@@ -339,6 +350,7 @@ UniversalNotifier.NET.Notification.UseTemplate(string! name) -> UniversalNotifie
 UniversalNotifier.NET.Notification.Via(UniversalNotifier.NET.NotificationChannel channel, UniversalNotifier.NET.ChannelContent? content = null, string? provider = null) -> UniversalNotifier.NET.Notification!
 UniversalNotifier.NET.Notification.Webhook(string? title = null, string? text = null, string? provider = null) -> UniversalNotifier.NET.Notification!
 UniversalNotifier.NET.Notification.WebPush(string? title = null, string? body = null, System.Collections.Generic.IReadOnlyDictionary<string!, string!>? data = null, string? provider = null) -> UniversalNotifier.NET.Notification!
+UniversalNotifier.NET.Notification.WhatsApp(string? text = null, string? provider = null) -> UniversalNotifier.NET.Notification!
 UniversalNotifier.NET.Notification.WithData(object! data) -> UniversalNotifier.NET.Notification!
 UniversalNotifier.NET.Notification.WithData(System.Collections.Generic.IReadOnlyDictionary<string!, object?>! data) -> UniversalNotifier.NET.Notification!
 UniversalNotifier.NET.Notification.WithId(string! id) -> UniversalNotifier.NET.Notification!
@@ -379,6 +391,7 @@ UniversalNotifier.NET.Notifier.Sms.get -> UniversalNotifier.NET.ISmsNotifier!
 UniversalNotifier.NET.Notifier.Telegram.get -> UniversalNotifier.NET.ITelegramNotifier!
 UniversalNotifier.NET.Notifier.Webhook.get -> UniversalNotifier.NET.IWebhookNotifier!
 UniversalNotifier.NET.Notifier.WebPush.get -> UniversalNotifier.NET.IWebPushNotifier!
+UniversalNotifier.NET.Notifier.WhatsApp.get -> UniversalNotifier.NET.IWhatsAppNotifier!
 UniversalNotifier.NET.NotifierBase<TMessage>
 UniversalNotifier.NET.NotifierBase<TMessage>.NotifierBase(UniversalNotifier.NET.NotifierContext! context) -> void
 UniversalNotifier.NET.NotifierBase<TMessage>.SendAsync(TMessage! message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<UniversalNotifier.NET.NotifierResponse!>!
@@ -623,6 +636,19 @@ UniversalNotifier.NET.WebPushUrgency.High = 3 -> UniversalNotifier.NET.WebPushUr
 UniversalNotifier.NET.WebPushUrgency.Low = 1 -> UniversalNotifier.NET.WebPushUrgency
 UniversalNotifier.NET.WebPushUrgency.Normal = 2 -> UniversalNotifier.NET.WebPushUrgency
 UniversalNotifier.NET.WebPushUrgency.VeryLow = 0 -> UniversalNotifier.NET.WebPushUrgency
+UniversalNotifier.NET.WhatsAppMessage
+UniversalNotifier.NET.WhatsAppMessage.Body.get -> string?
+UniversalNotifier.NET.WhatsAppMessage.Body.init -> void
+UniversalNotifier.NET.WhatsAppMessage.Equals(UniversalNotifier.NET.WhatsAppMessage? other) -> bool
+UniversalNotifier.NET.WhatsAppMessage.From.get -> string?
+UniversalNotifier.NET.WhatsAppMessage.From.init -> void
+UniversalNotifier.NET.WhatsAppMessage.TemplateId.get -> string?
+UniversalNotifier.NET.WhatsAppMessage.TemplateId.init -> void
+UniversalNotifier.NET.WhatsAppMessage.TemplateVariables.get -> System.Collections.Generic.IReadOnlyDictionary<string!, string!>?
+UniversalNotifier.NET.WhatsAppMessage.TemplateVariables.init -> void
+UniversalNotifier.NET.WhatsAppMessage.To.get -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.PhoneNumber>!
+UniversalNotifier.NET.WhatsAppMessage.To.init -> void
+UniversalNotifier.NET.WhatsAppMessage.WhatsAppMessage() -> void
 virtual UniversalNotifier.NET.NotifierBase<TMessage>.Classify(System.Exception! exception) -> UniversalNotifier.NET.NotifierError
 virtual UniversalNotifier.NET.NotifierBase<TMessage>.ProviderName.get -> string!
 virtual UniversalNotifier.NET.NotifierMessage.EqualityContract.get -> System.Type!

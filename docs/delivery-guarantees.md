@@ -68,6 +68,7 @@ For delivery that survives restarts, implement `INotificationQueue` over a datab
 | SMTP | server accepted the DATA | one message per recipient over one connection, per-recipient result |
 | Mailgun | API returned 200 (queued) | batch sending, up to 1000 recipients per request; a failed request fails its whole chunk |
 | Twilio | API returned 201 (queued) | one request per recipient, a few in parallel |
+| Twilio WhatsApp | API returned 201 (queued) | one request per recipient; free-form text outside the 24-hour window is refused (Twilio error 63016), so use an approved template |
 | FCM | FCM returned a message id | one message per token, batches of 500, per-token result |
 | Telegram | Bot API `ok: true` | one request per chat, a few in parallel |
 | Web Push | push service returned 201 | one push per subscription, per-subscription result (`webpush.gone` = remove it) |

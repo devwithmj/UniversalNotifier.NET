@@ -31,13 +31,16 @@ n.AddSendGrid(o => { o.ApiKey = "SG...."; o.From = "noreply@example.com"; });
 - Create an API key with the **Mail Send** permission, and verify the sender or the domain; unverified senders are rejected.
 - At most 10 categories (tags); each recipient is its own personalization.
 
-## Twilio SMS (`UniversalNotifier.NET.Sms.Twilio`)
+## Twilio SMS and WhatsApp (`UniversalNotifier.NET.Twilio`)
 
 ```csharp
-n.AddTwilioSms(o => { o.AccountSid = "AC..."; o.AuthToken = "..."; o.From = "+15005550006"; });
+n.AddTwilio(o => { o.AccountSid = "AC..."; o.AuthToken = "..."; o.From = "+15005550006"; });
 // or an API key: o.ApiKeySid = "SK..."; o.ApiKeySecret = "..."; (preferred: it can be revoked on its own)
 ```
 
+- `AddTwilio` registers both SMS and WhatsApp. Pass `channels: TwilioChannels.Sms` or `TwilioChannels.WhatsApp` to register one only, so Twilio does not become the default of a channel another provider should serve.
+- `From` is the SMS sender and `WhatsAppFrom` the WhatsApp sender; set whichever you use. To try WhatsApp, use Twilio's sandbox number `+14155238886` and have the recipient join the sandbox first.
+- WhatsApp free-form text (`.WhatsApp("...")` or `WhatsAppMessage.Create`) only reaches users inside WhatsApp's 24-hour window. For everyone else send an approved template through `IWhatsAppNotifier`: `WhatsAppMessage.FromTemplate("+1416...", "HX...", new Dictionary<string, string> { ["1"] = "Ada" })`. WhatsApp uses the recipient's `Phone`.
 - `From` may be a Twilio number, an alphanumeric sender id (where allowed) or a Messaging Service SID (`MG...`).
 - Numbers must be E.164 (`+14165551234`). Trial accounts only reach verified numbers.
 - Twilio error text repeats phone numbers, so only the error code and docs link are surfaced.

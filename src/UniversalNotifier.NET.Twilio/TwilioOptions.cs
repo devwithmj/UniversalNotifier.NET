@@ -1,9 +1,9 @@
 using Microsoft.Extensions.Options;
 
-namespace UniversalNotifier.NET.Sms.Twilio;
+namespace UniversalNotifier.NET.Twilio;
 
-/// <summary>Settings for <see cref="TwilioSmsNotifier"/>.</summary>
-public sealed class TwilioSmsOptions
+/// <summary>Settings for the Twilio SMS and WhatsApp notifiers. They share one account.</summary>
+public sealed class TwilioOptions
 {
     /// <summary>The Twilio Account SID (starts with <c>AC</c>).</summary>
     public string AccountSid { get; set; } = string.Empty;
@@ -18,10 +18,17 @@ public sealed class TwilioSmsOptions
     public string? ApiKeySecret { get; set; }
 
     /// <summary>
-    /// The default sender: a Twilio phone number in E.164 format, an alphanumeric sender id, or a Messaging Service SID
-    /// (starts with <c>MG</c>). A message can override it with <see cref="SmsMessage.From"/>.
+    /// The default SMS sender: a Twilio phone number in E.164 format, an alphanumeric sender id, or a Messaging Service SID
+    /// (starts with <c>MG</c>). A message can override it with <see cref="SmsMessage.From"/>. Needed to send SMS.
     /// </summary>
     public string From { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The default WhatsApp sender: a WhatsApp-enabled number (<c>+14155238886</c> or <c>whatsapp:+14155238886</c>) or a Messaging
+    /// Service SID. Use Twilio's sandbox number (<c>+14155238886</c>) to try it. A message can override it with
+    /// <see cref="WhatsAppMessage.From"/>. Needed to send WhatsApp messages.
+    /// </summary>
+    public string WhatsAppFrom { get; set; } = string.Empty;
 
     /// <summary>The API base address. Change it to use a Twilio regional endpoint such as <c>https://api.dublin.ie1.twilio.com</c>.</summary>
     public Uri BaseAddress { get; set; } = new("https://api.twilio.com");
@@ -33,9 +40,9 @@ public sealed class TwilioSmsOptions
     public int MaxConcurrency { get; set; } = 4;
 
     /// <summary>Never prints secrets.</summary>
-    public override string ToString() => $"TwilioSmsOptions {{ AccountSid = {AccountSid} }}";
+    public override string ToString() => $"TwilioOptions {{ AccountSid = {AccountSid} }}";
 
-    internal static string? Validate(TwilioSmsOptions options)
+    internal static string? Validate(TwilioOptions options)
     {
         if (string.IsNullOrWhiteSpace(options.AccountSid) || !options.AccountSid.StartsWith("AC", StringComparison.Ordinal))
         {
@@ -48,9 +55,9 @@ public sealed class TwilioSmsOptions
             return "Twilio needs an AuthToken, or an ApiKeySid together with an ApiKeySecret.";
         }
 
-        if (string.IsNullOrWhiteSpace(options.From))
+        if (string.IsNullOrWhiteSpace(options.From) && string.IsNullOrWhiteSpace(options.WhatsAppFrom))
         {
-            return "Twilio From is required (a phone number, sender id or Messaging Service SID).";
+            return "Twilio needs a From (SMS sender) or a WhatsAppFrom (WhatsApp sender).";
         }
 
         if (options.BaseAddress is null || options.BaseAddress.Scheme != Uri.UriSchemeHttps)
@@ -67,8 +74,8 @@ public sealed class TwilioSmsOptions
     }
 }
 
-internal sealed class TwilioSmsOptionsValidator : IValidateOptions<TwilioSmsOptions>
+internal sealed class TwilioOptionsValidator : IValidateOptions<TwilioOptions>
 {
-    public ValidateOptionsResult Validate(string? name, TwilioSmsOptions options) =>
-        TwilioSmsOptions.Validate(options) is { } error ? ValidateOptionsResult.Fail(error) : ValidateOptionsResult.Success;
+    public ValidateOptionsResult Validate(string? name, TwilioOptions options) =>
+        TwilioOptions.Validate(options) is { } error ? ValidateOptionsResult.Fail(error) : ValidateOptionsResult.Success;
 }

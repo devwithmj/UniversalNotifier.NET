@@ -27,7 +27,7 @@ An honest list of what is not done, ordered by how much it matters. "Spec" refer
 
 ## Channels and providers
 
-- Not built: **WhatsApp** (via Twilio, needs sender onboarding to test), **Amazon SES**, **Handlebars** renderer.
+- Not built: **Amazon SES**, **Handlebars** renderer. WhatsApp is built (through Twilio); other WhatsApp providers and inbound replies are not.
 - Spec 8 "evaluate" items not built: scheduling, priorities, user preferences, notification history, health checks, provider capability discovery, an all-in-one `UniversalNotifier.NET.All` package.
 
 ## Engineering

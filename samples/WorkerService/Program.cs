@@ -2,7 +2,7 @@
 // a hosted worker delivers them, and a result handler sees every outcome.
 //
 // This sample uses fake notifiers so it runs without credentials. Replace AddFakeNotifiers() with
-// AddSmtp(...), AddMailgun(...), AddTwilioSms(...) and so on for real delivery.
+// AddSmtp(...), AddMailgun(...), AddTwilio(...) and so on for real delivery.
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

@@ -14,7 +14,7 @@ How many packages, named how, and what goes into the core?
 3. **Core with contracts, dispatcher, templates and DI; one package per provider; optional extension packages.**
 
 ## Decision
-Option 3, named `UniversalNotifier.NET.{Channel}.{Provider}` (`Email.Smtp`, `Email.Mailgun`, `Sms.Twilio`, `Push.Fcm`). When channel and provider are the same thing the channel segment is dropped (`Telegram`, `WebPush`). Extensions: `Background`, `Testing`.
+Option 3, named `UniversalNotifier.NET.{Channel}.{Provider}` (`Email.Smtp`, `Email.Mailgun`, `Push.Fcm`). When channel and provider are the same thing, or one provider serves several channels, the channel segment is dropped (`Telegram`, `WebPush`, `Twilio` for SMS and WhatsApp). Extensions: `Background`, `Testing`.
 - The core depends only on `Microsoft.Extensions.DependencyInjection(.Abstractions)`, `Options` and `Logging.Abstractions`.
 - SMTP is its own package because MailKit is a large dependency; REST providers use plain `HttpClient`.
 - Provider `AddX` extension methods live in `Microsoft.Extensions.DependencyInjection` so they are found without extra `using` lines.

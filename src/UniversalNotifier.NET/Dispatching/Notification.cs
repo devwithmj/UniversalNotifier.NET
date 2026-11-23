@@ -63,6 +63,13 @@ public sealed record Notification
     public Notification WebPush(string? title = null, string? body = null, IReadOnlyDictionary<string, string>? data = null, string? provider = null) =>
         Via(NotificationChannel.WebPush, Inline(new ChannelContent { Title = title, Text = body, Data = data }), provider);
 
+    /// <summary>
+    /// Adds the WhatsApp channel, sent to <see cref="Recipient.Phone"/>. Free-form text only reaches users inside WhatsApp's
+    /// 24-hour window (or a provider sandbox); to message anyone else use an approved template through <see cref="IWhatsAppNotifier"/>.
+    /// </summary>
+    public Notification WhatsApp(string? text = null, string? provider = null) =>
+        Via(NotificationChannel.WhatsApp, Inline(new ChannelContent { Text = text }), provider);
+
     /// <summary>Adds the Telegram channel. Pass <paramref name="html"/> to send Telegram HTML instead of plain text.</summary>
     public Notification Telegram(string? text = null, string? html = null, string? provider = null) =>
         Via(NotificationChannel.Telegram, Inline(new ChannelContent { Text = text, Html = html }), provider);

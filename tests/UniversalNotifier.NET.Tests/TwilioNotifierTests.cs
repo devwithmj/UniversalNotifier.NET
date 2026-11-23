@@ -2,25 +2,25 @@ using System.Net;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using UniversalNotifier.NET.Sms.Twilio;
+using UniversalNotifier.NET.Twilio;
 
 namespace UniversalNotifier.NET.Tests;
 
 [TestFixture]
-public class TwilioSmsNotifierTests
+public class TwilioNotifierTests
 {
     private const string AccountSid = "AC00000000000000000000000000000000";
     private const string ServiceSid = "MG00000000000000000000000000000000";
     private const string Created = """{"sid":"SM123","status":"queued"}""";
 
-    private static TwilioSmsOptions Options(Action<TwilioSmsOptions>? configure = null)
+    private static TwilioOptions Options(Action<TwilioOptions>? configure = null)
     {
-        var options = new TwilioSmsOptions { AccountSid = AccountSid, AuthToken = "token-secret", From = "+15005550006" };
+        var options = new TwilioOptions { AccountSid = AccountSid, AuthToken = "token-secret", From = "+15005550006" };
         configure?.Invoke(options);
         return options;
     }
 
-    private static TwilioSmsNotifier Create(StubHttpHandler handler, Action<TwilioSmsOptions>? configure = null) =>
+    private static TwilioSmsNotifier Create(StubHttpHandler handler, Action<TwilioOptions>? configure = null) =>
         new(Options(configure), new HttpClient(handler), new NotifierContext());
 
     private static SmsMessage Sms(params string[] to) => new() { To = [.. to.Select(t => new PhoneNumber(t))], Body = "Hello & welcome" };
@@ -227,7 +227,7 @@ public class TwilioSmsNotifierTests
     public async Task It_registers_through_dependency_injection_and_works_with_the_dispatcher()
     {
         using var provider = new ServiceCollection()
-            .AddUniversalNotifier(n => n.AddTwilioSms(o =>
+            .AddUniversalNotifier(n => n.AddTwilio(o =>
             {
                 o.AccountSid = AccountSid;
                 o.AuthToken = "t";
@@ -244,7 +244,7 @@ public class TwilioSmsNotifierTests
     public void Invalid_settings_are_reported_by_the_options_system()
     {
         using var provider = new ServiceCollection()
-            .AddUniversalNotifier(n => n.AddTwilioSms(o => o.AccountSid = AccountSid))
+            .AddUniversalNotifier(n => n.AddTwilio(o => o.AccountSid = AccountSid))
             .BuildServiceProvider();
 
         Assert.Throws<OptionsValidationException>(() => provider.GetRequiredService<ISmsNotifier>());

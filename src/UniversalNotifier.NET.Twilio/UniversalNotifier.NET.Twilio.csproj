@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Title>UniversalNotifier.NET.Sms.Twilio</Title>
+    <Title>UniversalNotifier.NET.Twilio</Title>
     <Description>Twilio SMS provider for UniversalNotifier.NET. Lightweight REST integration with bounded parallel bulk sending, per-recipient results and classified errors.</Description>
   </PropertyGroup>
 

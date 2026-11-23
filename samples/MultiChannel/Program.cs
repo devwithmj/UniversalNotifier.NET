@@ -1,5 +1,5 @@
 // One notification, four channels, templates with logic (Scriban), per-channel results, retries and rate limiting.
-// Uses fake notifiers so it runs without credentials; swap AddFakeNotifiers() for AddSmtp(), AddTwilioSms(), AddFcm(), ...
+// Uses fake notifiers so it runs without credentials; swap AddFakeNotifiers() for AddSmtp(), AddTwilio(), AddFcm(), ...
 
 using Microsoft.Extensions.DependencyInjection;
 using UniversalNotifier.NET;

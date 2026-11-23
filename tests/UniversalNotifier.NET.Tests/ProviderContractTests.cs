@@ -5,7 +5,7 @@ using UniversalNotifier.NET.Email.Mailgun;
 using UniversalNotifier.NET.Email.SendGrid;
 using UniversalNotifier.NET.Email.Smtp;
 using UniversalNotifier.NET.Push.Fcm;
-using UniversalNotifier.NET.Sms.Twilio;
+using UniversalNotifier.NET.Twilio;
 using UniversalNotifier.NET.Telegram;
 using UniversalNotifier.NET.Webhook;
 using UniversalNotifier.NET.WebPush;
@@ -287,7 +287,7 @@ public class TwilioContractTests : ProviderContractTests<SmsMessage>
         };
 
         return new TwilioSmsNotifier(
-            new TwilioSmsOptions { AccountSid = "AC00000000000000000000000000000000", AuthToken = "token-SECRET", From = "+15005550006" },
+            new TwilioOptions { AccountSid = "AC00000000000000000000000000000000", AuthToken = "token-SECRET", From = "+15005550006" },
             new HttpClient(_handler),
             Context);
     }
@@ -460,6 +460,38 @@ public class SendGridContractTests : ProviderContractTests<EmailMessage>
 
         return new SendGridNotifier(
             new SendGridOptions { ApiKey = "SG.SECRET-key", From = "from@example.com" },
+            new HttpClient(_handler),
+            Context);
+    }
+}
+
+[TestFixture]
+public class TwilioWhatsAppContractTests : ProviderContractTests<WhatsAppMessage>
+{
+    private StubHttpHandler _handler = new(HttpStatusCode.OK);
+
+    protected override WhatsAppMessage Valid => WhatsAppMessage.Create("+14165550199", "Hello");
+
+    protected override WhatsAppMessage Invalid => new();
+
+    protected override IReadOnlyList<string> Secrets => ["token-SECRET"];
+
+    protected override IReadOnlyList<string> PersonalData => ["+14165550199"];
+
+    protected override int BackendCalls => _handler.Requests.Count;
+
+    protected override INotifier<WhatsAppMessage> Create(ContractScenario scenario)
+    {
+        _handler = scenario switch
+        {
+            ContractScenario.Accepts => new StubHttpHandler(HttpStatusCode.Created, """{"sid":"SM1","status":"queued"}"""),
+            ContractScenario.RejectsPermanently => new StubHttpHandler(HttpStatusCode.BadRequest, """{"code":63016,"message":"outside the window for +14165550199"}"""),
+            ContractScenario.RejectsTransiently => new StubHttpHandler(HttpStatusCode.ServiceUnavailable, "{}"),
+            _ => new StubHttpHandler(_ => throw new HttpRequestException(HttpRequestError.ConnectionError, "down")),
+        };
+
+        return new TwilioWhatsAppNotifier(
+            new TwilioOptions { AccountSid = "AC00000000000000000000000000000000", AuthToken = "token-SECRET", WhatsAppFrom = "+14155238886" },
             new HttpClient(_handler),
             Context);
     }

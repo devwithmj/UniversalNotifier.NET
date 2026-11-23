@@ -52,7 +52,7 @@ The libraries are not annotated as AOT-compatible. The JSON in the REST provider
 | `UniversalNotifier.NET` | yes | contracts, messages, results, templates, dispatcher, DI |
 | `UniversalNotifier.NET.Email.Smtp` | yes | SMTP via MailKit |
 | `UniversalNotifier.NET.Email.Mailgun` | yes | Mailgun REST |
-| `UniversalNotifier.NET.Sms.Twilio` | yes | Twilio REST |
+| `UniversalNotifier.NET.Twilio` | yes | Twilio REST |
 | `UniversalNotifier.NET.Push.Fcm` | yes | Firebase Admin SDK |
 | `UniversalNotifier.NET.Telegram` | yes | Telegram Bot API |
 | `UniversalNotifier.NET.WebPush` | yes | Lib.Net.Http.WebPush |
