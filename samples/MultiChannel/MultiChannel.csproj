@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET\UniversalNotifier.NET.csproj" />
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET.Templates.Scriban\UniversalNotifier.NET.Templates.Scriban.csproj" />
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET.Testing\UniversalNotifier.NET.Testing.csproj" />
+  </ItemGroup>
+
+</Project>

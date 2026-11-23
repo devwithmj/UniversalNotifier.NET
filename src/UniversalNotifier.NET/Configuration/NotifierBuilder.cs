@@ -28,6 +28,7 @@ public sealed class NotifierBuilder : INotifierBuilder
                 _ = provider.GetRequiredKeyedService(registration.Service, registration.Key);
             }
 
+            TemplateValidator.ThrowIfInvalid(provider);
             return new Notifier(provider);
         }
         catch

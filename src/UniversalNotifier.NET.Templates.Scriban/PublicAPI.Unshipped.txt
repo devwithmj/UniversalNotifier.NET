@@ -4,3 +4,4 @@ static Microsoft.Extensions.DependencyInjection.ScribanBuilderExtensions.UseScri
 UniversalNotifier.NET.Templates.Scriban.ScribanTemplateRenderer
 UniversalNotifier.NET.Templates.Scriban.ScribanTemplateRenderer.Render(string! templateText, UniversalNotifier.NET.TemplateData! data, UniversalNotifier.NET.TemplateFormat format = UniversalNotifier.NET.TemplateFormat.Text) -> string!
 UniversalNotifier.NET.Templates.Scriban.ScribanTemplateRenderer.ScribanTemplateRenderer(UniversalNotifier.NET.TemplateOptions? options = null) -> void
+UniversalNotifier.NET.Templates.Scriban.ScribanTemplateRenderer.Validate(string! templateText) -> string?

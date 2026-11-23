@@ -19,7 +19,7 @@ namespace UniversalNotifier.NET.Templates.Scriban;
 /// Names are case-sensitive here (unlike the built-in renderer). <see cref="MissingTokenBehavior.Throw"/> makes an undefined
 /// variable an error; the other behaviors render it as empty. Parsed templates are cached.
 /// </remarks>
-public sealed class ScribanTemplateRenderer : ITemplateRenderer
+public sealed class ScribanTemplateRenderer : IValidatingTemplateRenderer
 {
     private const int MaxDepth = 8;
     private const int LoopLimit = 1000;
@@ -66,6 +66,14 @@ public sealed class ScribanTemplateRenderer : ITemplateRenderer
         {
             context.PopCulture();
         }
+    }
+
+    /// <inheritdoc />
+    public string? Validate(string templateText)
+    {
+        ArgumentNullException.ThrowIfNull(templateText);
+        var template = Template.Parse(templateText);
+        return template.HasErrors ? string.Join("; ", template.Messages.Select(m => m.Message)) : null;
     }
 
     private Template GetTemplate(string text)

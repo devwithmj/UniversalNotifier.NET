@@ -7,13 +7,12 @@ An honest list of what is not done, ordered by how much it matters. "Spec" refer
 1. **Live verification of every provider.** Run `tests/UniversalNotifier.NET.LiveTests` ([guide](live-testing.md)). Least certain: the Microsoft Teams Adaptive Card payload (Workflows webhook), Mailgun batch sending with `recipient-variables`, FCM behavior with a real token.
 2. **First release.** Merge the PR, publish with trusted publishing (see CONTRIBUTING, "Releasing"), then set `PackageValidationBaselineVersion` and move each `PublicAPI.Unshipped.txt` into `PublicAPI.Shipped.txt`.
 3. **Observability** is built into the core (`System.Diagnostics` traces and metrics, see [Observability](observability.md)). A separate `UniversalNotifier.NET.Observability` package, as the spec sketches, was judged unnecessary: OpenTelemetry needs only `AddSource` and `AddMeter` with the names the core exposes. Still open: an `IHealthCheck` per provider.
-4. **Per-provider setup docs and more samples (spec 13).** The spec lists 11 samples and guides for configuration, templates, error handling and each provider. There are two samples and the README plus four guides. Missing: provider setup pages, a templates guide, an error-handling guide, an `appsettings.json` configuration example, custom-provider and custom-renderer samples.
+4. **Samples and guides (spec 13).** Four samples (`QuickStart`, `WorkerService`, `CustomExtensions`, `MultiChannel`) and guides for configuration, templates, error handling and each provider exist. Missing from the spec list: a generated API reference and a sample per provider.
 5. **Package polish.** A package icon, a generated API reference (DocFX from the XML docs), README badges once published.
 
 ## Templates (spec 6)
 
-- Template **validation at startup** (parse every registered template and fail fast).
-- **Embedded-resource template store** (spec 6.6 lists embedded; in-memory and directory exist).
+- Done: template validation at startup (`TemplateValidator`, also run by `NotifierBuilder.Build()`) and an embedded-resource store.
 - **Localization**: culture is per renderer today, not per recipient. Add a recipient culture and per-culture template lookup.
 - Template **versioning**.
 

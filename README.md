@@ -280,6 +280,7 @@ Measured with BenchmarkDotNet on one developer machine (short job; treat as orde
 
 ## Documentation
 
+- [Configuration](docs/configuration.md), [Templates](docs/templates.md), [Error handling](docs/error-handling.md) and [Provider setup](docs/providers.md)
 - [Architecture](docs/architecture.md) and [decision records](docs/decisions/)
 - [Delivery guarantees](docs/delivery-guarantees.md)
 - [Observability](docs/observability.md)
