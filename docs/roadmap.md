@@ -19,7 +19,7 @@ An honest list of what is not done, ordered by how much it matters. "Spec" refer
 ## Delivery (spec 7)
 
 - **Provider fallback / failover** (spec 4.5). Deliberately deferred: failover can double-send. Needs the same care as retries.
-- **Delivery receipts and bounces.** Needs an inbound endpoint; likely a separate ASP.NET Core package that maps provider webhooks (Mailgun events, Twilio status callbacks) to a common event.
+- **Delivery receipts and bounces.** Built for Mailgun, Twilio and SendGrid (`UniversalNotifier.NET.Receipts`: signature verification, replay protection, one `DeliveryEvent`). The ASP.NET Core endpoint is built (`UniversalNotifier.NET.Receipts.AspNetCore`, tested end to end on an in-process server). Amazon SES receipts (through SNS) are built too. Still open: a live check of all four against real webhooks, SNS in particular.
 - **Durable queue adapters** (database, RabbitMQ, Azure Service Bus) behind `INotificationQueue`.
 - **Shared rate limit and deduplication** across instances (today per process).
 - **SMTP connection pooling.**

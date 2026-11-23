@@ -13,6 +13,7 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
   </ItemGroup>
@@ -29,6 +30,8 @@
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.Background\UniversalNotifier.NET.Background.csproj" />
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.Webhook\UniversalNotifier.NET.Webhook.csproj" />
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.Email.SendGrid\UniversalNotifier.NET.Email.SendGrid.csproj" />
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET.Receipts\UniversalNotifier.NET.Receipts.csproj" />
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET.Receipts.AspNetCore\UniversalNotifier.NET.Receipts.AspNetCore.csproj" />
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.Email.Ses\UniversalNotifier.NET.Email.Ses.csproj" />
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.InApp\UniversalNotifier.NET.InApp.csproj" />
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.Templates.Fluid\UniversalNotifier.NET.Templates.Fluid.csproj" />

@@ -22,6 +22,9 @@ A ground-up redesign. See [Migrating from 1.x](docs/migration-from-1.x.md).
 - WhatsApp channel (`IWhatsAppNotifier`, `Notification.WhatsApp`, `WhatsAppMessage` with approved-template support) served by Twilio. The Twilio package is now `UniversalNotifier.NET.Twilio` and `AddTwilio` registers SMS and WhatsApp.
 - Sandbox switches that validate a live setup without delivering: Mailgun `TestMode`, SendGrid `SandboxMode`, FCM `DryRun`, Telegram `UseTestEnvironment`; sandbox variants in the live-test project.
 - `UniversalNotifier.NET.Email.Ses`: Amazon SES v2 provider with built-in request signing (no AWS SDK), one individual message per recipient, attachments and inline images.
+- `UniversalNotifier.NET.Receipts`: delivery reports for Mailgun events, SendGrid signed events and Twilio (SMS and WhatsApp) status callbacks. Verifies the provider signature (Mailgun also rejects replays) and returns one provider-neutral `DeliveryEvent`; no web framework dependency.
+- `SesDeliveryWebhook`: Amazon SES events through SNS, with signature verification against the AWS certificate, topic pinning, automatic subscription confirmation and refusal to fetch any non-Amazon address. `IDeliveryWebhook` is asynchronous.
+- `UniversalNotifier.NET.Receipts.AspNetCore`: `MapDeliveryReceipts` hosts a verified delivery webhook and hands each event to your `IDeliveryReceiptHandler`s (401 on a bad signature, 413 above 1 MiB, handler failures surface so the provider retries).
 - `UniversalNotifier.NET.Email.SendGrid`: SendGrid v3 provider, one personalization per recipient.
 - `UniversalNotifier.NET.InApp`: per-user inbox channel with unread counts, mark as read and a replaceable store.
 - `UniversalNotifier.NET.Webhook`: Slack, Microsoft Teams (Adaptive Card) and generic JSON webhooks by endpoint name, optional HMAC signing.
