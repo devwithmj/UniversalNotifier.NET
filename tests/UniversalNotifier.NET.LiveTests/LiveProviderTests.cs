@@ -4,7 +4,7 @@ using UniversalNotifier.NET.Email.Mailgun;
 using UniversalNotifier.NET.Email.SendGrid;
 using UniversalNotifier.NET.Email.Smtp;
 using UniversalNotifier.NET.Push.Fcm;
-using UniversalNotifier.NET.Sms.Twilio;
+using UniversalNotifier.NET.Twilio;
 using UniversalNotifier.NET.Telegram;
 using UniversalNotifier.NET.Webhook;
 using UniversalNotifier.NET.WebPush;
@@ -102,7 +102,7 @@ public class LiveProviderTests
         Require("LIVE_TWILIO_SID", "LIVE_TWILIO_TOKEN", "LIVE_TWILIO_FROM", "LIVE_SMS_TO");
         using var http = new HttpClient();
         var notifier = new TwilioSmsNotifier(
-            new TwilioSmsOptions { AccountSid = Env("LIVE_TWILIO_SID"), AuthToken = Env("LIVE_TWILIO_TOKEN"), From = Env("LIVE_TWILIO_FROM") },
+            new TwilioOptions { AccountSid = Env("LIVE_TWILIO_SID"), AuthToken = Env("LIVE_TWILIO_TOKEN"), From = Env("LIVE_TWILIO_FROM") },
             http,
             new NotifierContext());
 
@@ -156,6 +156,110 @@ public class LiveProviderTests
         using var notifier = new WebhookNotifier(new WebhookOptions().Add("live", Env(variable), format), new NotifierContext());
 
         await AssertAccepted(await notifier.SendAsync(WebhookMessage.Create("live", "Live test message", "UniversalNotifier.NET")));
+    }
+
+    // ---- Sandbox variants: they use each platform's own safe-testing mode, so nothing reaches a real person. ----
+
+    [Test]
+    public async Task Mailgun_test_mode()
+    {
+        Require("LIVE_MAILGUN_KEY", "LIVE_MAILGUN_DOMAIN", "LIVE_EMAIL_FROM", "LIVE_EMAIL_TO");
+        using var http = new HttpClient();
+        var notifier = new MailgunNotifier(
+            new MailgunOptions
+            {
+                ApiKey = Env("LIVE_MAILGUN_KEY"),
+                Domain = Env("LIVE_MAILGUN_DOMAIN"),
+                Region = Env("LIVE_MAILGUN_REGION").Equals("eu", StringComparison.OrdinalIgnoreCase) ? MailgunRegion.Eu : MailgunRegion.Us,
+                From = Env("LIVE_EMAIL_FROM"),
+                TestMode = true, // accepted and processed by Mailgun, never delivered
+            },
+            http,
+            new NotifierContext());
+
+        await AssertAccepted(await notifier.SendAsync(LiveEmail("Mailgun test mode")));
+    }
+
+    [Test]
+    public async Task SendGrid_sandbox_mode()
+    {
+        Require("LIVE_SENDGRID_KEY", "LIVE_EMAIL_FROM", "LIVE_EMAIL_TO");
+        using var http = new HttpClient();
+        var notifier = new SendGridNotifier(
+            new SendGridOptions { ApiKey = Env("LIVE_SENDGRID_KEY"), From = Env("LIVE_EMAIL_FROM"), SandboxMode = true }, // validated, never sent
+            http,
+            new NotifierContext());
+
+        await AssertAccepted(await notifier.SendAsync(LiveEmail("SendGrid sandbox")));
+    }
+
+    [Test]
+    public async Task Twilio_test_credentials()
+    {
+        // Twilio's test credentials (Console, Account, API keys and tokens, Test credentials) never send or bill.
+        Require("LIVE_TWILIO_TEST_SID", "LIVE_TWILIO_TEST_TOKEN");
+        using var http = new HttpClient();
+        var notifier = new TwilioSmsNotifier(
+            new TwilioOptions { AccountSid = Env("LIVE_TWILIO_TEST_SID"), AuthToken = Env("LIVE_TWILIO_TEST_TOKEN"), From = "+15005550006" }, // the magic "valid" sender
+            http,
+            new NotifierContext());
+
+        var to = string.IsNullOrEmpty(Env("LIVE_TWILIO_TEST_TO")) ? "+14155551234" : Env("LIVE_TWILIO_TEST_TO");
+        await AssertAccepted(await notifier.SendAsync(SmsMessage.Create(to, "UniversalNotifier.NET test credentials")));
+    }
+
+    [Test]
+    public async Task Twilio_magic_number_for_an_invalid_recipient_is_a_permanent_failure()
+    {
+        Require("LIVE_TWILIO_TEST_SID", "LIVE_TWILIO_TEST_TOKEN");
+        using var http = new HttpClient();
+        var notifier = new TwilioSmsNotifier(
+            new TwilioOptions { AccountSid = Env("LIVE_TWILIO_TEST_SID"), AuthToken = Env("LIVE_TWILIO_TEST_TOKEN"), From = "+15005550006" },
+            http,
+            new NotifierContext());
+
+        var response = await notifier.SendAsync(SmsMessage.Create("+15005550001", "invalid number")); // Twilio's magic invalid number
+
+        Assert.That(response.Success, Is.False);
+        Assert.That(response.Errors[0].Kind, Is.EqualTo(NotifierErrorKind.Permanent));
+    }
+
+    [Test]
+    public async Task Twilio_whatsapp_sandbox()
+    {
+        // Join the sandbox first: from the recipient's WhatsApp, send the join code shown in Twilio Console, Messaging, Try it out.
+        Require("LIVE_TWILIO_SID", "LIVE_TWILIO_TOKEN", "LIVE_WHATSAPP_TO");
+        using var http = new HttpClient();
+        var notifier = new TwilioWhatsAppNotifier(
+            new TwilioOptions
+            {
+                AccountSid = Env("LIVE_TWILIO_SID"),
+                AuthToken = Env("LIVE_TWILIO_TOKEN"),
+                WhatsAppFrom = string.IsNullOrEmpty(Env("LIVE_WHATSAPP_FROM")) ? "+14155238886" : Env("LIVE_WHATSAPP_FROM"), // Twilio's sandbox number
+            },
+            http,
+            new NotifierContext());
+
+        await AssertAccepted(await notifier.SendAsync(WhatsAppMessage.Create(Env("LIVE_WHATSAPP_TO"), "UniversalNotifier.NET WhatsApp sandbox test")));
+    }
+
+    [Test]
+    public async Task Fcm_dry_run()
+    {
+        Require("LIVE_FCM_CREDENTIAL_PATH", "LIVE_FCM_TOKEN");
+        using var notifier = new FcmPushNotifier(new FcmPushOptions { CredentialPath = Env("LIVE_FCM_CREDENTIAL_PATH"), DryRun = true }, new NotifierContext());
+
+        await AssertAccepted(await notifier.SendAsync(PushMessage.Create(Env("LIVE_FCM_TOKEN"), "UniversalNotifier.NET", "FCM dry run"))); // validated, never delivered
+    }
+
+    [Test]
+    public async Task Telegram_test_environment()
+    {
+        // Create the account and the bot in Telegram's test environment (see docs/live-testing.md); normal bot tokens do not work there.
+        Require("LIVE_TELEGRAM_TEST_TOKEN", "LIVE_TELEGRAM_TEST_CHAT");
+        using var notifier = new TelegramNotifier(new TelegramOptions { BotToken = Env("LIVE_TELEGRAM_TEST_TOKEN"), UseTestEnvironment = true }, new NotifierContext());
+
+        await AssertAccepted(await notifier.SendAsync(TelegramMessage.Create(Env("LIVE_TELEGRAM_TEST_CHAT"), "UniversalNotifier.NET test environment")));
     }
 
     [Test]

@@ -43,7 +43,7 @@ public sealed class TelegramNotifier : NotifierBase<TelegramMessage>, ITelegramN
 
         _http = new HttpClient(handler, disposeHandler: true) { Timeout = options.Timeout };
         _maxConcurrency = options.MaxConcurrency;
-        _sendMessageUri = new Uri(options.BaseAddress, $"/bot{options.BotToken}/sendMessage");
+        _sendMessageUri = new Uri(options.BaseAddress, $"/bot{options.BotToken}{(options.UseTestEnvironment ? "/test" : string.Empty)}/sendMessage");
     }
 
     /// <inheritdoc />

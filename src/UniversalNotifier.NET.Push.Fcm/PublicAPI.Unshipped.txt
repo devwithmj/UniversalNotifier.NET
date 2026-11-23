@@ -11,6 +11,8 @@ UniversalNotifier.NET.Push.Fcm.FcmPushOptions.CredentialJson.get -> string?
 UniversalNotifier.NET.Push.Fcm.FcmPushOptions.CredentialJson.set -> void
 UniversalNotifier.NET.Push.Fcm.FcmPushOptions.CredentialPath.get -> string?
 UniversalNotifier.NET.Push.Fcm.FcmPushOptions.CredentialPath.set -> void
+UniversalNotifier.NET.Push.Fcm.FcmPushOptions.DryRun.get -> bool
+UniversalNotifier.NET.Push.Fcm.FcmPushOptions.DryRun.set -> void
 UniversalNotifier.NET.Push.Fcm.FcmPushOptions.FcmPushOptions() -> void
 UniversalNotifier.NET.Push.Fcm.FcmPushOptions.ProjectId.get -> string?
 UniversalNotifier.NET.Push.Fcm.FcmPushOptions.ProjectId.set -> void

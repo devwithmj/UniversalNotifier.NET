@@ -16,3 +16,5 @@ UniversalNotifier.NET.Telegram.TelegramOptions.MaxConcurrency.set -> void
 UniversalNotifier.NET.Telegram.TelegramOptions.TelegramOptions() -> void
 UniversalNotifier.NET.Telegram.TelegramOptions.Timeout.get -> System.TimeSpan
 UniversalNotifier.NET.Telegram.TelegramOptions.Timeout.set -> void
+UniversalNotifier.NET.Telegram.TelegramOptions.UseTestEnvironment.get -> bool
+UniversalNotifier.NET.Telegram.TelegramOptions.UseTestEnvironment.set -> void

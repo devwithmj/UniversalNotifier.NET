@@ -237,3 +237,32 @@ internal sealed class InAppChannel(IServiceProvider services) : INotificationCha
             cancellationToken);
     }
 }
+
+internal sealed class WhatsAppChannel(IServiceProvider services) : INotificationChannel
+{
+    public NotificationChannel Channel => NotificationChannel.WhatsApp;
+
+    public Task<NotifierResponse> SendAsync(NotificationDelivery delivery, CancellationToken cancellationToken)
+    {
+        if (delivery.Notification.Recipient.Phone is not { } phone)
+        {
+            return Task.FromResult(ChannelSupport.NoAddress(Channel, "phone number"));
+        }
+
+        var notifier = ChannelSupport.Resolve<IWhatsAppNotifier>(services, delivery.Provider);
+        if (notifier is null)
+        {
+            return Task.FromResult(ChannelSupport.NoProvider(Channel, delivery.Provider));
+        }
+
+        return notifier.SendAsync(
+            new WhatsAppMessage
+            {
+                Id = delivery.Notification.Id,
+                Metadata = delivery.Notification.Metadata,
+                To = [phone],
+                Body = delivery.Content.Text ?? string.Empty,
+            },
+            cancellationToken);
+    }
+}

@@ -217,4 +217,29 @@ public class SendGridNotifierTests
 
         Assert.Throws<OptionsValidationException>(() => provider.GetRequiredService<IEmailNotifier>());
     }
+
+    [Test]
+    public async Task Sandbox_mode_validates_without_delivering_and_a_200_counts_as_accepted()
+    {
+        var handler = new StubHttpHandler(HttpStatusCode.OK, "{}");
+        var notifier = new SendGridNotifier(
+            new SendGridOptions { ApiKey = "k", From = "a@example.com", SandboxMode = true }, new HttpClient(handler), new NotifierContext());
+
+        var response = await notifier.SendAsync(Email("ada@example.com"));
+
+        Assert.That(response.Success, Is.True);
+        using var body = JsonDocument.Parse(handler.OnlyRequest.Body);
+        Assert.That(body.RootElement.GetProperty("mail_settings").GetProperty("sandbox_mode").GetProperty("enable").GetBoolean(), Is.True);
+    }
+
+    [Test]
+    public async Task Without_sandbox_mode_no_mail_settings_are_sent()
+    {
+        var handler = new StubHttpHandler(_ => Accepted());
+
+        await Create(handler).SendAsync(Email("ada@example.com"));
+
+        using var body = JsonDocument.Parse(handler.OnlyRequest.Body);
+        Assert.That(body.RootElement.TryGetProperty("mail_settings", out _), Is.False);
+    }
 }

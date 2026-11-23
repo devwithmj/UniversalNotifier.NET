@@ -19,7 +19,12 @@ internal sealed record SendGridMail(
     SendGridAttachment[]? Attachments,
     Dictionary<string, string>? Headers,
     string[]? Categories,
-    Dictionary<string, string>? CustomArgs);
+    Dictionary<string, string>? CustomArgs,
+    SendGridMailSettings? MailSettings);
+
+internal sealed record SendGridMailSettings(SendGridSandboxMode SandboxMode);
+
+internal sealed record SendGridSandboxMode(bool Enable);
 
 // Source-generated so serialization needs no reflection (trim and AOT friendly).
 [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.SnakeCaseLower, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

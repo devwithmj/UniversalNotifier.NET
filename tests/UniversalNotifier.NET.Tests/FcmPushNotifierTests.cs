@@ -187,4 +187,26 @@ public class FcmPushNotifierTests
 
         Assert.Throws<OptionsValidationException>(() => provider.GetRequiredService<IPushNotifier>());
     }
+
+    [Test]
+    public void Dry_run_is_off_by_default_and_a_notifier_with_it_on_builds_without_network()
+    {
+        Assert.That(new FcmPushOptions().DryRun, Is.False);
+
+        using var rsa = RSA.Create(2048);
+        var json = JsonSerializer.Serialize(new Dictionary<string, string>
+        {
+            ["type"] = "service_account",
+            ["project_id"] = "demo-project",
+            ["private_key_id"] = "key-id",
+            ["private_key"] = rsa.ExportPkcs8PrivateKeyPem(),
+            ["client_email"] = "sender@demo-project.iam.gserviceaccount.com",
+            ["client_id"] = "1",
+            ["token_uri"] = "https://oauth2.googleapis.com/token",
+        });
+
+        using var notifier = new FcmPushNotifier(new FcmPushOptions { CredentialJson = json, DryRun = true }, new NotifierContext());
+
+        Assert.That(notifier, Is.Not.Null);
+    }
 }

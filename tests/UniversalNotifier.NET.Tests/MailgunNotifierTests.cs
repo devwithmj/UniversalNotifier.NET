@@ -335,4 +335,19 @@ public class MailgunNotifierTests
         Assert.That(notifier.Email, Is.InstanceOf<MailgunNotifier>());
         Assert.That(handler.OnlyRequest.Body, Does.Contain("Hi Ada"));
     }
+
+    [Test]
+    public async Task Test_mode_asks_mailgun_to_accept_without_delivering_and_is_off_by_default()
+    {
+        var normal = new StubHttpHandler(HttpStatusCode.OK, Accepted);
+        var sandbox = new StubHttpHandler(HttpStatusCode.OK, Accepted);
+        var options = Options();
+        options.TestMode = true;
+
+        await Create(normal).SendAsync(Email("a@example.com"));
+        await Create(sandbox, options).SendAsync(Email("a@example.com"));
+
+        Assert.That(normal.OnlyRequest.Body, Does.Not.Contain("o:testmode"));
+        Assert.That(sandbox.OnlyRequest.Body, Does.Contain("o:testmode").And.Contain("yes"));
+    }
 }

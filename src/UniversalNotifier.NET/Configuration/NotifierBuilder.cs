@@ -66,6 +66,9 @@ public sealed class Notifier : INotificationService, IDisposable, IAsyncDisposab
     /// <summary>The default Telegram notifier.</summary>
     public ITelegramNotifier Telegram => Get<ITelegramNotifier>("Telegram");
 
+    /// <summary>The default WhatsApp notifier.</summary>
+    public IWhatsAppNotifier WhatsApp => Get<IWhatsAppNotifier>("WhatsApp");
+
     /// <summary>The default in-app notifier.</summary>
     public IInAppNotifier InApp => Get<IInAppNotifier>("in-app");
 

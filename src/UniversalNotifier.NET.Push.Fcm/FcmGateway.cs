@@ -23,6 +23,7 @@ internal sealed class FcmGateway : IFcmGateway
 
     private readonly FirebaseApp _app;
     private readonly FirebaseMessaging _messaging;
+    private readonly bool _dryRun;
 
     public FcmGateway(FcmPushOptions options, string name)
     {
@@ -38,11 +39,12 @@ internal sealed class FcmGateway : IFcmGateway
             new AppOptions { Credential = credential, ProjectId = string.IsNullOrWhiteSpace(options.ProjectId) ? null : options.ProjectId },
             $"UniversalNotifier.{name}.{Guid.NewGuid():N}");
         _messaging = FirebaseMessaging.GetMessaging(_app);
+        _dryRun = options.DryRun;
     }
 
     public async Task<IReadOnlyList<FcmResult>> SendEachAsync(IReadOnlyList<Message> messages, CancellationToken cancellationToken)
     {
-        var batch = await _messaging.SendEachAsync(messages, cancellationToken).ConfigureAwait(false);
+        var batch = await _messaging.SendEachAsync(messages, _dryRun, cancellationToken).ConfigureAwait(false);
         var results = new FcmResult[batch.Responses.Count];
         for (var i = 0; i < results.Length; i++)
         {

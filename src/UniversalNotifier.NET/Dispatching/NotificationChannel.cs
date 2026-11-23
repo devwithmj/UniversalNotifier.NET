@@ -32,6 +32,9 @@ public readonly struct NotificationChannel : IEquatable<NotificationChannel>
     /// <summary>Browser push notifications.</summary>
     public static NotificationChannel WebPush { get; } = new("webpush");
 
+    /// <summary>WhatsApp messages, sent to the recipient's phone number.</summary>
+    public static NotificationChannel WhatsApp { get; } = new("whatsapp");
+
     /// <summary>Telegram bot messages.</summary>
     public static NotificationChannel Telegram { get; } = new("telegram");
 

@@ -1,6 +1,6 @@
 # UniversalNotifier.NET
 
-**One API for every notification channel.** Send email, SMS, mobile push, web push, Telegram, Slack, Teams, webhooks and in-app notifications from .NET through the same small API, without writing or learning each provider's integration. Switch providers by changing configuration, not code.
+**One API for every notification channel.** Send email, SMS, WhatsApp, mobile push, web push, Telegram, Slack, Teams, webhooks and in-app notifications from .NET through the same small API, without writing or learning each provider's integration. Switch providers by changing configuration, not code.
 
 ```csharp
 await notifications.SendAsync(
@@ -30,7 +30,7 @@ dotnet add package UniversalNotifier.NET.Email.Smtp
 | Email | `UniversalNotifier.NET.Email.Smtp` | any SMTP server (MailKit) |
 | Email | `UniversalNotifier.NET.Email.Mailgun` | Mailgun (US and EU) |
 | Email | `UniversalNotifier.NET.Email.SendGrid` | SendGrid (US and EU) |
-| SMS | `UniversalNotifier.NET.Sms.Twilio` | Twilio |
+| SMS and WhatsApp | `UniversalNotifier.NET.Twilio` | Twilio |
 | Mobile push | `UniversalNotifier.NET.Push.Fcm` | Firebase Cloud Messaging |
 | Browser push | `UniversalNotifier.NET.WebPush` | Web Push / VAPID |
 | Telegram | `UniversalNotifier.NET.Telegram` | Telegram bots |
@@ -55,7 +55,7 @@ builder.Services.AddUniversalNotifier(n => n
         o.Password = builder.Configuration["Smtp:Password"];   // user secrets / environment variables / a vault
         o.From = new EmailAddress("noreply@example.com", "Example");
     })
-    .AddTwilioSms(o =>
+    .AddTwilio(o =>
     {
         o.AccountSid = builder.Configuration["Twilio:AccountSid"]!;
         o.AuthToken = builder.Configuration["Twilio:AuthToken"];
