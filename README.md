@@ -30,6 +30,7 @@ dotnet add package UniversalNotifier.NET.Email.Smtp
 | Email | `UniversalNotifier.NET.Email.Smtp` | any SMTP server (MailKit) |
 | Email | `UniversalNotifier.NET.Email.Mailgun` | Mailgun (US and EU) |
 | Email | `UniversalNotifier.NET.Email.SendGrid` | SendGrid (US and EU) |
+| Email | `UniversalNotifier.NET.Email.Ses` | Amazon SES (no AWS SDK needed) |
 | SMS and WhatsApp | `UniversalNotifier.NET.Twilio` | Twilio |
 | Mobile push | `UniversalNotifier.NET.Push.Fcm` | Firebase Cloud Messaging |
 | Browser push | `UniversalNotifier.NET.WebPush` | Web Push / VAPID |

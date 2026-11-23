@@ -16,6 +16,7 @@ Each test asserts the provider **accepted** the message (see [delivery guarantee
 | SMTP | `LIVE_SMTP_HOST`, `LIVE_EMAIL_FROM`, `LIVE_EMAIL_TO`; optional `LIVE_SMTP_PORT` (587), `LIVE_SMTP_SECURITY` (`StartTls`, `SslOnConnect`, `None`), `LIVE_SMTP_USER`, `LIVE_SMTP_PASSWORD` |
 | Mailgun | `LIVE_MAILGUN_KEY`, `LIVE_MAILGUN_DOMAIN`, `LIVE_EMAIL_FROM`, `LIVE_EMAIL_TO`; optional `LIVE_MAILGUN_REGION` (`eu`) |
 | SendGrid | `LIVE_SENDGRID_KEY`, `LIVE_EMAIL_FROM`, `LIVE_EMAIL_TO` |
+| Amazon SES | `LIVE_SES_REGION`, `LIVE_SES_ACCESS_KEY_ID`, `LIVE_SES_SECRET_ACCESS_KEY`, `LIVE_SES_FROM` (a verified identity); optional `LIVE_SES_SESSION_TOKEN` |
 | Twilio SMS | `LIVE_TWILIO_SID`, `LIVE_TWILIO_TOKEN`, `LIVE_TWILIO_FROM`, `LIVE_SMS_TO` |
 | Twilio WhatsApp | `LIVE_TWILIO_SID`, `LIVE_TWILIO_TOKEN`, `LIVE_WHATSAPP_TO`; optional `LIVE_WHATSAPP_FROM` (defaults to Twilio's sandbox number `+14155238886`) |
 | FCM push | `LIVE_FCM_CREDENTIAL_PATH` (service account JSON file), `LIVE_FCM_TOKEN` (a real device registration token) |
@@ -33,6 +34,7 @@ These use each platform's own safe-testing mode. They are the ones to run first,
 |---|---|---|
 | Mailgun | `TestMode = true` (`o:testmode`): accepted and processed, not delivered | the Mailgun variables above |
 | SendGrid | `SandboxMode = true`: the request is validated, nothing is sent | the SendGrid variables above |
+| Amazon SES | the mailbox simulator (`success@`, `bounce@`, `complaint@simulator.amazonses.com`): accepted, never delivered; works from the SES sandbox | the SES variables above |
 | Twilio SMS | test credentials and magic numbers: never sends or bills; `+15005550006` is the valid sender, `+15005550001` an invalid recipient | `LIVE_TWILIO_TEST_SID`, `LIVE_TWILIO_TEST_TOKEN`; optional `LIVE_TWILIO_TEST_TO` |
 | Twilio WhatsApp | the WhatsApp sandbox (shared number `+14155238886`); the recipient must first join the sandbox by sending Twilio's join code from their WhatsApp | `LIVE_TWILIO_SID`, `LIVE_TWILIO_TOKEN`, `LIVE_WHATSAPP_TO`; optional `LIVE_WHATSAPP_FROM` |
 | FCM | `DryRun = true`: FCM validates the message and the token, nothing reaches the device | the FCM variables above |
