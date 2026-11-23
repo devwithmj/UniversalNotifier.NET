@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- CA1711 asks "...Queue" types to implement ICollection; these are queue abstractions with a clearer name than any alternative. -->
+    <NoWarn>$(NoWarn);CA1711</NoWarn>
+    <Title>UniversalNotifier.NET.Background</Title>
+    <Description>Background delivery for UniversalNotifier.NET: a bounded in-process queue with backpressure, a concurrent worker and graceful shutdown. Replaceable with a durable queue.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UniversalNotifier.NET\UniversalNotifier.NET.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="UniversalNotifier.NET.Tests" />
+  </ItemGroup>
+
+</Project>

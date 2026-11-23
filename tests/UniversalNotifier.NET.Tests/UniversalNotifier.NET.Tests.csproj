@@ -24,6 +24,7 @@
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.Push.Fcm\UniversalNotifier.NET.Push.Fcm.csproj" />
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.Telegram\UniversalNotifier.NET.Telegram.csproj" />
     <ProjectReference Include="..\..\src\UniversalNotifier.NET.WebPush\UniversalNotifier.NET.WebPush.csproj" />
+    <ProjectReference Include="..\..\src\UniversalNotifier.NET.Background\UniversalNotifier.NET.Background.csproj" />
   </ItemGroup>
 
   <ItemGroup>
