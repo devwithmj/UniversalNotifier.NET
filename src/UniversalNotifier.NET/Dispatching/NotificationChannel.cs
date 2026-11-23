@@ -35,6 +35,9 @@ public readonly struct NotificationChannel : IEquatable<NotificationChannel>
     /// <summary>Telegram bot messages.</summary>
     public static NotificationChannel Telegram { get; } = new("telegram");
 
+    /// <summary>Webhooks: Slack, Microsoft Teams and generic HTTP endpoints.</summary>
+    public static NotificationChannel Webhook { get; } = new("webhook");
+
     /// <summary>The lower-case channel name.</summary>
     public string Name => _name ?? string.Empty;
 

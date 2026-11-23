@@ -65,6 +65,9 @@ public sealed class Notifier : INotificationService, IDisposable, IAsyncDisposab
     /// <summary>The default Telegram notifier.</summary>
     public ITelegramNotifier Telegram => Get<ITelegramNotifier>("Telegram");
 
+    /// <summary>The default webhook notifier.</summary>
+    public IWebhookNotifier Webhook => Get<IWebhookNotifier>("webhook");
+
     /// <summary>The default browser push notifier.</summary>
     public IWebPushNotifier WebPush => Get<IWebPushNotifier>("web push");
 

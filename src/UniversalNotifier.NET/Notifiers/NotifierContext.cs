@@ -11,7 +11,9 @@ public sealed class NotifierContext
     /// <summary>Creates a context. Every argument is optional; defaults are no logging, the system clock and no retries.</summary>
     public NotifierContext(NotifierOptions? options = null, ILoggerFactory? loggerFactory = null, TimeProvider? timeProvider = null)
     {
-        Retry = (options ?? new NotifierOptions()).Retry;
+        var settings = options ?? new NotifierOptions();
+        Retry = settings.Retry;
+        RateLimit = settings.RateLimit;
         TimeProvider = timeProvider ?? TimeProvider.System;
         _loggerFactory = loggerFactory ?? NullLoggerFactory.Instance;
     }
@@ -19,7 +21,10 @@ public sealed class NotifierContext
     /// <summary>The retry settings.</summary>
     public RetryOptions Retry { get; }
 
-    /// <summary>The clock used for retry delays. Replace it in tests.</summary>
+    /// <summary>The rate limit settings.</summary>
+    public RateLimitOptions RateLimit { get; }
+
+    /// <summary>The clock used for retry delays and rate limiting. Replace it in tests.</summary>
     public TimeProvider TimeProvider { get; }
 
     /// <summary>Creates a logger for the given notifier type.</summary>

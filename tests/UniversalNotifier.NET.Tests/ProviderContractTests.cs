@@ -6,6 +6,7 @@ using UniversalNotifier.NET.Email.Smtp;
 using UniversalNotifier.NET.Push.Fcm;
 using UniversalNotifier.NET.Sms.Twilio;
 using UniversalNotifier.NET.Telegram;
+using UniversalNotifier.NET.Webhook;
 using UniversalNotifier.NET.WebPush;
 
 namespace UniversalNotifier.NET.Tests;
@@ -398,5 +399,35 @@ public class WebPushContractTests : ProviderContractTests<WebPushMessage>
             new WebPushOptions { PublicKey = Keys.PublicKey, PrivateKey = Keys.PrivateKey, Subject = "mailto:ops@example.com" },
             Context,
             _handler);
+    }
+}
+
+[TestFixture]
+public class WebhookContractTests : ProviderContractTests<WebhookMessage>
+{
+    private StubHttpHandler _handler = new(HttpStatusCode.OK);
+
+    protected override WebhookMessage Valid => WebhookMessage.Create("ops", "Deploy finished", "Release");
+
+    protected override WebhookMessage Invalid => new();
+
+    protected override IReadOnlyList<string> Secrets => ["T0SECRET/B0SECRET/xyzSECRET", "signing-SECRET"];
+
+    protected override IReadOnlyList<string> PersonalData => [];
+
+    protected override int BackendCalls => _handler.Requests.Count;
+
+    protected override INotifier<WebhookMessage> Create(ContractScenario scenario)
+    {
+        _handler = scenario switch
+        {
+            ContractScenario.Accepts => new StubHttpHandler(HttpStatusCode.OK, "ok"),
+            ContractScenario.RejectsPermanently => new StubHttpHandler(HttpStatusCode.BadRequest, "invalid_payload"),
+            ContractScenario.RejectsTransiently => new StubHttpHandler(HttpStatusCode.TooManyRequests, "rate_limited"),
+            _ => new StubHttpHandler(_ => throw new HttpRequestException(HttpRequestError.ConnectionError, "down")),
+        };
+
+        var options = new WebhookOptions().Add("ops", "https://hooks.slack.com/services/T0SECRET/B0SECRET/xyzSECRET", WebhookFormat.Slack, "signing-SECRET");
+        return new WebhookNotifier(options, Context, _handler);
     }
 }

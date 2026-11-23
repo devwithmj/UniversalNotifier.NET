@@ -26,6 +26,9 @@ public static class ServiceCollectionExtensions
             .Validate(
                 static o => o.Retry.MaxAttempts is >= 1 and <= 10 && o.Retry.BaseDelay >= TimeSpan.Zero && o.Retry.MaxDelay >= o.Retry.BaseDelay,
                 "Retry needs 1 to 10 attempts and a MaxDelay that is not shorter than BaseDelay.")
+            .Validate(
+                static o => o.RateLimit.PermitsPerSecond >= 0 && o.RateLimit.Burst >= 1 && (!o.RateLimit.Enabled || o.RateLimit.PermitsPerSecond <= 100_000),
+                "RateLimit needs PermitsPerSecond of 0 (off) up to 100000 and a Burst of at least 1.")
             .ValidateOnStart();
         services.AddOptions<TemplateOptions>()
             .Validate(static o => o.MaxCachedTemplates >= 1 && o.Culture is not null, "Templates need a culture and a cache size of at least 1.")
@@ -45,6 +48,7 @@ public static class ServiceCollectionExtensions
         services.TryAddEnumerable(ServiceDescriptor.Singleton<INotificationChannel, PushChannel>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<INotificationChannel, WebPushChannel>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<INotificationChannel, TelegramChannel>());
+        services.TryAddEnumerable(ServiceDescriptor.Singleton<INotificationChannel, WebhookChannel>());
         return services;
     }
 

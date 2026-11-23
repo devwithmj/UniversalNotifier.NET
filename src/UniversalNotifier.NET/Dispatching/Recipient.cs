@@ -21,6 +21,9 @@ public sealed record Recipient
     /// <summary>The Telegram chat id.</summary>
     public string? TelegramChatId { get; init; }
 
+    /// <summary>The name of a configured webhook endpoint (for example a Slack channel or Teams workflow).</summary>
+    public string? WebhookEndpoint { get; init; }
+
     /// <summary>
     /// Builds a recipient from one string: an email address (contains <c>@</c>) or an E.164 phone number (starts with <c>+</c>).
     /// </summary>

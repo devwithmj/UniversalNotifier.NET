@@ -1,0 +1,27 @@
+#nullable enable
+const UniversalNotifier.NET.Webhook.WebhookNotifier.Name = "webhook" -> string!
+Microsoft.Extensions.DependencyInjection.WebhookBuilderExtensions
+override UniversalNotifier.NET.Webhook.WebhookEndpoint.ToString() -> string!
+override UniversalNotifier.NET.Webhook.WebhookOptions.ToString() -> string!
+static Microsoft.Extensions.DependencyInjection.WebhookBuilderExtensions.AddWebhook(this UniversalNotifier.NET.INotifierBuilder! builder, System.Action<UniversalNotifier.NET.Webhook.WebhookOptions!>? configure = null, string? name = null) -> UniversalNotifier.NET.INotifierBuilder!
+UniversalNotifier.NET.Webhook.WebhookEndpoint
+UniversalNotifier.NET.Webhook.WebhookEndpoint.Format.get -> UniversalNotifier.NET.Webhook.WebhookFormat
+UniversalNotifier.NET.Webhook.WebhookEndpoint.Format.set -> void
+UniversalNotifier.NET.Webhook.WebhookEndpoint.SigningSecret.get -> string?
+UniversalNotifier.NET.Webhook.WebhookEndpoint.SigningSecret.set -> void
+UniversalNotifier.NET.Webhook.WebhookEndpoint.Url.get -> System.Uri?
+UniversalNotifier.NET.Webhook.WebhookEndpoint.Url.set -> void
+UniversalNotifier.NET.Webhook.WebhookEndpoint.WebhookEndpoint() -> void
+UniversalNotifier.NET.Webhook.WebhookFormat
+UniversalNotifier.NET.Webhook.WebhookFormat.Json = 0 -> UniversalNotifier.NET.Webhook.WebhookFormat
+UniversalNotifier.NET.Webhook.WebhookFormat.Slack = 1 -> UniversalNotifier.NET.Webhook.WebhookFormat
+UniversalNotifier.NET.Webhook.WebhookFormat.Teams = 2 -> UniversalNotifier.NET.Webhook.WebhookFormat
+UniversalNotifier.NET.Webhook.WebhookNotifier
+UniversalNotifier.NET.Webhook.WebhookNotifier.Dispose() -> void
+UniversalNotifier.NET.Webhook.WebhookNotifier.WebhookNotifier(UniversalNotifier.NET.Webhook.WebhookOptions! options, UniversalNotifier.NET.NotifierContext! context) -> void
+UniversalNotifier.NET.Webhook.WebhookOptions
+UniversalNotifier.NET.Webhook.WebhookOptions.Add(string! name, string! url, UniversalNotifier.NET.Webhook.WebhookFormat format = UniversalNotifier.NET.Webhook.WebhookFormat.Json, string? signingSecret = null) -> UniversalNotifier.NET.Webhook.WebhookOptions!
+UniversalNotifier.NET.Webhook.WebhookOptions.Endpoints.get -> System.Collections.Generic.IDictionary<string!, UniversalNotifier.NET.Webhook.WebhookEndpoint!>!
+UniversalNotifier.NET.Webhook.WebhookOptions.Timeout.get -> System.TimeSpan
+UniversalNotifier.NET.Webhook.WebhookOptions.Timeout.set -> void
+UniversalNotifier.NET.Webhook.WebhookOptions.WebhookOptions() -> void

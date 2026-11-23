@@ -28,6 +28,12 @@ public sealed record Notification
     /// <summary>The values for <c>{{Token}}</c> placeholders.</summary>
     public IReadOnlyDictionary<string, object?>? Data { get; init; }
 
+    /// <summary>
+    /// Makes a repeated send of the same logical notification harmless: the background queue accepts a notification with a
+    /// key it has already seen (within its deduplication window) without delivering it again.
+    /// </summary>
+    public string? IdempotencyKey { get; init; }
+
     /// <summary>Free-form key/value data copied onto each message.</summary>
     public IReadOnlyDictionary<string, string>? Metadata { get; init; }
 
@@ -61,6 +67,10 @@ public sealed record Notification
     public Notification Telegram(string? text = null, string? html = null, string? provider = null) =>
         Via(NotificationChannel.Telegram, Inline(new ChannelContent { Text = text, Html = html }), provider);
 
+    /// <summary>Adds the webhook channel (Slack, Teams, generic). The title and text come from the template when left out.</summary>
+    public Notification Webhook(string? title = null, string? text = null, string? provider = null) =>
+        Via(NotificationChannel.Webhook, Inline(new ChannelContent { Title = title, Text = text }), provider);
+
     /// <summary>Adds any channel, including custom ones.</summary>
     public Notification Via(NotificationChannel channel, ChannelContent? content = null, string? provider = null) =>
         this with { Channels = [.. Channels, new ChannelRequest(channel, content, provider)] };
@@ -84,6 +94,13 @@ public sealed record Notification
     {
         ArgumentNullException.ThrowIfNull(data);
         return this with { Data = TemplateData.Snapshot(data) };
+    }
+
+    /// <summary>Sets the idempotency key used to drop duplicate submissions. See <see cref="IdempotencyKey"/>.</summary>
+    public Notification WithIdempotencyKey(string key)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(key);
+        return this with { IdempotencyKey = key };
     }
 
     /// <summary>Sets a correlation id.</summary>

@@ -10,6 +10,7 @@ override sealed UniversalNotifier.NET.PushMessage.Equals(UniversalNotifier.NET.N
 override sealed UniversalNotifier.NET.Recipient.ToString() -> string!
 override sealed UniversalNotifier.NET.SmsMessage.Equals(UniversalNotifier.NET.NotifierMessage? other) -> bool
 override sealed UniversalNotifier.NET.TelegramMessage.Equals(UniversalNotifier.NET.NotifierMessage? other) -> bool
+override sealed UniversalNotifier.NET.WebhookMessage.Equals(UniversalNotifier.NET.NotifierMessage? other) -> bool
 override sealed UniversalNotifier.NET.WebPushMessage.Equals(UniversalNotifier.NET.NotifierMessage? other) -> bool
 override UniversalNotifier.NET.ChannelContent.Equals(object? obj) -> bool
 override UniversalNotifier.NET.ChannelContent.GetHashCode() -> int
@@ -59,6 +60,10 @@ override UniversalNotifier.NET.TelegramMessage.Validate() -> System.Collections.
 override UniversalNotifier.NET.TemplateRegistration.Equals(object? obj) -> bool
 override UniversalNotifier.NET.TemplateRegistration.GetHashCode() -> int
 override UniversalNotifier.NET.TemplateRegistration.ToString() -> string!
+override UniversalNotifier.NET.WebhookMessage.<Clone>$() -> UniversalNotifier.NET.WebhookMessage!
+override UniversalNotifier.NET.WebhookMessage.Equals(object? obj) -> bool
+override UniversalNotifier.NET.WebhookMessage.GetHashCode() -> int
+override UniversalNotifier.NET.WebhookMessage.Validate() -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.NotifierError>!
 override UniversalNotifier.NET.WebPushMessage.<Clone>$() -> UniversalNotifier.NET.WebPushMessage!
 override UniversalNotifier.NET.WebPushMessage.Equals(object? obj) -> bool
 override UniversalNotifier.NET.WebPushMessage.GetHashCode() -> int
@@ -91,6 +96,7 @@ static UniversalNotifier.NET.NotificationChannel.operator ==(UniversalNotifier.N
 static UniversalNotifier.NET.NotificationChannel.Push.get -> UniversalNotifier.NET.NotificationChannel
 static UniversalNotifier.NET.NotificationChannel.Sms.get -> UniversalNotifier.NET.NotificationChannel
 static UniversalNotifier.NET.NotificationChannel.Telegram.get -> UniversalNotifier.NET.NotificationChannel
+static UniversalNotifier.NET.NotificationChannel.Webhook.get -> UniversalNotifier.NET.NotificationChannel
 static UniversalNotifier.NET.NotificationChannel.WebPush.get -> UniversalNotifier.NET.NotificationChannel
 static UniversalNotifier.NET.NotificationDelivery.operator !=(UniversalNotifier.NET.NotificationDelivery? left, UniversalNotifier.NET.NotificationDelivery? right) -> bool
 static UniversalNotifier.NET.NotificationDelivery.operator ==(UniversalNotifier.NET.NotificationDelivery? left, UniversalNotifier.NET.NotificationDelivery? right) -> bool
@@ -105,6 +111,7 @@ static UniversalNotifier.NET.NotifierBuilderExtensions.Build(this UniversalNotif
 static UniversalNotifier.NET.NotifierBuilderExtensions.ConfigureTemplates(this UniversalNotifier.NET.INotifierBuilder! builder, System.Action<UniversalNotifier.NET.TemplateOptions!>! configure) -> UniversalNotifier.NET.INotifierBuilder!
 static UniversalNotifier.NET.NotifierBuilderExtensions.UseLoggerFactory(this UniversalNotifier.NET.INotifierBuilder! builder, Microsoft.Extensions.Logging.ILoggerFactory! loggerFactory) -> UniversalNotifier.NET.INotifierBuilder!
 static UniversalNotifier.NET.NotifierBuilderExtensions.UseTemplateRenderer<TRenderer>(this UniversalNotifier.NET.INotifierBuilder! builder) -> UniversalNotifier.NET.INotifierBuilder!
+static UniversalNotifier.NET.NotifierBuilderExtensions.WithRateLimit(this UniversalNotifier.NET.INotifierBuilder! builder, double permitsPerSecond, int burst = 1) -> UniversalNotifier.NET.INotifierBuilder!
 static UniversalNotifier.NET.NotifierBuilderExtensions.WithRetries(this UniversalNotifier.NET.INotifierBuilder! builder, int maxAttempts = 3, System.TimeSpan? baseDelay = null, System.TimeSpan? maxDelay = null, bool retryUnknownFailures = false) -> UniversalNotifier.NET.INotifierBuilder!
 static UniversalNotifier.NET.NotifierError.operator !=(UniversalNotifier.NET.NotifierError left, UniversalNotifier.NET.NotifierError right) -> bool
 static UniversalNotifier.NET.NotifierError.operator ==(UniversalNotifier.NET.NotifierError left, UniversalNotifier.NET.NotifierError right) -> bool
@@ -136,6 +143,9 @@ static UniversalNotifier.NET.TemplateData.Empty.get -> UniversalNotifier.NET.Tem
 static UniversalNotifier.NET.TemplateData.From(object? data) -> UniversalNotifier.NET.TemplateData!
 static UniversalNotifier.NET.TemplateRegistration.operator !=(UniversalNotifier.NET.TemplateRegistration? left, UniversalNotifier.NET.TemplateRegistration? right) -> bool
 static UniversalNotifier.NET.TemplateRegistration.operator ==(UniversalNotifier.NET.TemplateRegistration? left, UniversalNotifier.NET.TemplateRegistration? right) -> bool
+static UniversalNotifier.NET.WebhookMessage.Create(string! endpoint, string! text, string? title = null) -> UniversalNotifier.NET.WebhookMessage!
+static UniversalNotifier.NET.WebhookMessage.operator !=(UniversalNotifier.NET.WebhookMessage? left, UniversalNotifier.NET.WebhookMessage? right) -> bool
+static UniversalNotifier.NET.WebhookMessage.operator ==(UniversalNotifier.NET.WebhookMessage? left, UniversalNotifier.NET.WebhookMessage? right) -> bool
 static UniversalNotifier.NET.WebPushMessage.operator !=(UniversalNotifier.NET.WebPushMessage? left, UniversalNotifier.NET.WebPushMessage? right) -> bool
 static UniversalNotifier.NET.WebPushMessage.operator ==(UniversalNotifier.NET.WebPushMessage? left, UniversalNotifier.NET.WebPushMessage? right) -> bool
 static UniversalNotifier.NET.WebPushSubscription.operator !=(UniversalNotifier.NET.WebPushSubscription? left, UniversalNotifier.NET.WebPushSubscription? right) -> bool
@@ -249,6 +259,7 @@ UniversalNotifier.NET.ITemplateRenderer
 UniversalNotifier.NET.ITemplateRenderer.Render(string! templateText, UniversalNotifier.NET.TemplateData! data, UniversalNotifier.NET.TemplateFormat format = UniversalNotifier.NET.TemplateFormat.Text) -> string!
 UniversalNotifier.NET.ITemplateStore
 UniversalNotifier.NET.ITemplateStore.TryGetAsync(string! name, UniversalNotifier.NET.NotificationChannel channel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<UniversalNotifier.NET.ChannelContent?>
+UniversalNotifier.NET.IWebhookNotifier
 UniversalNotifier.NET.IWebPushNotifier
 UniversalNotifier.NET.MissingTokenBehavior
 UniversalNotifier.NET.MissingTokenBehavior.Empty = 2 -> UniversalNotifier.NET.MissingTokenBehavior
@@ -264,6 +275,8 @@ UniversalNotifier.NET.Notification.Email(string? subject = null, string? html = 
 UniversalNotifier.NET.Notification.Equals(UniversalNotifier.NET.Notification? other) -> bool
 UniversalNotifier.NET.Notification.Id.get -> string?
 UniversalNotifier.NET.Notification.Id.init -> void
+UniversalNotifier.NET.Notification.IdempotencyKey.get -> string?
+UniversalNotifier.NET.Notification.IdempotencyKey.init -> void
 UniversalNotifier.NET.Notification.Metadata.get -> System.Collections.Generic.IReadOnlyDictionary<string!, string!>?
 UniversalNotifier.NET.Notification.Metadata.init -> void
 UniversalNotifier.NET.Notification.Notification() -> void
@@ -276,10 +289,12 @@ UniversalNotifier.NET.Notification.TemplateName.get -> string?
 UniversalNotifier.NET.Notification.TemplateName.init -> void
 UniversalNotifier.NET.Notification.UseTemplate(string! name) -> UniversalNotifier.NET.Notification!
 UniversalNotifier.NET.Notification.Via(UniversalNotifier.NET.NotificationChannel channel, UniversalNotifier.NET.ChannelContent? content = null, string? provider = null) -> UniversalNotifier.NET.Notification!
+UniversalNotifier.NET.Notification.Webhook(string? title = null, string? text = null, string? provider = null) -> UniversalNotifier.NET.Notification!
 UniversalNotifier.NET.Notification.WebPush(string? title = null, string? body = null, System.Collections.Generic.IReadOnlyDictionary<string!, string!>? data = null, string? provider = null) -> UniversalNotifier.NET.Notification!
 UniversalNotifier.NET.Notification.WithData(object! data) -> UniversalNotifier.NET.Notification!
 UniversalNotifier.NET.Notification.WithData(System.Collections.Generic.IReadOnlyDictionary<string!, object?>! data) -> UniversalNotifier.NET.Notification!
 UniversalNotifier.NET.Notification.WithId(string! id) -> UniversalNotifier.NET.Notification!
+UniversalNotifier.NET.Notification.WithIdempotencyKey(string! key) -> UniversalNotifier.NET.Notification!
 UniversalNotifier.NET.NotificationChannel
 UniversalNotifier.NET.NotificationChannel.Equals(UniversalNotifier.NET.NotificationChannel other) -> bool
 UniversalNotifier.NET.NotificationChannel.Name.get -> string!
@@ -313,6 +328,7 @@ UniversalNotifier.NET.Notifier.Push.get -> UniversalNotifier.NET.IPushNotifier!
 UniversalNotifier.NET.Notifier.SendAsync(UniversalNotifier.NET.Notification! notification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<UniversalNotifier.NET.NotificationResult!>!
 UniversalNotifier.NET.Notifier.Sms.get -> UniversalNotifier.NET.ISmsNotifier!
 UniversalNotifier.NET.Notifier.Telegram.get -> UniversalNotifier.NET.ITelegramNotifier!
+UniversalNotifier.NET.Notifier.Webhook.get -> UniversalNotifier.NET.IWebhookNotifier!
 UniversalNotifier.NET.Notifier.WebPush.get -> UniversalNotifier.NET.IWebPushNotifier!
 UniversalNotifier.NET.NotifierBase<TMessage>
 UniversalNotifier.NET.NotifierBase<TMessage>.NotifierBase(UniversalNotifier.NET.NotifierContext! context) -> void
@@ -325,6 +341,7 @@ UniversalNotifier.NET.NotifierBuilderExtensions
 UniversalNotifier.NET.NotifierContext
 UniversalNotifier.NET.NotifierContext.CreateLogger(System.Type! type) -> Microsoft.Extensions.Logging.ILogger!
 UniversalNotifier.NET.NotifierContext.NotifierContext(UniversalNotifier.NET.NotifierOptions? options = null, Microsoft.Extensions.Logging.ILoggerFactory? loggerFactory = null, System.TimeProvider? timeProvider = null) -> void
+UniversalNotifier.NET.NotifierContext.RateLimit.get -> UniversalNotifier.NET.RateLimitOptions!
 UniversalNotifier.NET.NotifierContext.Retry.get -> UniversalNotifier.NET.RetryOptions!
 UniversalNotifier.NET.NotifierContext.TimeProvider.get -> System.TimeProvider!
 UniversalNotifier.NET.NotifierError
@@ -353,6 +370,7 @@ UniversalNotifier.NET.NotifierMessage.NotifierMessage() -> void
 UniversalNotifier.NET.NotifierMessage.NotifierMessage(UniversalNotifier.NET.NotifierMessage! original) -> void
 UniversalNotifier.NET.NotifierOptions
 UniversalNotifier.NET.NotifierOptions.NotifierOptions() -> void
+UniversalNotifier.NET.NotifierOptions.RateLimit.get -> UniversalNotifier.NET.RateLimitOptions!
 UniversalNotifier.NET.NotifierOptions.Retry.get -> UniversalNotifier.NET.RetryOptions!
 UniversalNotifier.NET.NotifierResponse
 UniversalNotifier.NET.NotifierResponse.Errors.get -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.NotifierError>!
@@ -383,6 +401,12 @@ UniversalNotifier.NET.PushMessage.Tokens.get -> System.Collections.Generic.IRead
 UniversalNotifier.NET.PushMessage.Tokens.init -> void
 UniversalNotifier.NET.PushMessage.Topic.get -> string?
 UniversalNotifier.NET.PushMessage.Topic.init -> void
+UniversalNotifier.NET.RateLimitOptions
+UniversalNotifier.NET.RateLimitOptions.Burst.get -> int
+UniversalNotifier.NET.RateLimitOptions.Burst.set -> void
+UniversalNotifier.NET.RateLimitOptions.PermitsPerSecond.get -> double
+UniversalNotifier.NET.RateLimitOptions.PermitsPerSecond.set -> void
+UniversalNotifier.NET.RateLimitOptions.RateLimitOptions() -> void
 UniversalNotifier.NET.Recipient
 UniversalNotifier.NET.Recipient.<Clone>$() -> UniversalNotifier.NET.Recipient!
 UniversalNotifier.NET.Recipient.DeviceTokens.get -> System.Collections.Generic.IReadOnlyList<string!>!
@@ -395,6 +419,8 @@ UniversalNotifier.NET.Recipient.Phone.init -> void
 UniversalNotifier.NET.Recipient.Recipient() -> void
 UniversalNotifier.NET.Recipient.TelegramChatId.get -> string?
 UniversalNotifier.NET.Recipient.TelegramChatId.init -> void
+UniversalNotifier.NET.Recipient.WebhookEndpoint.get -> string?
+UniversalNotifier.NET.Recipient.WebhookEndpoint.init -> void
 UniversalNotifier.NET.Recipient.WebPushSubscriptions.get -> System.Collections.Generic.IReadOnlyList<UniversalNotifier.NET.WebPushSubscription!>!
 UniversalNotifier.NET.Recipient.WebPushSubscriptions.init -> void
 UniversalNotifier.NET.RecipientResult
@@ -473,6 +499,17 @@ UniversalNotifier.NET.TemplateRenderException.Token.get -> string?
 UniversalNotifier.NET.TokenTemplateRenderer
 UniversalNotifier.NET.TokenTemplateRenderer.Render(string! templateText, UniversalNotifier.NET.TemplateData! data, UniversalNotifier.NET.TemplateFormat format = UniversalNotifier.NET.TemplateFormat.Text) -> string!
 UniversalNotifier.NET.TokenTemplateRenderer.TokenTemplateRenderer(UniversalNotifier.NET.TemplateOptions? options = null) -> void
+UniversalNotifier.NET.WebhookMessage
+UniversalNotifier.NET.WebhookMessage.Data.get -> System.Collections.Generic.IReadOnlyDictionary<string!, string!>?
+UniversalNotifier.NET.WebhookMessage.Data.init -> void
+UniversalNotifier.NET.WebhookMessage.Endpoint.get -> string!
+UniversalNotifier.NET.WebhookMessage.Endpoint.init -> void
+UniversalNotifier.NET.WebhookMessage.Equals(UniversalNotifier.NET.WebhookMessage? other) -> bool
+UniversalNotifier.NET.WebhookMessage.Text.get -> string!
+UniversalNotifier.NET.WebhookMessage.Text.init -> void
+UniversalNotifier.NET.WebhookMessage.Title.get -> string?
+UniversalNotifier.NET.WebhookMessage.Title.init -> void
+UniversalNotifier.NET.WebhookMessage.WebhookMessage() -> void
 UniversalNotifier.NET.WebPushMessage
 UniversalNotifier.NET.WebPushMessage.Body.get -> string?
 UniversalNotifier.NET.WebPushMessage.Body.init -> void

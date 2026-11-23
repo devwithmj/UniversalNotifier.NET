@@ -78,7 +78,7 @@ public class ConfigurationTests
             .AddUniversalNotifier()
             .BuildServiceProvider();
 
-        Assert.That(provider.GetServices<INotificationChannel>().Count(), Is.EqualTo(5));
+        Assert.That(provider.GetServices<INotificationChannel>().Count(), Is.EqualTo(6));
         Assert.That(provider.GetServices<ITemplateStore>().Count(), Is.EqualTo(1));
     }
 

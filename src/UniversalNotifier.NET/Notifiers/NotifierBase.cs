@@ -11,6 +11,7 @@ public abstract class NotifierBase<TMessage> : INotifier<TMessage> where TMessag
 {
     private readonly NotifierContext _context;
     private readonly ILogger _logger;
+    private readonly RateGate? _rateGate;
 
     /// <summary>Creates the notifier.</summary>
     protected NotifierBase(NotifierContext context)
@@ -18,6 +19,7 @@ public abstract class NotifierBase<TMessage> : INotifier<TMessage> where TMessag
         ArgumentNullException.ThrowIfNull(context);
         _context = context;
         _logger = context.CreateLogger(GetType());
+        _rateGate = context.RateLimit.Enabled ? new RateGate(context.RateLimit, context.TimeProvider) : null;
     }
 
     /// <summary>The name used in logs. Defaults to the class name.</summary>
@@ -42,6 +44,11 @@ public abstract class NotifierBase<TMessage> : INotifier<TMessage> where TMessag
         var retry = _context.Retry;
         for (var attempt = 1; ; attempt++)
         {
+            if (_rateGate is not null)
+            {
+                await _rateGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+            }
+
             NotifierLog.Sending(_logger, ProviderName, messageType, id, attempt);
             var response = await TrySendAsync(message, cancellationToken).ConfigureAwait(false);
 

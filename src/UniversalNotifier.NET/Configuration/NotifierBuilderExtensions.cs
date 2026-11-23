@@ -82,6 +82,24 @@ public static class NotifierBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// Spaces the calls each notifier makes to its provider so you stay under the provider's rate limit. Calls wait their
+    /// turn instead of failing. Applies to every provider; waiting counts toward the caller's cancellation token.
+    /// </summary>
+    /// <param name="builder">The builder.</param>
+    /// <param name="permitsPerSecond">The sustained calls per second, for example 10.</param>
+    /// <param name="burst">How many calls may go out at once before spacing starts.</param>
+    public static INotifierBuilder WithRateLimit(this INotifierBuilder builder, double permitsPerSecond, int burst = 1)
+    {
+        ArgumentNullException.ThrowIfNull(builder);
+        builder.Services.Configure<NotifierOptions>(options =>
+        {
+            options.RateLimit.PermitsPerSecond = permitsPerSecond;
+            options.RateLimit.Burst = burst;
+        });
+        return builder;
+    }
+
     /// <summary>Changes template settings such as what happens to a missing token.</summary>
     public static INotifierBuilder ConfigureTemplates(this INotifierBuilder builder, Action<TemplateOptions> configure)
     {
