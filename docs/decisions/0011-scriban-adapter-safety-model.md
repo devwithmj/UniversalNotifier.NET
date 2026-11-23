@@ -1,6 +1,6 @@
 # ADR 0011: Scriban as an optional renderer with an explicit data model
 
-Status: accepted
+Status: accepted (also applies to the Fluid adapter, `UniversalNotifier.NET.Templates.Fluid`, which uses the same data model, limits and encoding rules with Liquid syntax)
 
 ## Context
 The built-in renderer is intentionally small. Some teams need conditionals, loops and filters. Scriban is a capable, maintained engine, but its documentation is clear that it is not a security boundary around arbitrary .NET objects.

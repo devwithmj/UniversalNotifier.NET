@@ -37,6 +37,7 @@ dotnet add package UniversalNotifier.NET.Email.Smtp
 | Webhooks | `UniversalNotifier.NET.Webhook` | Slack, Microsoft Teams, generic JSON (HMAC signing) |
 | In-app | `UniversalNotifier.NET.InApp` | per-user inbox: unread counts, mark as read, your own store |
 | Templates | `UniversalNotifier.NET.Templates.Scriban` | Scriban: conditionals, loops, filters |
+| Templates | `UniversalNotifier.NET.Templates.Fluid` | Fluid (Liquid syntax): conditionals, loops, filters |
 | Background delivery | `UniversalNotifier.NET.Background` | in-memory queue and worker |
 | Tests | `UniversalNotifier.NET.Testing` | fake notifiers |
 
@@ -182,6 +183,8 @@ n.UseScriban();   // dotnet add package UniversalNotifier.NET.Templates.Scriban
 {{ if Total > 100 }}Free shipping!{{ end }}
 {{ for line in Lines }}<li>{{ line.Sku }} x {{ line.Qty }}</li>{{ end }}
 ```
+
+Prefer Liquid syntax? `n.UseFluid()` (package `UniversalNotifier.NET.Templates.Fluid`) offers the same safety model with `{% if %}`, `{% for %}` and Liquid filters.
 
 Existing `{{Name}}` templates keep working. The adapter limits loops, recursion and output size, has no `include`, gives templates plain data instead of .NET objects (no method calls), and HTML-encodes every string value in HTML parts.
 

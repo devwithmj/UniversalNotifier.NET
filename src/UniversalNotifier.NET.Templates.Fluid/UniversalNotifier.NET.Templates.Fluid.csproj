@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>UniversalNotifier.NET.Templates.Fluid</Title>
+    <Description>Fluid (Liquid) template engine for UniversalNotifier.NET: conditionals, loops and filters in notification templates, with execution limits and an explicit, sanitized data model.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fluid.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UniversalNotifier.NET\UniversalNotifier.NET.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="UniversalNotifier.NET.Tests" />
+  </ItemGroup>
+
+</Project>
