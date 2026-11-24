@@ -75,13 +75,13 @@ public sealed class DirectoryTemplateStore : IListableTemplateStore
             return null;
         }
 
-        var directory = Path.Combine(_root, name);
+        var directory = Path.Join(_root, name);
         if (!Directory.Exists(directory))
         {
             return null;
         }
 
-        var prefix = Path.Combine(directory, channel.Name);
+        var prefix = Path.Join(directory, channel.Name);
         var subject = await ReadAsync(prefix + ".subject.txt", cancellationToken).ConfigureAwait(false);
         var title = await ReadAsync(prefix + ".title.txt", cancellationToken).ConfigureAwait(false);
         var text = await ReadAsync(prefix + ".text.txt", cancellationToken).ConfigureAwait(false);

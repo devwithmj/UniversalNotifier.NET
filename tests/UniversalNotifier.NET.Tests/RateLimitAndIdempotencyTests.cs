@@ -201,6 +201,7 @@ public class RateLimitAndIdempotencyTests
         Assert.That(await queue.EnqueueAsync(Keyed("second")), Is.False, "the queue is full");
         await foreach (var _ in queue.DequeueAllAsync().Take(1))
         {
+            // Take one to free the slot.
         }
 
         Assert.That(await queue.EnqueueAsync(Keyed("second")), Is.True, "the retry must not be mistaken for a duplicate");

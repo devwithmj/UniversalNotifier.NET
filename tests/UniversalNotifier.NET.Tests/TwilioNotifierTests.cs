@@ -111,6 +111,7 @@ public class TwilioNotifierTests
             int seen;
             while (now > (seen = Volatile.Read(ref peak)) && Interlocked.CompareExchange(ref peak, now, seen) != seen)
             {
+                // Retry until the peak is recorded.
             }
 
             Thread.Sleep(20);

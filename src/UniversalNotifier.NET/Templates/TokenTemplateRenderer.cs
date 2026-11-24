@@ -34,9 +34,7 @@ public sealed class TokenTemplateRenderer : ITemplateRenderer
             return templateText;
         }
 
-        var builder = t_builder ?? new StringBuilder(256);
-        t_builder = null;
-        builder.Clear();
+        var builder = RentBuilder();
 
         foreach (var segment in compiled.Segments)
         {
@@ -63,12 +61,24 @@ public sealed class TokenTemplateRenderer : ITemplateRenderer
         }
 
         var result = builder.ToString();
+        ReturnBuilder(builder);
+        return result;
+    }
+
+    // One reusable builder per thread; a large one is dropped so a single big template cannot pin memory.
+    private static StringBuilder RentBuilder()
+    {
+        var builder = t_builder ?? new StringBuilder(256);
+        t_builder = null;
+        return builder.Clear();
+    }
+
+    private static void ReturnBuilder(StringBuilder builder)
+    {
         if (builder.Capacity <= 16 * 1024)
         {
             t_builder = builder;
         }
-
-        return result;
     }
 
     private string ToText(object? value) => value switch

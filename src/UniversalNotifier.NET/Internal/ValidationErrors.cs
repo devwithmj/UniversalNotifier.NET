@@ -8,7 +8,7 @@ internal struct ValidationErrors
     public void Add(string code, string message) =>
         (_errors ??= []).Add(new NotifierError(NotifierErrorKind.Validation, code, message));
 
-    public readonly IReadOnlyList<NotifierError> ToList() => _errors ?? (IReadOnlyList<NotifierError>)[];
+    public readonly IReadOnlyList<NotifierError> ToList() => _errors is null ? Array.Empty<NotifierError>() : _errors;
 
     public static bool HasLineBreak(string? value) =>
         value is not null && value.AsSpan().IndexOfAny('\r', '\n') >= 0;
