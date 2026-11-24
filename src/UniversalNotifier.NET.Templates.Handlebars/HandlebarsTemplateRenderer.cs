@@ -149,7 +149,7 @@ public sealed class HandlebarsTemplateRenderer : IValidatingTemplateRenderer
 
     private static object? FromJson(JsonElement element, TemplateFormat format, int depth) => element.ValueKind switch
     {
-        JsonValueKind.Object => FromEntries(element.EnumerateObject().Select(p => (p.Name, (object?)p.Value)), format, depth),
+        JsonValueKind.Object => FromEntries(element.EnumerateObject().Select<JsonProperty, (string, object?)>(p => (p.Name, p.Value)), format, depth),
         JsonValueKind.Array => element.EnumerateArray().Select(e => ToPlain(e, format, depth + 1)).ToList(),
         JsonValueKind.String => ToPlain(element.GetString(), format, depth),
         JsonValueKind.Number => element.TryGetInt64(out var integer) ? integer : element.GetDecimal(),

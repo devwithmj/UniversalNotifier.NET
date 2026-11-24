@@ -87,6 +87,7 @@ public class QueueBenchmarks
         queue.Complete();
         await foreach (var _ in queue.DequeueAllAsync())
         {
+            // Drain only.
         }
     }
 

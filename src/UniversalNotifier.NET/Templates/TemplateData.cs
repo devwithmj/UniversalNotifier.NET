@@ -46,12 +46,9 @@ public sealed class TemplateData
         }
 
         var snapshot = new Dictionary<string, object?>(StringComparer.OrdinalIgnoreCase);
-        foreach (var property in data.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
+        foreach (var property in data.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.CanRead && p.GetIndexParameters().Length == 0))
         {
-            if (property.CanRead && property.GetIndexParameters().Length == 0)
-            {
-                snapshot[property.Name] = property.GetValue(data);
-            }
+            snapshot[property.Name] = property.GetValue(data);
         }
 
         return snapshot;

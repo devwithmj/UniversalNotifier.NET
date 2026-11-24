@@ -100,15 +100,15 @@ public class TemplateValidationTests
     [Test]
     public void Directory_templates_are_validated_too_and_the_standalone_builder_fails_fast()
     {
-        var root = Path.Combine(Path.GetTempPath(), "un-validate-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(Path.Combine(root, "welcome"));
-        File.WriteAllText(Path.Combine(root, "welcome", "email.subject.txt"), "{{ if }}");
+        var root = Path.Join(Path.GetTempPath(), "un-validate-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(Path.Join(root, "welcome"));
+        File.WriteAllText(Path.Join(root, "welcome", "email.subject.txt"), "{{ if }}");
 
         try
         {
             Assert.Throws<TemplateRenderException>(() => new NotifierBuilder().AddFakeNotifiers().UseScriban().AddTemplatesFromDirectory(root).Build());
 
-            File.WriteAllText(Path.Combine(root, "welcome", "email.subject.txt"), "Hi {{ Name }}");
+            File.WriteAllText(Path.Join(root, "welcome", "email.subject.txt"), "Hi {{ Name }}");
             using var notifier = new NotifierBuilder().AddFakeNotifiers().UseScriban().AddTemplatesFromDirectory(root).Build();
             Assert.That(notifier, Is.Not.Null);
         }

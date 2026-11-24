@@ -117,11 +117,12 @@ public class SesNotifierTests
         Assert.That(handler.Requests, Has.Count.EqualTo(3));
         Assert.That(response.Status, Is.EqualTo(DeliveryStatus.PartiallyAccepted));
         Assert.That(response.Recipients.Single(r => !r.Accepted).Recipient, Is.EqualTo("bad@example.com"));
-        foreach (var request in handler.Requests)
+        var sizes = handler.Requests.Select(request =>
         {
             using var json = JsonDocument.Parse(request.Body);
-            Assert.That(json.RootElement.GetProperty("Destination").GetProperty("ToAddresses").GetArrayLength(), Is.EqualTo(1), "recipients must not see each other");
-        }
+            return json.RootElement.GetProperty("Destination").GetProperty("ToAddresses").GetArrayLength();
+        });
+        Assert.That(sizes, Has.All.EqualTo(1), "recipients must not see each other");
     }
 
     [Test]

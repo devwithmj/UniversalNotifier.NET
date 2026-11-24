@@ -102,11 +102,11 @@ public class ConfigurationTests
     [Test]
     public async Task Templates_can_be_loaded_from_a_directory_and_path_traversal_is_blocked()
     {
-        var root = Path.Combine(Path.GetTempPath(), "un-templates-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(Path.Combine(root, "welcome"));
-        await File.WriteAllTextAsync(Path.Combine(root, "welcome", "email.subject.txt"), "Hello {{Name}}");
-        await File.WriteAllTextAsync(Path.Combine(root, "welcome", "email.html"), "<p>{{Name}}</p>");
-        await File.WriteAllTextAsync(Path.Combine(root, "secret.email.text.txt"), "outside");
+        var root = Path.Join(Path.GetTempPath(), "un-templates-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(Path.Join(root, "welcome"));
+        await File.WriteAllTextAsync(Path.Join(root, "welcome", "email.subject.txt"), "Hello {{Name}}");
+        await File.WriteAllTextAsync(Path.Join(root, "welcome", "email.html"), "<p>{{Name}}</p>");
+        await File.WriteAllTextAsync(Path.Join(root, "secret.email.text.txt"), "outside");
 
         try
         {

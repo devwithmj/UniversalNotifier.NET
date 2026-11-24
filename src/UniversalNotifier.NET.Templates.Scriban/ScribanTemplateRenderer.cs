@@ -145,12 +145,9 @@ public sealed class ScribanTemplateRenderer : IValidatingTemplateRenderer
     private static ScriptObject FromObject(object value, TemplateFormat format, int depth)
     {
         var result = new ScriptObject();
-        foreach (var property in value.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
+        foreach (var property in value.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.CanRead && p.GetIndexParameters().Length == 0))
         {
-            if (property.CanRead && property.GetIndexParameters().Length == 0)
-            {
-                result.SetValue(property.Name, ToScript(property.GetValue(value), format, depth + 1), readOnly: true);
-            }
+            result.SetValue(property.Name, ToScript(property.GetValue(value), format, depth + 1), readOnly: true);
         }
 
         return result;
@@ -158,7 +155,7 @@ public sealed class ScribanTemplateRenderer : IValidatingTemplateRenderer
 
     private static object? FromJson(JsonElement element, TemplateFormat format, int depth) => element.ValueKind switch
     {
-        JsonValueKind.Object => FromDictionary(element.EnumerateObject().Select(p => (p.Name, (object?)p.Value)), format, depth),
+        JsonValueKind.Object => FromDictionary(element.EnumerateObject().Select<JsonProperty, (string, object?)>(p => (p.Name, p.Value)), format, depth),
         JsonValueKind.Array => ToScript(element.EnumerateArray().Select(e => (object?)e).ToList(), format, depth),
         JsonValueKind.String => ToScript(element.GetString(), format, depth),
         JsonValueKind.Number => element.TryGetInt64(out var integer) ? integer : element.GetDecimal(),

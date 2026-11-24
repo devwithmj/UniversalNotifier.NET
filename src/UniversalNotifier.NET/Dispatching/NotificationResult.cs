@@ -15,14 +15,7 @@ public sealed class NotificationResult
         NotificationId = notificationId;
         Channels = channels;
 
-        var accepted = 0;
-        foreach (var channel in channels)
-        {
-            if (channel.Response.Success)
-            {
-                accepted++;
-            }
-        }
+        var accepted = channels.Count(channel => channel.Response.Success);
 
         Status = accepted == channels.Count && accepted > 0
             ? DeliveryStatus.Accepted

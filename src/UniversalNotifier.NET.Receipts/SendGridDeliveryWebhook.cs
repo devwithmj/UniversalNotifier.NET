@@ -73,12 +73,9 @@ public sealed class SendGridDeliveryWebhook : IDeliveryWebhook
             }
 
             var events = new List<DeliveryEvent>();
-            foreach (var item in json.RootElement.EnumerateArray())
+            foreach (var item in json.RootElement.EnumerateArray().Where(i => i.ValueKind == JsonValueKind.Object))
             {
-                if (item.ValueKind == JsonValueKind.Object)
-                {
-                    events.Add(Map(item));
-                }
+                events.Add(Map(item));
             }
 
             return new ReceiptResult(true, events);
