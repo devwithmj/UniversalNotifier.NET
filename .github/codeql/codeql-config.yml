@@ -1,0 +1,8 @@
+name: UniversalNotifier.NET CodeQL
+# Scan the shipped library code only. Generated sources (System.Text.Json and LoggerMessage generators),
+# tests, samples and benchmarks produce style notes that are not security findings.
+paths-ignore:
+  - '**/obj/**'
+  - tests
+  - samples
+  - benchmarks
